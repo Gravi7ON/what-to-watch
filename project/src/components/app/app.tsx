@@ -12,22 +12,31 @@ type FilmList = {
   released: number;
   posterImage: string;
   backgroundImage: string;
-  // rating?: number;
-  // scoresCount?: number;
-  // director?: string;
-  // starring?: string[];
-  // description?: string;
+  // rating: number;
+  // scoresCount: number;
+  // director: string;
+  // starring: string[];
+  // description: string;
 };
 
 function App(props: FilmList): JSX.Element {
+  const {
+    name,
+    previewImage,
+    genre,
+    released,
+    posterImage,
+    backgroundImage
+  } = props;
+
   return (
     <MainPage
-      name={props.name}
-      previewImage={props.previewImage}
-      genre={props.genre}
-      released={props.released}
-      posterImage={props.posterImage}
-      backgroundImage={props.backgroundImage}
+      name={name}
+      previewImage={previewImage}
+      genre={genre}
+      released={released}
+      posterImage={posterImage}
+      backgroundImage={backgroundImage}
     />
 
   // <SignIn />

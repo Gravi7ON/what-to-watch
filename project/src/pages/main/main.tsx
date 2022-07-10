@@ -1,6 +1,8 @@
 import React from 'react';
 import FilmCard from '../../components/film-card';
 
+const AMOUNT_FILMS_PER_STEP = 20;
+
 type FilmList = {
   name: string;
   previewImage: string;
@@ -11,11 +13,20 @@ type FilmList = {
 };
 
 function MainPage(props: FilmList): JSX.Element {
+  const {
+    name,
+    previewImage,
+    genre,
+    released,
+    posterImage,
+    backgroundImage
+  } = props;
+
   const getFilmsCards = (): JSX.Element[] => {
     const filmsCards: JSX.Element[] = [];
 
-    for (let i = 0; i < 20; i++) {
-      filmsCards.push(<FilmCard name={props.name} previewImage={props.previewImage} />);
+    for (let i = 0; i < AMOUNT_FILMS_PER_STEP; i++) {
+      filmsCards.push(<FilmCard name={name} previewImage={previewImage} />);
     }
 
     return filmsCards;
@@ -25,7 +36,7 @@ function MainPage(props: FilmList): JSX.Element {
     <React.Fragment>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={props.backgroundImage} alt={props.name} />
+          <img src={backgroundImage} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -54,14 +65,14 @@ function MainPage(props: FilmList): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={props.posterImage} alt={`${props.name} poster`} width="218" height="327" />
+              <img src={posterImage} alt={`${name} poster`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{props.name}</h2>
+              <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{props.genre}</span>
-                <span className="film-card__year">{props.released}</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{released}</span>
               </p>
 
               <div className="film-card__buttons">

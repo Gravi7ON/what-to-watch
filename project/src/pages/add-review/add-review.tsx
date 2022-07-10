@@ -7,10 +7,13 @@ type FilmReview = {
 
 function AddReview({name, posterImage}: FilmReview): JSX.Element {
   const createElementsGrade = (): JSX.Element => {
-    const stars = Array.from({length: RATING_STARS_COUNT}, (element, index) => index + 1).reverse().reduce((previous, current) =>
-      `${previous}
+    const stars = Array.from({length: RATING_STARS_COUNT}, (element, index) => index + 1)
+      .reverse()
+      .reduce((previous, current) =>
+        `${previous}
          <input class="rating__input" id="star-${current}" type="radio" name="rating" value="${current}">
-         <label class="rating__label" for="star-${current}">Rating ${current}</label>`, '');
+         <label class="rating__label" for="star-${current}">Rating ${current}</label>`,'');
+
     return (
       <div className="rating__stars" dangerouslySetInnerHTML={{__html: stars}}></div>
     );

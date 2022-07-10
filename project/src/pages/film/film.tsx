@@ -9,6 +9,8 @@ const TextFormRating = {
   AWESOME: 'Awesome'
 };
 
+const AMOUNT_SIMILAR_FILMS = 4;
+
 type FilmList = {
   name: string;
   previewImage: string;
@@ -24,31 +26,43 @@ type FilmList = {
 };
 
 function Film(props: FilmList): JSX.Element {
-  const getTextFormRating = (rating: number): string => {
-    if (rating < 3) {
-      return TextFormRating.BAD;
-    }
+  const {
+    name,
+    previewImage,
+    genre,
+    released,
+    posterImage,
+    backgroundImage,
+    rating,
+    scoresCount,
+    director,
+    starring,
+    description
+  } = props;
 
-    if (rating >= 3 && rating < 5) {
-      return TextFormRating.NORMAL;
-    }
+  const getTextFormRating = (estimate: number): string => {
+    const ratingConfig = [
+      TextFormRating.BAD,
+      TextFormRating.BAD,
+      TextFormRating.BAD,
+      TextFormRating.NORMAL,
+      TextFormRating.NORMAL,
+      TextFormRating.GOOD,
+      TextFormRating.GOOD,
+      TextFormRating.GOOD,
+      TextFormRating.VERY_GOOD,
+      TextFormRating.VERY_GOOD,
+      TextFormRating.AWESOME
+    ];
 
-    if (rating >= 5 && rating < 8) {
-      return TextFormRating.GOOD;
-    }
-
-    if (rating >= 8 && rating < 10) {
-      return TextFormRating.VERY_GOOD;
-    }
-
-    return TextFormRating.AWESOME;
+    return ratingConfig[Math.floor(estimate)];
   };
 
   const getFilmsCards = (): JSX.Element[] => {
     const filmsCards: JSX.Element[] = [];
 
-    for (let i = 0; i < 4; i++) {
-      filmsCards.push(<FilmCard name={props.name} previewImage={props.previewImage} />);
+    for (let i = 0; i < AMOUNT_SIMILAR_FILMS; i++) {
+      filmsCards.push(<FilmCard name={name} previewImage={previewImage} />);
     }
 
     return filmsCards;
@@ -59,7 +73,7 @@ function Film(props: FilmList): JSX.Element {
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={props.backgroundImage} alt={props.name} />
+            <img src={backgroundImage} alt={name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -87,10 +101,10 @@ function Film(props: FilmList): JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{props.name}</h2>
+              <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{props.genre}</span>
-                <span className="film-card__year">{props.released}</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -116,7 +130,7 @@ function Film(props: FilmList): JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={props.posterImage} alt={props.name} width="218" height="327" />
+              <img src={posterImage} alt={name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -135,19 +149,19 @@ function Film(props: FilmList): JSX.Element {
               </nav>
 
               <div className="film-rating">
-                <div className="film-rating__score">{props.rating.toFixed(1)}</div>
+                <div className="film-rating__score">{rating.toFixed(1)}</div>
                 <p className="film-rating__meta">
-                  <span className="film-rating__level">{getTextFormRating(props.rating)}</span>
-                  <span className="film-rating__count">{props.scoresCount} ratings</span>
+                  <span className="film-rating__level">{getTextFormRating(rating)}</span>
+                  <span className="film-rating__count">{scoresCount} ratings</span>
                 </p>
               </div>
 
               <div className="film-card__text">
-                <p>{props.description}</p>
+                <p>{description}</p>
 
-                <p className="film-card__director"><strong>Director: {props.director}</strong></p>
+                <p className="film-card__director"><strong>Director: {director}</strong></p>
 
-                <p className="film-card__starring"><strong>Starring: {props.starring.join(', ')} and other</strong></p>
+                <p className="film-card__starring"><strong>Starring: {starring.join(', ')} and other</strong></p>
               </div>
             </div>
           </div>
