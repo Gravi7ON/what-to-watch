@@ -1,4 +1,7 @@
-const RATING_STARS_COUNT = 10;
+import {AppRoute, RATING_STARS_COUNT} from '../../const';
+import {Link} from 'react-router-dom';
+import Logo from '../../components/logo/logo';
+import UserLogo from '../../components/user-logo/user-logo';
 
 type FilmReview = {
   name: string;
@@ -6,18 +9,14 @@ type FilmReview = {
 }
 
 function AddReview({name, posterImage}: FilmReview): JSX.Element {
-  const createElementsGrade = (): JSX.Element => {
-    const stars = Array.from({length: RATING_STARS_COUNT}, (element, index) => index + 1)
-      .reverse()
-      .reduce((previous, current) =>
-        `${previous}
-         <input class="rating__input" id="star-${current}" type="radio" name="rating" value="${current}">
-         <label class="rating__label" for="star-${current}">Rating ${current}</label>`,'');
-
-    return (
-      <div className="rating__stars" dangerouslySetInnerHTML={{__html: stars}}></div>
-    );
-  };
+  const ratingStars: JSX.Element[] = Array.from({length: RATING_STARS_COUNT}, (element, index) => index + 1)
+    .reverse()
+    .map((number) => (
+      <>
+        <input className="rating__input" id={`star-${number}`} type="radio" name="rating" value={number} />
+        <label className="rating__label" htmlFor={`star-${number}`}>Rating {number}</label>
+      </>
+    ));
 
   return (
     <section className="film-card film-card--full">
@@ -29,34 +28,21 @@ function AddReview({name, posterImage}: FilmReview): JSX.Element {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header">
-          <div className="logo">
-            <a href="main.html" className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+          {<Logo path={AppRoute.Main} />}
 
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">{name}</a>
+                <Link to={AppRoute.Film} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <a href="_" className="breadcrumbs__link">Add review</a>
+                <Link to={AppRoute.AddReview} className="breadcrumbs__link">Add review</Link>
               </li>
             </ul>
           </nav>
 
           <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a href="_" className="user-block__link">Sign out</a>
-            </li>
+            {<UserLogo path={AppRoute.Main} />}
           </ul>
         </header>
 
@@ -68,7 +54,9 @@ function AddReview({name, posterImage}: FilmReview): JSX.Element {
       <div className="add-review">
         <form action="#" className="add-review__form">
           <div className="rating">
-            {createElementsGrade()}
+            <div className="rating__stars">
+              {ratingStars}
+            </div>
           </div>
 
           <div className="add-review__text">
