@@ -1,11 +1,14 @@
-import FilmCard from '../../components/film-card';
+import FilmCard from '../../components/film-card/film-card';
+import {AppRoute, LOGO_CLASS_NAME} from '../../const';
+import Logo from '../../components/logo/logo';
+import UserLogo from '../../components/user-logo/user-logo';
 
-type MyFilm = {
+type MyFilms = {
   name: string;
   previewImage: string;
 };
 
-function MyList({name, previewImage}: MyFilm): JSX.Element {
+function MyList({name, previewImage}: MyFilms): JSX.Element {
   const getFilmsCards = (): JSX.Element[] => {
     const filmsCards: JSX.Element[] = [];
 
@@ -19,24 +22,11 @@ function MyList({name, previewImage}: MyFilm): JSX.Element {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
-        <div className="logo">
-          <a href="main.html" className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
+        {<Logo path={AppRoute.Main} />}
 
         <h1 className="page-title user-page__title">My list <span className="user-page__film-count">9</span></h1>
         <ul className="user-block">
-          <li className="user-block__item">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
-          </li>
-          <li className="user-block__item">
-            <a href="_" className="user-block__link">Sign out</a>
-          </li>
+          {<UserLogo path={AppRoute.Main} />}
         </ul>
       </header>
 
@@ -49,17 +39,7 @@ function MyList({name, previewImage}: MyFilm): JSX.Element {
       </section>
 
       <footer className="page-footer">
-        <div className="logo">
-          <a href="main.html" className="logo__link logo__link--light">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
-
-        <div className="copyright">
-          <p>© 2022 What to watch Ltd.</p>
-        </div>
+        {<Logo path={AppRoute.Main} classTitle={LOGO_CLASS_NAME} />}
       </footer>
     </div>
   );

@@ -1,15 +1,8 @@
-import React from 'react';
-import FilmCard from '../../components/film-card';
-
-const TextFormRating = {
-  BAD: 'Bad',
-  NORMAL: 'Normal',
-  GOOD: 'Good',
-  VERY_GOOD: 'Very good',
-  AWESOME: 'Awesome'
-};
-
-const AMOUNT_SIMILAR_FILMS = 4;
+import {Link} from 'react-router-dom';
+import {AppRoute, LOGO_CLASS_NAME, AMOUNT_SIMILAR_FILMS, TextFormRating} from '../../const';
+import FilmCard from '../../components/film-card/film-card';
+import Logo from '../../components/logo/logo';
+import UserLogo from '../../components/user-logo/user-logo';
 
 type FilmList = {
   name: string;
@@ -42,17 +35,17 @@ function Film(props: FilmList): JSX.Element {
 
   const getTextFormRating = (estimate: number): string => {
     const ratingConfig = [
-      TextFormRating.BAD,
-      TextFormRating.BAD,
-      TextFormRating.BAD,
-      TextFormRating.NORMAL,
-      TextFormRating.NORMAL,
-      TextFormRating.GOOD,
-      TextFormRating.GOOD,
-      TextFormRating.GOOD,
-      TextFormRating.VERY_GOOD,
-      TextFormRating.VERY_GOOD,
-      TextFormRating.AWESOME
+      TextFormRating.Bad,
+      TextFormRating.Bad,
+      TextFormRating.Bad,
+      TextFormRating.Normal,
+      TextFormRating.Normal,
+      TextFormRating.Good,
+      TextFormRating.Good,
+      TextFormRating.Good,
+      TextFormRating.VeryGood,
+      TextFormRating.VeryGood,
+      TextFormRating.Awesome
     ];
 
     return ratingConfig[Math.floor(estimate)];
@@ -69,7 +62,7 @@ function Film(props: FilmList): JSX.Element {
   };
 
   return (
-    <React.Fragment>
+    <>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
@@ -79,23 +72,10 @@ function Film(props: FilmList): JSX.Element {
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header film-card__head">
-            <div className="logo">
-              <a href="main.html" className="logo__link">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </a>
-            </div>
+            {<Logo path={AppRoute.Main} />}
 
             <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a href="_" className="user-block__link">Sign out</a>
-              </li>
+              {<UserLogo path={AppRoute.Main} />}
             </ul>
           </header>
 
@@ -121,7 +101,7 @@ function Film(props: FilmList): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">Add review</a>
+                <Link to={AppRoute.AddReview} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -137,7 +117,7 @@ function Film(props: FilmList): JSX.Element {
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
                   <li className="film-nav__item film-nav__item--active">
-                    <a href="_" className="film-nav__link">Overview</a>
+                    <Link to={AppRoute.Film} className="film-nav__link">Overview</Link>
                   </li>
                   <li className="film-nav__item">
                     <a href="_" className="film-nav__link">Details</a>
@@ -178,20 +158,10 @@ function Film(props: FilmList): JSX.Element {
         </section>
 
         <footer className="page-footer">
-          <div className="logo">
-            <a href="main.html" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2022 What to watch Ltd.</p>
-          </div>
+          {<Logo path={AppRoute.Main} classTitle={LOGO_CLASS_NAME} />}
         </footer>
       </div>
-    </React.Fragment>
+    </>
   );
 }
 

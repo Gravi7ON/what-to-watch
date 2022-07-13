@@ -30,11 +30,11 @@ root.render(
       released={Film.RELEASE_DATE}
       posterImage={Film.POSTER_IMAGE}
       backgroundImage={Film.BACKGROUND_IMAGE}
-      // rating={Film.RATNG}
-      // scoresCount={Film.SCORES_COUNT}
-      // director={Film.DIRECTOR}
-      // starring={Film.STARRING}
-      // description={Film.DESCRIPTION}
+      rating={Film.RATNG}
+      scoresCount={Film.SCORES_COUNT}
+      director={Film.DIRECTOR}
+      starring={Film.STARRING}
+      description={Film.DESCRIPTION}
     />
   </React.StrictMode>,
 );

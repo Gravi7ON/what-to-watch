@@ -1,7 +1,7 @@
-import React from 'react';
-import FilmCard from '../../components/film-card';
-
-const AMOUNT_FILMS_PER_STEP = 20;
+import {AppRoute, LOGO_CLASS_NAME, AMOUNT_FILMS_PER_STEP} from '../../const';
+import FilmCard from '../../components/film-card/film-card';
+import Logo from '../../components/logo/logo';
+import UserLogo from '../../components/user-logo/user-logo';
 
 type FilmList = {
   name: string;
@@ -33,7 +33,7 @@ function MainPage(props: FilmList): JSX.Element {
   };
 
   return (
-    <React.Fragment>
+    <>
       <section className="film-card">
         <div className="film-card__bg">
           <img src={backgroundImage} alt={name} />
@@ -42,23 +42,10 @@ function MainPage(props: FilmList): JSX.Element {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header film-card__head">
-          <div className="logo">
-            <a href="_" className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+          {<Logo path={AppRoute.Main} />}
 
           <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a href="_" className="user-block__link">Sign out</a>
-            </li>
+            {<UserLogo path={AppRoute.Main} />}
           </ul>
         </header>
 
@@ -142,20 +129,10 @@ function MainPage(props: FilmList): JSX.Element {
         </section>
 
         <footer className="page-footer">
-          <div className="logo">
-            <a href="_" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2022 What to watch Ltd.</p>
-          </div>
+          {<Logo path={AppRoute.Main} classTitle={LOGO_CLASS_NAME} />}
         </footer>
       </div>
-    </React.Fragment>
+    </>
   );
 }
 
