@@ -1,30 +1,20 @@
-import FilmCard from '../../components/film-card/film-card';
 import {AppRoute, LOGO_CLASS_NAME} from '../../const';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
+import Films from '../../types/films';
+import FilmsList from '../../components/films-list/films-list';
 
-type MyFilms = {
-  name: string;
-  previewImage: string;
-};
+type MyFilmsProps = {
+  films: Films
+}
 
-function MyList({name, previewImage}: MyFilms): JSX.Element {
-  const getFilmsCards = (): JSX.Element[] => {
-    const filmsCards: JSX.Element[] = [];
-
-    for (let i = 0; i < 9; i++) {
-      filmsCards.push(<FilmCard name={name} previewImage={previewImage} />);
-    }
-
-    return filmsCards;
-  };
-
+function MyList({films}: MyFilmsProps): JSX.Element {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
         {<Logo path={AppRoute.Main} />}
 
-        <h1 className="page-title user-page__title">My list <span className="user-page__film-count">9</span></h1>
+        <h1 className="page-title user-page__title">My list <span className="user-page__film-count">{films.length}</span></h1>
         <ul className="user-block">
           {<UserLogo path={AppRoute.Main} />}
         </ul>
@@ -34,7 +24,7 @@ function MyList({name, previewImage}: MyFilms): JSX.Element {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          {getFilmsCards()}
+          {<FilmsList films={films} />}
         </div>
       </section>
 

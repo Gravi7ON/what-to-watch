@@ -1,27 +1,18 @@
 import {Link} from 'react-router-dom';
-import {AppRoute, LOGO_CLASS_NAME, AMOUNT_SIMILAR_FILMS, TextFormRating} from '../../const';
-import FilmCard from '../../components/film-card/film-card';
+import {AppRoute, LOGO_CLASS_NAME, AMOUNT_SIMILAR_FILMS} from '../../const';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
+import FilmInfo from '../../components/film-info/film-info';
+import Films from '../../types/films';
+import FilmsList from '../../components/films-list/films-list';
 
-type FilmList = {
-  name: string;
-  previewImage: string;
-  genre: string;
-  released: number;
-  posterImage: string;
-  backgroundImage: string;
-  rating: number;
-  scoresCount:number;
-  director: string;
-  starring: string[];
-  description: string;
-};
+type FilmProps = {
+  films: Films
+}
 
-function Film(props: FilmList): JSX.Element {
+function Film({films}: FilmProps): JSX.Element {
   const {
     name,
-    previewImage,
     genre,
     released,
     posterImage,
@@ -30,36 +21,8 @@ function Film(props: FilmList): JSX.Element {
     scoresCount,
     director,
     starring,
-    description
-  } = props;
-
-  const getTextFormRating = (estimate: number): string => {
-    const ratingConfig = [
-      TextFormRating.Bad,
-      TextFormRating.Bad,
-      TextFormRating.Bad,
-      TextFormRating.Normal,
-      TextFormRating.Normal,
-      TextFormRating.Good,
-      TextFormRating.Good,
-      TextFormRating.Good,
-      TextFormRating.VeryGood,
-      TextFormRating.VeryGood,
-      TextFormRating.Awesome
-    ];
-
-    return ratingConfig[Math.floor(estimate)];
-  };
-
-  const getFilmsCards = (): JSX.Element[] => {
-    const filmsCards: JSX.Element[] = [];
-
-    for (let i = 0; i < AMOUNT_SIMILAR_FILMS; i++) {
-      filmsCards.push(<FilmCard name={name} previewImage={previewImage} />);
-    }
-
-    return filmsCards;
-  };
+    description,
+  } = films[0];
 
   return (
     <>
@@ -120,29 +83,23 @@ function Film(props: FilmList): JSX.Element {
                     <Link to={AppRoute.Film} className="film-nav__link">Overview</Link>
                   </li>
                   <li className="film-nav__item">
-                    <a href="_" className="film-nav__link">Details</a>
+                    <a href={AppRoute.Film} className="film-nav__link">Details</a>
                   </li>
                   <li className="film-nav__item">
-                    <a href="_" className="film-nav__link">Reviews</a>
+                    <a href={AppRoute.Film} className="film-nav__link">Reviews</a>
                   </li>
                 </ul>
               </nav>
 
-              <div className="film-rating">
-                <div className="film-rating__score">{rating.toFixed(1)}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">{getTextFormRating(rating)}</span>
-                  <span className="film-rating__count">{scoresCount} ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{description}</p>
-
-                <p className="film-card__director"><strong>Director: {director}</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: {starring.join(', ')} and other</strong></p>
-              </div>
+              {
+                <FilmInfo
+                  rating={rating}
+                  scoresCount={scoresCount}
+                  director={director}
+                  starring={starring}
+                  description={description}
+                />
+              }
             </div>
           </div>
         </div>
@@ -152,9 +109,7 @@ function Film(props: FilmList): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <div className="catalog__films-list">
-            {getFilmsCards()}
-          </div>
+          {<FilmsList films={films} amountFilms={AMOUNT_SIMILAR_FILMS} />}
         </section>
 
         <footer className="page-footer">

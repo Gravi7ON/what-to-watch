@@ -2,27 +2,29 @@ import {AppRoute, RATING_STARS_COUNT} from '../../const';
 import {Link} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
+import {Fragment} from 'react';
 
 type FilmReview = {
   name: string;
   posterImage: string;
+  backgroundImage: string
 }
 
-function AddReview({name, posterImage}: FilmReview): JSX.Element {
+function AddReview({name, posterImage, backgroundImage}: FilmReview): JSX.Element {
   const ratingStars: JSX.Element[] = Array.from({length: RATING_STARS_COUNT}, (element, index) => index + 1)
     .reverse()
     .map((number) => (
-      <>
+      <Fragment key={number.toString()}>
         <input className="rating__input" id={`star-${number}`} type="radio" name="rating" value={number} />
         <label className="rating__label" htmlFor={`star-${number}`}>Rating {number}</label>
-      </>
+      </Fragment>
     ));
 
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={backgroundImage} alt={name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>

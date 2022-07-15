@@ -1,10 +1,10 @@
 import {Link} from 'react-router-dom';
 
-type RouteUserLogo = {
+type RouteUserLogoProps = {
   path: string;
 }
 
-function UserLogo({path}: RouteUserLogo): JSX.Element {
+function UserLogo({path}: RouteUserLogoProps): JSX.Element {
   return (
     <>
       <li className="user-block__item">

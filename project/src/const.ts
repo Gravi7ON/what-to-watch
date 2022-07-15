@@ -27,7 +27,7 @@ const LOGO_CLASS_NAME = 'logo__link--light';
 
 const RATING_STARS_COUNT = 10;
 
-const AMOUNT_FILMS_PER_STEP = 20;
+const AMOUNT_FILMS_PER_STEP = 8;
 
 const HOUR_IN_MINUTES = 60;
 

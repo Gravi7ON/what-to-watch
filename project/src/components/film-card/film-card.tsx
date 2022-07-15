@@ -1,12 +1,12 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 
-type Film = {
+type FilmCardProps = {
   name: string;
   previewImage: string;
-};
+}
 
-function FilmCard({name, previewImage}: Film): JSX.Element {
+function FilmCard({name, previewImage}: FilmCardProps): JSX.Element {
   return (
     <article className="small-film-card catalog__films-card">
       <div className="small-film-card__image">

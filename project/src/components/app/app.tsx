@@ -9,35 +9,18 @@ import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
+import Films from '../../types/films';
 
-type FilmList = {
-  name: string;
-  previewImage: string;
-  genre: string;
-  released: number;
-  posterImage: string;
-  backgroundImage: string;
-  rating: number;
-  scoresCount: number;
-  director: string;
-  starring: string[];
-  description: string;
-};
+type AppProps = {
+  films: Films
+}
 
-function App(props: FilmList): JSX.Element {
+function App({films}: AppProps): JSX.Element {
   const {
     name,
-    previewImage,
-    genre,
-    released,
     posterImage,
     backgroundImage,
-    rating,
-    scoresCount,
-    director,
-    starring,
-    description
-  } = props;
+  } = films[0];
 
   return (
     <BrowserRouter>
@@ -47,12 +30,7 @@ function App(props: FilmList): JSX.Element {
           path={AppRoute.Main}
           element={
             <MainPage
-              name={name}
-              previewImage={previewImage}
-              genre={genre}
-              released={released}
-              posterImage={posterImage}
-              backgroundImage={backgroundImage}
+              films={films}
             />
           }
         />
@@ -63,10 +41,9 @@ function App(props: FilmList): JSX.Element {
         <Route
           path={AppRoute.MyList}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
               <MyList
-                name={props.name}
-                previewImage={props.previewImage}
+                films={films}
               />
             </PrivateRoute>
           }
@@ -75,17 +52,7 @@ function App(props: FilmList): JSX.Element {
           path={AppRoute.Film}
           element={
             <Film
-              name={name}
-              previewImage={previewImage}
-              genre={genre}
-              released={released}
-              posterImage={posterImage}
-              backgroundImage={backgroundImage}
-              rating={rating}
-              scoresCount={scoresCount}
-              director={director}
-              starring={starring}
-              description={description}
+              films={films}
             />
           }
         />
@@ -93,8 +60,9 @@ function App(props: FilmList): JSX.Element {
           path={AppRoute.AddReview}
           element={
             <AddReview
-              name={props.name}
-              posterImage={props.posterImage}
+              name={name}
+              posterImage={posterImage}
+              backgroundImage={backgroundImage}
             />
           }
         />
