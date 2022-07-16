@@ -5,12 +5,13 @@ type FilmCardProps = {
   id: number;
   name: string;
   previewImage: string;
+  makeActive: (id: number) => void;
 }
 
-function FilmCard({name, previewImage, id}: FilmCardProps): JSX.Element {
+function FilmCard({name, previewImage, id, makeActive}: FilmCardProps): JSX.Element {
   return (
     <article className="small-film-card catalog__films-card">
-      <div className="small-film-card__image">
+      <div className="small-film-card__image" onMouseOver={() => makeActive(id)}>
         <img src={previewImage} alt={name} width="280" height="175" />
       </div>
       <h3 className="small-film-card__title">

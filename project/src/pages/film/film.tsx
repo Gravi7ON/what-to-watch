@@ -71,7 +71,7 @@ function Film({films}: FilmProps): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <Link to={`${AppRoute.Film}/${id}${AppRoute.AddReview}`} className="btn film-card__button">Add review</Link>
+                <Link to={`${AppRoute.Film}/${id}/review`} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -90,10 +90,10 @@ function Film({films}: FilmProps): JSX.Element {
                     <Link to={`${AppRoute.Film}/${id}`} className="film-nav__link">Overview</Link>
                   </li>
                   <li className="film-nav__item">
-                    <a href={`${AppRoute.Film}/${id}`} className="film-nav__link">Details</a>
+                    <Link to={`${AppRoute.Film}/${id}`} className="film-nav__link">Details</Link>
                   </li>
                   <li className="film-nav__item">
-                    <a href={`${AppRoute.Film}/${id}`} className="film-nav__link">Reviews</a>
+                    <Link to={`${AppRoute.Film}/${id}`} className="film-nav__link">Reviews</Link>
                   </li>
                 </ul>
               </nav>

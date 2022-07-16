@@ -33,7 +33,7 @@ function App({films}: AppProps): JSX.Element {
         <Route
           path={AppRoute.MyList}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
               <MyList films={films} />
             </PrivateRoute>
           }
@@ -47,14 +47,14 @@ function App({films}: AppProps): JSX.Element {
           />
         </Route>
         <Route
-          path='films/:id/review'
+          path={AppRoute.AddReview}
           element={
             <AddReview films={films} />
           }
         />
         <Route
           path={AppRoute.Player}
-          element={<Player />}
+          element={<Player films={films} />}
         />
         <Route
           path="*"

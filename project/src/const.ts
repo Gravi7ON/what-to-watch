@@ -3,7 +3,7 @@ enum AppRoute {
   SignIn = '/login',
   MyList = '/mylist',
   Film = '/films',
-  AddReview = '/review',
+  AddReview = '/films/:id/review',
   Player = '/player/:id'
 }
 

@@ -1,9 +1,9 @@
-import {AppRoute, RATING_STARS_COUNT} from '../../const';
+import {AppRoute} from '../../const';
 import {Link, useParams} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
-import {Fragment} from 'react';
 import Films from '../../types/films';
+import UserCommentForm from '../../components/user-comment-form/user-comment-form';
 
 type AddReviewProps = {
   films: Films
@@ -18,15 +18,6 @@ function AddReview({films}: AddReviewProps): JSX.Element {
   const filmIndexInList = parseInt(id, 10) - 1;
 
   const {name, backgroundImage, posterImage} = films[filmIndexInList];
-
-  const ratingStars: JSX.Element[] = Array.from({length: RATING_STARS_COUNT}, (element, index) => index + 1)
-    .reverse()
-    .map((number) => (
-      <Fragment key={number.toString()}>
-        <input className="rating__input" id={`star-${number}`} type="radio" name="rating" value={number} />
-        <label className="rating__label" htmlFor={`star-${number}`}>Rating {number}</label>
-      </Fragment>
-    ));
 
   return (
     <section className="film-card film-card--full">
@@ -46,7 +37,7 @@ function AddReview({films}: AddReviewProps): JSX.Element {
                 <Link to={`${AppRoute.Film}/${id}`} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <Link to={`${AppRoute.Film}/${id}${AppRoute.AddReview}`} className="breadcrumbs__link">Add review</Link>
+                <Link to={`${AppRoute.Film}/${id}/review`} className="breadcrumbs__link">Add review</Link>
               </li>
             </ul>
           </nav>
@@ -62,21 +53,7 @@ function AddReview({films}: AddReviewProps): JSX.Element {
       </div>
 
       <div className="add-review">
-        <form action="#" className="add-review__form">
-          <div className="rating">
-            <div className="rating__stars">
-              {ratingStars}
-            </div>
-          </div>
-
-          <div className="add-review__text">
-            <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
-            <div className="add-review__submit">
-              <button className="add-review__btn" type="submit">Post</button>
-            </div>
-
-          </div>
-        </form>
+        {<UserCommentForm />}
       </div>
 
     </section>
