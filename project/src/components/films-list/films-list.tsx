@@ -12,7 +12,7 @@ function FilmsList({films, amountFilms}: FilmListProps): JSX.Element {
     const filmsCards: JSX.Element[] = [];
 
     for (let i = 0; i < (amountFilms || AMOUNT_FILMS_PER_STEP); i++) {
-      filmsCards.push(<FilmCard name={films[i].name} previewImage={films[i].previewImage} />);
+      filmsCards.push(<FilmCard key={films[i].id} name={films[i].name} previewImage={films[i].previewImage} id={films[i].id} />);
     }
 
     return filmsCards;

@@ -1,16 +1,24 @@
 import {AppRoute, RATING_STARS_COUNT} from '../../const';
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
 import {Fragment} from 'react';
+import Films from '../../types/films';
 
-type FilmReview = {
-  name: string;
-  posterImage: string;
-  backgroundImage: string
+type AddReviewProps = {
+  films: Films
 }
 
-function AddReview({name, posterImage, backgroundImage}: FilmReview): JSX.Element {
+type FilmId = {
+  id: string
+}
+
+function AddReview({films}: AddReviewProps): JSX.Element {
+  const {id} = useParams() as FilmId ;
+  const filmIndexInList = parseInt(id, 10) - 1;
+
+  const {name, backgroundImage, posterImage} = films[filmIndexInList];
+
   const ratingStars: JSX.Element[] = Array.from({length: RATING_STARS_COUNT}, (element, index) => index + 1)
     .reverse()
     .map((number) => (
@@ -35,10 +43,10 @@ function AddReview({name, posterImage, backgroundImage}: FilmReview): JSX.Elemen
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={AppRoute.Film} className="breadcrumbs__link">{name}</Link>
+                <Link to={`${AppRoute.Film}/${id}`} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <Link to={AppRoute.AddReview} className="breadcrumbs__link">Add review</Link>
+                <Link to={`${AppRoute.Film}/${id}${AppRoute.AddReview}`} className="breadcrumbs__link">Add review</Link>
               </li>
             </ul>
           </nav>

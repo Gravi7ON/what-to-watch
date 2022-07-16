@@ -16,12 +16,6 @@ type AppProps = {
 }
 
 function App({films}: AppProps): JSX.Element {
-  const {
-    name,
-    posterImage,
-    backgroundImage,
-  } = films[0];
-
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -29,9 +23,7 @@ function App({films}: AppProps): JSX.Element {
         <Route
           path={AppRoute.Main}
           element={
-            <MainPage
-              films={films}
-            />
+            <MainPage films={films} />
           }
         />
         <Route
@@ -42,28 +34,22 @@ function App({films}: AppProps): JSX.Element {
           path={AppRoute.MyList}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <MyList
-                films={films}
-              />
+              <MyList films={films} />
             </PrivateRoute>
           }
         />
+        <Route path={AppRoute.Film}>
+          <Route
+            path=':id'
+            element={
+              <Film films={films} />
+            }
+          />
+        </Route>
         <Route
-          path={AppRoute.Film}
+          path='films/:id/review'
           element={
-            <Film
-              films={films}
-            />
-          }
-        />
-        <Route
-          path={AppRoute.AddReview}
-          element={
-            <AddReview
-              name={name}
-              posterImage={posterImage}
-              backgroundImage={backgroundImage}
-            />
+            <AddReview films={films} />
           }
         />
         <Route

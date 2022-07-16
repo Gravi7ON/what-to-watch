@@ -1,4 +1,4 @@
-import {Link} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import {AppRoute, LOGO_CLASS_NAME, AMOUNT_SIMILAR_FILMS} from '../../const';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
@@ -10,7 +10,14 @@ type FilmProps = {
   films: Films
 }
 
+type FilmId = {
+  id: string
+}
+
 function Film({films}: FilmProps): JSX.Element {
+  const {id} = useParams() as FilmId ;
+  const filmIndexInList = parseInt(id, 10) - 1;
+
   const {
     name,
     genre,
@@ -22,7 +29,7 @@ function Film({films}: FilmProps): JSX.Element {
     director,
     starring,
     description,
-  } = films[0];
+  } = films[filmIndexInList];
 
   return (
     <>
@@ -64,7 +71,7 @@ function Film({films}: FilmProps): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <Link to={AppRoute.AddReview} className="btn film-card__button">Add review</Link>
+                <Link to={`${AppRoute.Film}/${id}${AppRoute.AddReview}`} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -80,13 +87,13 @@ function Film({films}: FilmProps): JSX.Element {
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
                   <li className="film-nav__item film-nav__item--active">
-                    <Link to={AppRoute.Film} className="film-nav__link">Overview</Link>
+                    <Link to={`${AppRoute.Film}/${id}`} className="film-nav__link">Overview</Link>
                   </li>
                   <li className="film-nav__item">
-                    <a href={AppRoute.Film} className="film-nav__link">Details</a>
+                    <a href={`${AppRoute.Film}/${id}`} className="film-nav__link">Details</a>
                   </li>
                   <li className="film-nav__item">
-                    <a href={AppRoute.Film} className="film-nav__link">Reviews</a>
+                    <a href={`${AppRoute.Film}/${id}`} className="film-nav__link">Reviews</a>
                   </li>
                 </ul>
               </nav>
