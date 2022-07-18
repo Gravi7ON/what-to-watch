@@ -10,12 +10,17 @@ import {AppRoute, AuthorizationStatus} from '../../const';
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
 import {Films} from '../../types/films';
+import FilmInfo from '../film-info/film-info';
+import FilmDetails from '../film-info/film-detais';
+import FilmReviews from '../film-info/film-reviews';
+import Comments from '../../types/comments';
 
 type AppProps = {
   films: Films
+  comments: Comments
 }
 
-function App({films}: AppProps): JSX.Element {
+function App({films, comments}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -44,7 +49,26 @@ function App({films}: AppProps): JSX.Element {
             element={
               <Film films={films} />
             }
-          />
+          >
+            <Route
+              index
+              element={
+                <FilmInfo films={films} />
+              }
+            />
+            <Route
+              path='details'
+              element={
+                <FilmDetails films={films} />
+              }
+            />
+            <Route
+              path='reviews'
+              element={
+                <FilmReviews comments={comments} />
+              }
+            />
+          </Route>
         </Route>
         <Route
           path={AppRoute.AddReview}

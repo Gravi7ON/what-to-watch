@@ -1,23 +1,22 @@
 import FilmComment from './film-comment';
+// import {FilmId} from '../../types/films';
+// import {useParams} from 'react-router-dom';
+import Comments from '../../types/comments';
 
-type User = {
-  name: string;
+type CommentsProps = {
+  comments: Comments
 }
 
-type CommentProps = {
-  comment: string;
-  date: string;
-  rating: number;
-  user: User;
-}
+function FilmReviews({comments}: CommentsProps): JSX.Element {
+  // const {id} = useParams<FilmId>() ;
+  // const filmIndexInList = parseInt((id || '1'), 10) - 1;
 
-function FilmReviews(props: CommentProps): JSX.Element {
   const {
     comment,
     date,
     rating,
     user
-  } = props;
+  } = comments[0];
 
   return (
     <div className="film-card__reviews film-card__row">

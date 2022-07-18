@@ -1,22 +1,19 @@
 import {Fragment} from 'react';
 import {HOUR_IN_MINUTES} from '../../const';
+import {ScreenProps, FilmId} from '../../types/films';
+import {useParams} from 'react-router-dom';
 
-type DetailsProps = {
-  director: string;
-  starring: string[];
-  genre: string;
-  released: number;
-  runTime: number;
-}
+function FilmDetails({films}: ScreenProps): JSX.Element {
+  const {id} = useParams<FilmId>() ;
+  const filmIndexInList = parseInt((id || '1'), 10) - 1;
 
-function FilmDetails(props: DetailsProps): JSX.Element {
   const {
     director,
     starring,
     genre,
     released,
     runTime
-  } = props;
+  } = films[filmIndexInList];
 
   const durationHours: number = Math.floor(runTime / HOUR_IN_MINUTES);
   const durationMunutes: number = runTime - HOUR_IN_MINUTES * durationHours;

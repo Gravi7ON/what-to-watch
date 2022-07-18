@@ -1,14 +1,28 @@
-import {Link, useParams} from 'react-router-dom';
+import {Link, Outlet, useParams} from 'react-router-dom';
 import {AppRoute, LOGO_CLASS_NAME, AMOUNT_SIMILAR_FILMS} from '../../const';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
-import FilmInfo from '../../components/film-info/film-info';
 import {ScreenProps, FilmId} from '../../types/films';
 import FilmsList from '../../components/films-list/films-list';
+import {useState} from 'react';
+
+type LinkEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {target: { id: string}};
 
 function Film({films}: ScreenProps): JSX.Element {
   const {id} = useParams<FilmId>() ;
   const filmIndexInList = parseInt((id || '1'), 10) - 1;
+
+  const [isActive, setActive] = useState({
+    overview: true,
+    details: false,
+    reviews: false
+  });
+  const linkClickHandler = (evt: LinkEvent) => setActive({
+    overview: false,
+    details: false,
+    reviews: false,
+    [evt.target.id]: true
+  });
 
   const {
     name,
@@ -16,11 +30,6 @@ function Film({films}: ScreenProps): JSX.Element {
     released,
     posterImage,
     backgroundImage,
-    rating,
-    scoresCount,
-    director,
-    starring,
-    description,
   } = films[filmIndexInList];
 
   return (
@@ -78,25 +87,19 @@ function Film({films}: ScreenProps): JSX.Element {
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <Link to={`${AppRoute.Film}/${id}`} className="film-nav__link">Overview</Link>
+                  <li className={`film-nav__item ${isActive.overview ? 'film-nav__item--active' : ''}`}>
+                    <Link to={`${AppRoute.Film}/${id}`} className="film-nav__link" id="overview" onClick={linkClickHandler}>Overview</Link>
                   </li>
-                  <li className="film-nav__item">
-                    <Link to={`${AppRoute.Film}/${id}`} className="film-nav__link">Details</Link>
+                  <li className={`film-nav__item ${isActive.details ? 'film-nav__item--active' : ''}`}>
+                    <Link to={`${AppRoute.Film}/${id}/details`} className="film-nav__link" id="details" onClick={linkClickHandler}>Details</Link>
                   </li>
-                  <li className="film-nav__item">
-                    <Link to={`${AppRoute.Film}/${id}`} className="film-nav__link">Reviews</Link>
+                  <li className={`film-nav__item ${isActive.reviews ? 'film-nav__item--active' : ''}`}>
+                    <Link to={`${AppRoute.Film}/${id}/reviews`} className="film-nav__link" id="reviews" onClick={linkClickHandler}>Reviews</Link>
                   </li>
                 </ul>
               </nav>
 
-              <FilmInfo
-                rating={rating}
-                scoresCount={scoresCount}
-                director={director}
-                starring={starring}
-                description={description}
-              />
+              <Outlet />
             </div>
           </div>
         </div>
