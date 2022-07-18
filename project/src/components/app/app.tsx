@@ -9,7 +9,7 @@ import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
-import Films from '../../types/films';
+import {Films} from '../../types/films';
 
 type AppProps = {
   films: Films

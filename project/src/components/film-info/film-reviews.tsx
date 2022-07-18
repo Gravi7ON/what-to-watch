@@ -22,24 +22,20 @@ function FilmReviews(props: CommentProps): JSX.Element {
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
-        {
-          <FilmComment
-            comment={comment}
-            date={date}
-            rating={rating}
-            user={user}
-          />
-        }
+        <FilmComment
+          comment={comment}
+          date={date}
+          rating={rating}
+          user={user}
+        />
       </div>
       <div className="film-card__reviews-col">
-        {
-          <FilmComment
-            comment={comment}
-            date={date}
-            rating={rating}
-            user={user}
-          />
-        }
+        <FilmComment
+          comment={comment}
+          date={date}
+          rating={rating}
+          user={user}
+        />
       </div>
     </div>
   );

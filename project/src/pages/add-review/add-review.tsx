@@ -2,20 +2,12 @@ import {AppRoute} from '../../const';
 import {Link, useParams} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
-import Films from '../../types/films';
+import {ScreenProps, FilmId} from '../../types/films';
 import UserCommentForm from '../../components/user-comment-form/user-comment-form';
 
-type AddReviewProps = {
-  films: Films
-}
-
-type FilmId = {
-  id: string
-}
-
-function AddReview({films}: AddReviewProps): JSX.Element {
-  const {id} = useParams() as FilmId ;
-  const filmIndexInList = parseInt(id, 10) - 1;
+function AddReview({films}: ScreenProps): JSX.Element {
+  const {id} = useParams<FilmId>();
+  const filmIndexInList = parseInt((id || '1'), 10) - 1;
 
   const {name, backgroundImage, posterImage} = films[filmIndexInList];
 
@@ -29,7 +21,7 @@ function AddReview({films}: AddReviewProps): JSX.Element {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header">
-          {<Logo path={AppRoute.Main} />}
+          <Logo path={AppRoute.Main} />
 
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
@@ -43,7 +35,7 @@ function AddReview({films}: AddReviewProps): JSX.Element {
           </nav>
 
           <ul className="user-block">
-            {<UserLogo path={AppRoute.Main} />}
+            <UserLogo path={AppRoute.Main} />
           </ul>
         </header>
 
@@ -53,7 +45,7 @@ function AddReview({films}: AddReviewProps): JSX.Element {
       </div>
 
       <div className="add-review">
-        {<UserCommentForm />}
+        <UserCommentForm />
       </div>
 
     </section>

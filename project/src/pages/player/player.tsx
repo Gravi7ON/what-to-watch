@@ -1,17 +1,9 @@
 import {useParams} from 'react-router-dom';
-import Films from '../../types/films';
+import {ScreenProps, FilmId} from '../../types/films';
 
-type PlayerProps = {
-  films: Films
-}
-
-type FilmId = {
-  id: string
-}
-
-function Player({films}: PlayerProps): JSX.Element {
-  const {id} = useParams() as FilmId ;
-  const filmIndexInList: number = parseInt(id, 10) - 1;
+function Player({films}: ScreenProps): JSX.Element {
+  const {id} = useParams<FilmId>() ;
+  const filmIndexInList: number = parseInt((id || '1'), 10) - 1;
 
   const {videoLink, runTime, backgroundImage} = films[filmIndexInList];
 

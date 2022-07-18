@@ -1,14 +1,10 @@
 import {AppRoute, LOGO_CLASS_NAME, AMOUNT_FILMS_PER_STEP} from '../../const';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
-import Films from '../../types/films';
+import {ScreenProps} from '../../types/films';
 import FilmsList from '../../components/films-list/films-list';
 
-type MainProps = {
-  films: Films
-}
-
-function MainPage({films}: MainProps): JSX.Element {
+function MainPage({films}: ScreenProps): JSX.Element {
   const {
     name,
     genre,
@@ -27,10 +23,10 @@ function MainPage({films}: MainProps): JSX.Element {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header film-card__head">
-          {<Logo path={AppRoute.Main} />}
+          <Logo path={AppRoute.Main} />
 
           <ul className="user-block">
-            {<UserLogo path={AppRoute.Main} />}
+            <UserLogo path={AppRoute.Main} />
           </ul>
         </header>
 
@@ -104,14 +100,14 @@ function MainPage({films}: MainProps): JSX.Element {
             </li>
           </ul>
 
-          {<FilmsList films={films} amountFilms={AMOUNT_FILMS_PER_STEP} />}
+          <FilmsList films={films} amountFilms={AMOUNT_FILMS_PER_STEP} />
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
           </div>
         </section>
 
         <footer className="page-footer">
-          {<Logo path={AppRoute.Main} classTitle={LOGO_CLASS_NAME} />}
+          <Logo path={AppRoute.Main} classTitle={LOGO_CLASS_NAME} />
         </footer>
       </div>
     </>

@@ -1,5 +1,5 @@
 import FilmCard from '../../components/film-card/film-card';
-import Films from '../../types/films';
+import {Films} from '../../types/films';
 import {AMOUNT_FILMS_PER_STEP} from '../../const';
 import {useState} from 'react';
 

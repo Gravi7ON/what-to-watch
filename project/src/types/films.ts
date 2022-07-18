@@ -18,6 +18,14 @@ type Film = {
   previewVideoLink: string;
 }
 
+type FilmId = {
+  id: string
+}
+
 type Films = Film[]
 
-export default Films;
+type ScreenProps = {
+  films: Films
+}
+
+export type {ScreenProps, Films, FilmId};

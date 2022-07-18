@@ -3,20 +3,12 @@ import {AppRoute, LOGO_CLASS_NAME, AMOUNT_SIMILAR_FILMS} from '../../const';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
 import FilmInfo from '../../components/film-info/film-info';
-import Films from '../../types/films';
+import {ScreenProps, FilmId} from '../../types/films';
 import FilmsList from '../../components/films-list/films-list';
 
-type FilmProps = {
-  films: Films
-}
-
-type FilmId = {
-  id: string
-}
-
-function Film({films}: FilmProps): JSX.Element {
-  const {id} = useParams() as FilmId ;
-  const filmIndexInList = parseInt(id, 10) - 1;
+function Film({films}: ScreenProps): JSX.Element {
+  const {id} = useParams<FilmId>() ;
+  const filmIndexInList = parseInt((id || '1'), 10) - 1;
 
   const {
     name,
@@ -42,10 +34,10 @@ function Film({films}: FilmProps): JSX.Element {
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header film-card__head">
-            {<Logo path={AppRoute.Main} />}
+            <Logo path={AppRoute.Main} />
 
             <ul className="user-block">
-              {<UserLogo path={AppRoute.Main} />}
+              <UserLogo path={AppRoute.Main} />
             </ul>
           </header>
 
@@ -98,15 +90,13 @@ function Film({films}: FilmProps): JSX.Element {
                 </ul>
               </nav>
 
-              {
-                <FilmInfo
-                  rating={rating}
-                  scoresCount={scoresCount}
-                  director={director}
-                  starring={starring}
-                  description={description}
-                />
-              }
+              <FilmInfo
+                rating={rating}
+                scoresCount={scoresCount}
+                director={director}
+                starring={starring}
+                description={description}
+              />
             </div>
           </div>
         </div>
@@ -116,11 +106,11 @@ function Film({films}: FilmProps): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          {<FilmsList films={films} amountFilms={AMOUNT_SIMILAR_FILMS} />}
+          <FilmsList films={films} amountFilms={AMOUNT_SIMILAR_FILMS} />
         </section>
 
         <footer className="page-footer">
-          {<Logo path={AppRoute.Main} classTitle={LOGO_CLASS_NAME} />}
+          <Logo path={AppRoute.Main} classTitle={LOGO_CLASS_NAME} />
         </footer>
       </div>
     </>

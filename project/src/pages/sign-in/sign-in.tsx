@@ -5,7 +5,7 @@ function SignIn(): JSX.Element {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
-        {<Logo path={AppRoute.Main} />}
+        <Logo path={AppRoute.Main} />
 
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
@@ -29,7 +29,7 @@ function SignIn(): JSX.Element {
       </div>
 
       <footer className="page-footer">
-        {<Logo path={AppRoute.Main} classTitle={LOGO_CLASS_NAME} />}
+        <Logo path={AppRoute.Main} classTitle={LOGO_CLASS_NAME} />
       </footer>
     </div>
   );
