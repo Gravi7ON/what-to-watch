@@ -1,36 +1,17 @@
 import {AppRoute, LOGO_CLASS_NAME, AMOUNT_FILMS_PER_STEP} from '../../const';
-import FilmCard from '../../components/film-card/film-card';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
+import {ScreenProps} from '../../types/films';
+import FilmsList from '../../components/films-list/films-list';
 
-type FilmList = {
-  name: string;
-  previewImage: string;
-  genre: string;
-  released: number;
-  posterImage: string;
-  backgroundImage: string;
-};
-
-function MainPage(props: FilmList): JSX.Element {
+function MainPage({films}: ScreenProps): JSX.Element {
   const {
     name,
-    previewImage,
     genre,
     released,
     posterImage,
     backgroundImage
-  } = props;
-
-  const getFilmsCards = (): JSX.Element[] => {
-    const filmsCards: JSX.Element[] = [];
-
-    for (let i = 0; i < AMOUNT_FILMS_PER_STEP; i++) {
-      filmsCards.push(<FilmCard name={name} previewImage={previewImage} />);
-    }
-
-    return filmsCards;
-  };
+  } = films[0];
 
   return (
     <>
@@ -42,10 +23,10 @@ function MainPage(props: FilmList): JSX.Element {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header film-card__head">
-          {<Logo path={AppRoute.Main} />}
+          <Logo path={AppRoute.Main} />
 
           <ul className="user-block">
-            {<UserLogo path={AppRoute.Main} />}
+            <UserLogo path={AppRoute.Main} />
           </ul>
         </header>
 
@@ -119,17 +100,14 @@ function MainPage(props: FilmList): JSX.Element {
             </li>
           </ul>
 
-          <div className="catalog__films-list">
-            {getFilmsCards()}
-          </div>
-
+          <FilmsList films={films} amountFilms={AMOUNT_FILMS_PER_STEP} />
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
           </div>
         </section>
 
         <footer className="page-footer">
-          {<Logo path={AppRoute.Main} classTitle={LOGO_CLASS_NAME} />}
+          <Logo path={AppRoute.Main} classTitle={LOGO_CLASS_NAME} />
         </footer>
       </div>
     </>

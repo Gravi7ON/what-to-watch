@@ -1,65 +1,36 @@
-import {Link} from 'react-router-dom';
-import {AppRoute, LOGO_CLASS_NAME, AMOUNT_SIMILAR_FILMS, TextFormRating} from '../../const';
-import FilmCard from '../../components/film-card/film-card';
+import {Link, Outlet, useParams} from 'react-router-dom';
+import {AppRoute, LOGO_CLASS_NAME, AMOUNT_SIMILAR_FILMS} from '../../const';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
+import {ScreenProps, FilmId} from '../../types/films';
+import FilmsList from '../../components/films-list/films-list';
+import {useState} from 'react';
 
-type FilmList = {
-  name: string;
-  previewImage: string;
-  genre: string;
-  released: number;
-  posterImage: string;
-  backgroundImage: string;
-  rating: number;
-  scoresCount:number;
-  director: string;
-  starring: string[];
-  description: string;
-};
+type LinkEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {target: { id: string}};
 
-function Film(props: FilmList): JSX.Element {
+function Film({films}: ScreenProps): JSX.Element {
+  const {id} = useParams<FilmId>() ;
+  const filmIndexInList = parseInt((id || '1'), 10) - 1;
+
+  const [isActive, setActive] = useState({
+    overview: true,
+    details: false,
+    reviews: false
+  });
+  const linkClickHandler = (evt: LinkEvent) => setActive({
+    overview: false,
+    details: false,
+    reviews: false,
+    [evt.target.id]: true
+  });
+
   const {
     name,
-    previewImage,
     genre,
     released,
     posterImage,
     backgroundImage,
-    rating,
-    scoresCount,
-    director,
-    starring,
-    description
-  } = props;
-
-  const getTextFormRating = (estimate: number): string => {
-    const ratingConfig = [
-      TextFormRating.Bad,
-      TextFormRating.Bad,
-      TextFormRating.Bad,
-      TextFormRating.Normal,
-      TextFormRating.Normal,
-      TextFormRating.Good,
-      TextFormRating.Good,
-      TextFormRating.Good,
-      TextFormRating.VeryGood,
-      TextFormRating.VeryGood,
-      TextFormRating.Awesome
-    ];
-
-    return ratingConfig[Math.floor(estimate)];
-  };
-
-  const getFilmsCards = (): JSX.Element[] => {
-    const filmsCards: JSX.Element[] = [];
-
-    for (let i = 0; i < AMOUNT_SIMILAR_FILMS; i++) {
-      filmsCards.push(<FilmCard name={name} previewImage={previewImage} />);
-    }
-
-    return filmsCards;
-  };
+  } = films[filmIndexInList];
 
   return (
     <>
@@ -72,10 +43,10 @@ function Film(props: FilmList): JSX.Element {
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header film-card__head">
-            {<Logo path={AppRoute.Main} />}
+            <Logo path={AppRoute.Main} />
 
             <ul className="user-block">
-              {<UserLogo path={AppRoute.Main} />}
+              <UserLogo path={AppRoute.Main} />
             </ul>
           </header>
 
@@ -101,7 +72,7 @@ function Film(props: FilmList): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <Link to={AppRoute.AddReview} className="btn film-card__button">Add review</Link>
+                <Link to={`${AppRoute.Film}/${id}/review`} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -116,33 +87,19 @@ function Film(props: FilmList): JSX.Element {
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <Link to={AppRoute.Film} className="film-nav__link">Overview</Link>
+                  <li className={`film-nav__item ${isActive.overview ? 'film-nav__item--active' : ''}`}>
+                    <Link to={`${AppRoute.Film}/${id}`} className="film-nav__link" id="overview" onClick={linkClickHandler}>Overview</Link>
                   </li>
-                  <li className="film-nav__item">
-                    <a href="_" className="film-nav__link">Details</a>
+                  <li className={`film-nav__item ${isActive.details ? 'film-nav__item--active' : ''}`}>
+                    <Link to={`${AppRoute.Film}/${id}/details`} className="film-nav__link" id="details" onClick={linkClickHandler}>Details</Link>
                   </li>
-                  <li className="film-nav__item">
-                    <a href="_" className="film-nav__link">Reviews</a>
+                  <li className={`film-nav__item ${isActive.reviews ? 'film-nav__item--active' : ''}`}>
+                    <Link to={`${AppRoute.Film}/${id}/reviews`} className="film-nav__link" id="reviews" onClick={linkClickHandler}>Reviews</Link>
                   </li>
                 </ul>
               </nav>
 
-              <div className="film-rating">
-                <div className="film-rating__score">{rating.toFixed(1)}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">{getTextFormRating(rating)}</span>
-                  <span className="film-rating__count">{scoresCount} ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{description}</p>
-
-                <p className="film-card__director"><strong>Director: {director}</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: {starring.join(', ')} and other</strong></p>
-              </div>
+              <Outlet />
             </div>
           </div>
         </div>
@@ -152,13 +109,11 @@ function Film(props: FilmList): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <div className="catalog__films-list">
-            {getFilmsCards()}
-          </div>
+          <FilmsList films={films} amountFilms={AMOUNT_SIMILAR_FILMS} />
         </section>
 
         <footer className="page-footer">
-          {<Logo path={AppRoute.Main} classTitle={LOGO_CLASS_NAME} />}
+          <Logo path={AppRoute.Main} classTitle={LOGO_CLASS_NAME} />
         </footer>
       </div>
     </>

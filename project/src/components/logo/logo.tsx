@@ -1,11 +1,11 @@
 import {Link} from 'react-router-dom';
 
-type RouteLogo = {
+type RouteLogoProps = {
   path: string;
   classTitle?: string;
 }
 
-function Logo({path, classTitle}: RouteLogo): JSX.Element {
+function Logo({path, classTitle}: RouteLogoProps): JSX.Element {
   if (classTitle) {
     return (
       <>

@@ -9,36 +9,18 @@ import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
+import {Films} from '../../types/films';
+import FilmInfo from '../film-info/film-info';
+import FilmDetails from '../film-info/film-detais';
+import FilmReviews from '../film-info/film-reviews';
+import Comments from '../../types/comments';
 
-type FilmList = {
-  name: string;
-  previewImage: string;
-  genre: string;
-  released: number;
-  posterImage: string;
-  backgroundImage: string;
-  rating: number;
-  scoresCount: number;
-  director: string;
-  starring: string[];
-  description: string;
-};
+type AppProps = {
+  films: Films
+  comments: Comments
+}
 
-function App(props: FilmList): JSX.Element {
-  const {
-    name,
-    previewImage,
-    genre,
-    released,
-    posterImage,
-    backgroundImage,
-    rating,
-    scoresCount,
-    director,
-    starring,
-    description
-  } = props;
-
+function App({films, comments}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -46,14 +28,7 @@ function App(props: FilmList): JSX.Element {
         <Route
           path={AppRoute.Main}
           element={
-            <MainPage
-              name={name}
-              previewImage={previewImage}
-              genre={genre}
-              released={released}
-              posterImage={posterImage}
-              backgroundImage={backgroundImage}
-            />
+            <MainPage films={films} />
           }
         />
         <Route
@@ -64,43 +39,46 @@ function App(props: FilmList): JSX.Element {
           path={AppRoute.MyList}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <MyList
-                name={props.name}
-                previewImage={props.previewImage}
-              />
+              <MyList films={films} />
             </PrivateRoute>
           }
         />
-        <Route
-          path={AppRoute.Film}
-          element={
-            <Film
-              name={name}
-              previewImage={previewImage}
-              genre={genre}
-              released={released}
-              posterImage={posterImage}
-              backgroundImage={backgroundImage}
-              rating={rating}
-              scoresCount={scoresCount}
-              director={director}
-              starring={starring}
-              description={description}
+        <Route path={AppRoute.Film}>
+          <Route
+            path=':id'
+            element={
+              <Film films={films} />
+            }
+          >
+            <Route
+              index
+              element={
+                <FilmInfo films={films} />
+              }
             />
-          }
-        />
+            <Route
+              path='details'
+              element={
+                <FilmDetails films={films} />
+              }
+            />
+            <Route
+              path='reviews'
+              element={
+                <FilmReviews comments={comments} />
+              }
+            />
+          </Route>
+        </Route>
         <Route
           path={AppRoute.AddReview}
           element={
-            <AddReview
-              name={props.name}
-              posterImage={props.posterImage}
-            />
+            <AddReview films={films} />
           }
         />
         <Route
           path={AppRoute.Player}
-          element={<Player />}
+          element={<Player films={films} />}
         />
         <Route
           path="*"
