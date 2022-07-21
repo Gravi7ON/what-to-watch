@@ -18,21 +18,9 @@ function FilmDetails({films}: ScreenProps): JSX.Element {
   const durationHours: number = Math.floor(runTime / HOUR_IN_MINUTES);
   const durationMunutes: number = runTime - HOUR_IN_MINUTES * durationHours;
 
-  const getActors = (): JSX.Element[] => {
-    const actors: JSX.Element[] = [];
-
-    for (let i = 0; i < starring.length - 1; i++) {
-      actors.push(
-        (<Fragment key={i.toString()}>{`${starring[i]},`} <br /></Fragment>)
-      );
-    }
-
-    actors.push(
-      (<Fragment key={starring.length.toString()}>{starring[starring.length - 1]}</Fragment>)
-    );
-
-    return actors;
-  };
+  const getActors = (): JSX.Element[] => starring.map((actor, index) => (
+    <Fragment key={index++}>{`${actor}${index === starring.length - 1 ? '' : ','}`}<br /></Fragment>
+  ));
 
   return (
     <div className="film-card__text film-card__row">
