@@ -20,7 +20,7 @@ function MyList({films}: ScreenProps): JSX.Element {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          <FilmsList films={films} />
+          <FilmsList films={films} amountFilms={films.length}/>
         </div>
       </section>
 

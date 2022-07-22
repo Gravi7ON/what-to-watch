@@ -1,3 +1,5 @@
+import Comments from '../types/comments';
+
 type Film = {
   name: string;
   posterImage: string;
@@ -19,13 +21,22 @@ type Film = {
 }
 
 type FilmId = {
-  id: string
+  id: string;
 }
 
 type Films = Film[]
 
 type ScreenProps = {
-  films: Films
+  films: Films;
 }
 
-export type {ScreenProps, Films, FilmId};
+type FilmsCommentsProps = {
+  films: Films
+  comments: Comments;
+}
+
+type FilmTabProps = {
+  film: Film;
+}
+
+export type {ScreenProps, Film, Films, FilmId, FilmTabProps, FilmsCommentsProps};

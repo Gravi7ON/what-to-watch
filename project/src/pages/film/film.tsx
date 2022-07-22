@@ -1,28 +1,17 @@
-import {Link, Outlet, useParams} from 'react-router-dom';
-import {AppRoute, LOGO_CLASS_NAME, AMOUNT_SIMILAR_FILMS} from '../../const';
+import {Link, useParams} from 'react-router-dom';
+import {AppRoute, LOGO_CLASS_NAME} from '../../const';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
-import {ScreenProps, FilmId} from '../../types/films';
+import {FilmsCommentsProps, FilmId} from '../../types/films';
 import FilmsList from '../../components/films-list/films-list';
-import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import Tabs from '../../components/tabs/tabs';
 
-type LinkEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {target: { id: string}};
+function Film({films, comments}: FilmsCommentsProps): JSX.Element {
+  const navigate = useNavigate();
 
-function Film({films}: ScreenProps): JSX.Element {
   const {id} = useParams<FilmId>() ;
-  const filmIndexInList = parseInt((id || '1'), 10) - 1;
-
-  const [isActive, setActive] = useState({
-    overview: true,
-    details: false,
-    reviews: false
-  });
-  const linkClickHandler = (evt: LinkEvent) => setActive({
-    overview: false,
-    details: false,
-    reviews: false,
-    [evt.target.id]: true
-  });
+  const filmIndexInList = Number(id) - 1;
 
   const {
     name,
@@ -65,12 +54,12 @@ function Film({films}: ScreenProps): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
+                <button className="btn btn--list film-card__button" type="button" onClick={() => navigate(AppRoute.MyList)}>
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">9</span>
+                  <span className="film-card__count">{films.length}</span>
                 </button>
                 <Link to={`${AppRoute.Film}/${id}/review`} className="btn film-card__button">Add review</Link>
               </div>
@@ -85,21 +74,7 @@ function Film({films}: ScreenProps): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className={`film-nav__item ${isActive.overview ? 'film-nav__item--active' : ''}`}>
-                    <Link to={`${AppRoute.Film}/${id}`} className="film-nav__link" id="overview" onClick={linkClickHandler}>Overview</Link>
-                  </li>
-                  <li className={`film-nav__item ${isActive.details ? 'film-nav__item--active' : ''}`}>
-                    <Link to={`${AppRoute.Film}/${id}/details`} className="film-nav__link" id="details" onClick={linkClickHandler}>Details</Link>
-                  </li>
-                  <li className={`film-nav__item ${isActive.reviews ? 'film-nav__item--active' : ''}`}>
-                    <Link to={`${AppRoute.Film}/${id}/reviews`} className="film-nav__link" id="reviews" onClick={linkClickHandler}>Reviews</Link>
-                  </li>
-                </ul>
-              </nav>
-
-              <Outlet />
+              <Tabs comments={comments} currentFilm={films[filmIndexInList]} />
             </div>
           </div>
         </div>
@@ -109,7 +84,7 @@ function Film({films}: ScreenProps): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmsList films={films} amountFilms={AMOUNT_SIMILAR_FILMS} />
+          <FilmsList moreLikeThis currentFilmId={id} films={films} />
         </section>
 
         <footer className="page-footer">

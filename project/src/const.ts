@@ -21,7 +21,7 @@ enum TextFormRating {
   Awesome = 'Awesome'
 }
 
-const AMOUNT_SIMILAR_FILMS = 4;
+const MAX_SHOW_SIMILAR_FILMS = 4;
 
 const LOGO_CLASS_NAME = 'logo__link--light';
 
@@ -38,7 +38,7 @@ export {
   LOGO_CLASS_NAME,
   AuthorizationStatus,
   RATING_STARS_COUNT,
-  AMOUNT_SIMILAR_FILMS,
+  MAX_SHOW_SIMILAR_FILMS,
   TextFormRating,
   AMOUNT_FILMS_PER_STEP,
   HOUR_IN_MINUTES,

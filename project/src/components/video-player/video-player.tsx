@@ -18,7 +18,7 @@ function VideoPlayer({previewImage, previewVideoLink}: VideoPlayerProps): JSX.El
     return () => clearTimeout(timeoutId);
   });
 
-  return <video ref={videoRef} height="175" width="280" src={previewVideoLink} muted loop poster={previewImage}/>;
+  return <video ref={videoRef} height="175" src={previewVideoLink} muted loop poster={previewImage}/>;
 }
 
 export default VideoPlayer;

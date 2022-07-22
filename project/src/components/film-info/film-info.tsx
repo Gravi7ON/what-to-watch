@@ -1,18 +1,14 @@
 import {TextFormRating} from '../../const';
-import {ScreenProps, FilmId} from '../../types/films';
-import {useParams} from 'react-router-dom';
+import {FilmTabProps} from '../../types/films';
 
-function FilmInfo({films}: ScreenProps): JSX.Element {
-  const {id} = useParams<FilmId>() ;
-  const filmIndexInList = parseInt((id || '1'), 10) - 1;
-
+function FilmInfo({film}: FilmTabProps): JSX.Element {
   const {
     rating,
     scoresCount,
     director,
     starring,
     description,
-  } = films[filmIndexInList];
+  } = film;
 
   const getTextFormRating = (estimate: number): string => {
     const ratingConfig = [

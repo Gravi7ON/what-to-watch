@@ -1,6 +1,6 @@
 import FilmComment from './film-comment';
-// import {FilmId} from '../../types/films';
-// import {useParams} from 'react-router-dom';
+import {FilmId} from '../../types/films';
+import {useParams} from 'react-router-dom';
 import Comments from '../../types/comments';
 
 type CommentsProps = {
@@ -8,33 +8,45 @@ type CommentsProps = {
 }
 
 function FilmReviews({comments}: CommentsProps): JSX.Element {
-  // const {id} = useParams<FilmId>() ;
-  // const filmIndexInList = parseInt((id || '1'), 10) - 1;
+  const {id} = useParams<FilmId>() ;
+  const idToNumber = Number(id);
 
-  const {
-    comment,
-    date,
-    rating,
-    user
-  } = comments[0];
+  const commentsByFilm = comments.filter((comment) => comment.id === idToNumber);
+
+  if (commentsByFilm.length === 0) {
+    return <> </>;
+  }
+
+  const firsCommentsColumn = commentsByFilm.slice(0, Math.ceil(commentsByFilm.length / 2));
+  const secondCommentsColumn = commentsByFilm.slice(Math.ceil(commentsByFilm.length / 2));
 
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
-        <FilmComment
-          comment={comment}
-          date={date}
-          rating={rating}
-          user={user}
-        />
+        {
+          firsCommentsColumn.map((comment, index) => (
+            <FilmComment
+              key={index++}
+              comment={comment.comment}
+              date={comment.date}
+              rating={comment.rating}
+              user={comment.user}
+            />
+          ))
+        }
       </div>
       <div className="film-card__reviews-col">
-        <FilmComment
-          comment={comment}
-          date={date}
-          rating={rating}
-          user={user}
-        />
+        {
+          secondCommentsColumn.map((comment, index) => (
+            <FilmComment
+              key={index--}
+              comment={comment.comment}
+              date={comment.date}
+              rating={comment.rating}
+              user={comment.user}
+            />
+          ))
+        }
       </div>
     </div>
   );
