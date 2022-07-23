@@ -27,10 +27,7 @@ function FilmReviews({comments}: CommentsProps): JSX.Element {
           firsCommentsColumn.map((comment, index) => (
             <FilmComment
               key={index++}
-              comment={comment.comment}
-              date={comment.date}
-              rating={comment.rating}
-              user={comment.user}
+              {...comment}
             />
           ))
         }
@@ -40,10 +37,7 @@ function FilmReviews({comments}: CommentsProps): JSX.Element {
           secondCommentsColumn.map((comment, index) => (
             <FilmComment
               key={index--}
-              comment={comment.comment}
-              date={comment.date}
-              rating={comment.rating}
-              user={comment.user}
+              {...comment}
             />
           ))
         }

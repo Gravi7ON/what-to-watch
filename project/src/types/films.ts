@@ -39,4 +39,6 @@ type FilmTabProps = {
   film: Film;
 }
 
-export type {ScreenProps, Film, Films, FilmId, FilmTabProps, FilmsCommentsProps};
+type TabEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {target: {tagName: string; textContent: string}}
+
+export type {ScreenProps, Film, Films, FilmId, FilmTabProps, FilmsCommentsProps, TabEvent};

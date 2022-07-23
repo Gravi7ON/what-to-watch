@@ -25,10 +25,7 @@ function FilmsList({films, amountFilms, moreLikeThis, currentFilmId}: FilmListPr
       return similarFilms.map((film) => (
         <FilmCard
           key={film.id}
-          name={film.name}
-          previewImage={film.previewImage}
-          id={film.id}
-          previewVideoLink={film.previewVideoLink}
+          {...film}
         />
       ));
     }
