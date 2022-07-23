@@ -14,6 +14,12 @@ type TabsProps = {
 function Tabs({comments, currentFilm}: TabsProps): JSX.Element {
   const [activeTab, setActiveTab] = useState('Overview');
 
+  const tabs = new Map([
+    ['Overview', <FilmInfo key={0} film={currentFilm} />],
+    ['Details', <Details key={1} film={currentFilm} />],
+    ['Reviews', <Reviews key={2} comments={comments} />]
+  ]);
+
   const handleTabClick = (evt: TabEvent) => {
     if (evt.target.tagName === 'A') {
       evt.preventDefault();
@@ -21,22 +27,12 @@ function Tabs({comments, currentFilm}: TabsProps): JSX.Element {
     }
   };
 
-  const getActiveTabComponent = (tabTitle: string): JSX.Element | undefined => {
-    const tabs = new Map([
-      ['Overview', <FilmInfo key={0} film={currentFilm} />],
-      ['Details', <Details key={1} film={currentFilm} />],
-      ['Reviews', <Reviews key={2} comments={comments} />]
-    ]);
-
-    return tabs.get(tabTitle);
-  };
-
   return (
     <>
       <nav className="film-nav film-card__nav">
-        <TabBar activeTab={activeTab} onTabClick={handleTabClick} />
+        <TabBar activeTab={activeTab} onTabClick={handleTabClick} titleTabs={Array.from(tabs.keys())} />
       </nav>
-      {getActiveTabComponent(activeTab)}
+      {tabs.get(activeTab)}
     </>
   );
 }
