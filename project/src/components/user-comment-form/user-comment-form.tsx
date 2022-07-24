@@ -1,7 +1,7 @@
 import {RATING_STARS_COUNT} from '../../const';
 import {Fragment, useState} from 'react';
 
-type inputEvent = React.FormEvent<HTMLFormElement> & {target: {value: number, tagName: string}};
+type inputEvent = React.FormEvent<HTMLFormElement> & {target: {value: number; tagName: string}};
 type textAreaEvent = {target: {value: string}}
 
 function UserCommentForm(): JSX.Element {
@@ -9,11 +9,11 @@ function UserCommentForm(): JSX.Element {
   const userEstimate = useState(0);
   const setEstimate = userEstimate[1];
 
-  const fieldChangeHandler = (evt: textAreaEvent) => {
+  const handleFieldChange = (evt: textAreaEvent) => {
     setComment(evt.target.value);
   };
 
-  const inputChangeHandler = (evt: inputEvent) => {
+  const handleInputChange = (evt: inputEvent) => {
     if (evt.target.tagName === 'INPUT') {
       setEstimate(evt.target.value);
     }
@@ -29,7 +29,7 @@ function UserCommentForm(): JSX.Element {
     ));
 
   return (
-    <form action="#" className="add-review__form" onChange={inputChangeHandler}>
+    <form action="#" className="add-review__form" onChange={handleInputChange}>
       <div className="rating">
         <div className="rating__stars">
           {ratingStars}
@@ -37,7 +37,7 @@ function UserCommentForm(): JSX.Element {
       </div>
 
       <div className="add-review__text">
-        <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={userComment} onChange={fieldChangeHandler}></textarea>
+        <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={userComment} onChange={handleFieldChange}></textarea>
         <div className="add-review__submit">
           <button className="add-review__btn" type="submit">Post</button>
         </div>

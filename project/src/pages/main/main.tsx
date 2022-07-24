@@ -3,8 +3,11 @@ import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
 import {ScreenProps} from '../../types/films';
 import FilmsList from '../../components/films-list/films-list';
+import {useNavigate} from 'react-router-dom';
 
 function MainPage({films}: ScreenProps): JSX.Element {
+  const navigate = useNavigate();
+
   const {
     name,
     genre,
@@ -50,12 +53,12 @@ function MainPage({films}: ScreenProps): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button">
+                <button className="btn btn--list film-card__button" type="button" onClick={() => navigate(AppRoute.MyList)}>
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">9</span>
+                  <span className="film-card__count">{films.length}</span>
                 </button>
               </div>
             </div>
