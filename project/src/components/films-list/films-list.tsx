@@ -31,6 +31,10 @@ function FilmsList({films, amountFilms, moreLikeThis, currentFilmId}: FilmListPr
     }
 
     for (let i = 0; i < (amountFilms || AMOUNT_FILMS_PER_STEP); i++) {
+      if (i === films.length){
+        break;
+      }
+
       filmsCards.push(
         <FilmCard
           key={films[i].id}

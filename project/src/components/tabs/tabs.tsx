@@ -21,10 +21,8 @@ function Tabs({comments, currentFilm}: TabsProps): JSX.Element {
   ]);
 
   const handleTabClick = (evt: TabEvent) => {
-    if (evt.target.tagName === 'A') {
-      evt.preventDefault();
-      setActiveTab(evt.target.textContent);
-    }
+    evt.preventDefault();
+    setActiveTab(evt.target.textContent);
   };
 
   return (
