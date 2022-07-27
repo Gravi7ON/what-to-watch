@@ -9,7 +9,7 @@ type FilmListProps = {
   currentFilmId?: string;
 }
 
-function FilmsList({films, amountFilms, moreLikeThis, currentFilmId}: FilmListProps): JSX.Element {
+function FilmsList({films, amountFilms = AMOUNT_FILMS_PER_STEP, moreLikeThis, currentFilmId}: FilmListProps): JSX.Element {
   const getFilmsCards = (): JSX.Element[] => {
     const filmsCards: JSX.Element[] = [];
 
@@ -30,7 +30,7 @@ function FilmsList({films, amountFilms, moreLikeThis, currentFilmId}: FilmListPr
       ));
     }
 
-    for (let i = 0; i < (amountFilms || AMOUNT_FILMS_PER_STEP); i++) {
+    for (let i = 0; i < amountFilms && i !== films.length; i++) {
       filmsCards.push(
         <FilmCard
           key={films[i].id}
