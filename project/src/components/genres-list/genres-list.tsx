@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom';
 import {ScreenProps} from '../../types/films';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
 import {changeGenre, receiveFilmsByGenre} from '../../store/action';
+import {ALL_GENRES} from '../../const';
 
 type EventGenreClick = {preventDefault: () => void; target: {textContent: string}} & React.MouseEvent<HTMLAnchorElement, MouseEvent>
 
@@ -21,13 +22,20 @@ function GenresList({films}: ScreenProps) {
   return (
     <ul className="catalog__genres-list">
       {uniqueGenres.map((filmGenre, index) => (
-        index === 0 ?
-          <li key={index++} className={genre === 'All genres' ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item'}>
-            <Link to="#" className="catalog__genres-link" onClick={handleGenreClick}>All genres</Link>
-          </li> :
-          <li key={index++} className={genre === filmGenre ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item'}>
-            <Link to="#" className="catalog__genres-link" onClick={handleGenreClick}>{filmGenre}</Link>
-          </li>
+        <li
+          key={index++}
+          className={(genre === ALL_GENRES && index === 0) || genre === filmGenre ?
+            'catalog__genres-item catalog__genres-item--active' :
+            'catalog__genres-item'}
+        >
+          <Link
+            to="#"
+            className="catalog__genres-link"
+            onClick={handleGenreClick}
+          >
+            {index === 0 ? ALL_GENRES : filmGenre}
+          </Link>
+        </li>
       ))}
     </ul>
   );
