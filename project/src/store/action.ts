@@ -6,5 +6,9 @@ const changeGenre = createAction('main/changeGenre', (value) => ({
 
 const receiveFilmsByGenre = createAction('main/receiveFilmsByGenre');
 
-export {changeGenre, receiveFilmsByGenre};
+const showMoreFilms = createAction('main/showMoreFilms', (value) => ({
+  payload: value
+}));
+
+export {changeGenre, receiveFilmsByGenre, showMoreFilms};
 

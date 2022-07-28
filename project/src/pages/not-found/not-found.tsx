@@ -1,12 +1,13 @@
 import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
+import './not-found.css';
 
 function NotFound(): JSX.Element {
   return (
     <div className="content_not-found">
       <div className="container_not-found">
         <svg className="vector_not-found" width="1123" height="837" viewBox="0 0 1123 837" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="1123" height="837" fill="#0d0101" />
+          <rect width="1123" fill="#0d0101" />
           <g id="sky">
             <rect id="background" x="30" y="26" width="1063" height="777" rx="20" fill="#0d0101" />
             <g id="stars_not-found">

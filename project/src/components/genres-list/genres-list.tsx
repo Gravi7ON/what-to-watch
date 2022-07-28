@@ -15,6 +15,10 @@ function GenresList({films}: ScreenProps) {
 
   const handleGenreClick = (evt: EventGenreClick) => {
     evt.preventDefault();
+
+    if (genre === evt.target.textContent) {
+      return;
+    }
     dispatch(changeGenre(evt.target.textContent));
     dispatch(receiveFilmsByGenre());
   };
