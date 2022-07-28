@@ -29,7 +29,7 @@ function App({films, comments}: FilmsCommentsProps): JSX.Element {
         <Route
           path={AppRoute.MyList}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
               <MyList films={films} />
             </PrivateRoute>
           }
@@ -45,7 +45,7 @@ function App({films, comments}: FilmsCommentsProps): JSX.Element {
         <Route
           path={AppRoute.AddReview}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
               <AddReview films={films} />
             </PrivateRoute>
           }
