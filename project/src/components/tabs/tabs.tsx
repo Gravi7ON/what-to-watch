@@ -1,4 +1,5 @@
-import {useState} from 'react';
+import {useAppSelector, useAppDispatch} from '../../hooks/index';
+import {setActiveFilmTab} from '../../store/action';
 import {Film, TabEvent} from '../../types/films';
 import Details from '../film-info/film-detais';
 import FilmInfo from '../film-info/film-info';
@@ -12,7 +13,8 @@ type TabsProps = {
 }
 
 function Tabs({comments, currentFilm}: TabsProps): JSX.Element {
-  const [activeTab, setActiveTab] = useState('Overview');
+  const {activeFilmTab} = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
 
   const tabs = new Map([
     ['Overview', <FilmInfo key={0} film={currentFilm} />],
@@ -22,15 +24,15 @@ function Tabs({comments, currentFilm}: TabsProps): JSX.Element {
 
   const handleTabClick = (evt: TabEvent) => {
     evt.preventDefault();
-    setActiveTab(evt.target.textContent);
+    dispatch(setActiveFilmTab(evt.target.textContent));
   };
 
   return (
     <>
       <nav className="film-nav film-card__nav">
-        <TabBar activeTab={activeTab} onTabClick={handleTabClick} titleTabs={Array.from(tabs.keys())} />
+        <TabBar activeTab={activeFilmTab} onTabClick={handleTabClick} titleTabs={Array.from(tabs.keys())} />
       </nav>
-      {tabs.get(activeTab)}
+      {tabs.get(activeFilmTab)}
     </>
   );
 }

@@ -6,12 +6,27 @@ import MainPage from '../../pages/main/main';
 import MyList from '../../pages/my-list/my-list';
 import NotFound from '../../pages/not-found/not-found';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import {AppRoute} from '../../const';
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
-import {FilmsCommentsProps} from '../../types/films';
+import LoadingScreen from '../../pages/loading/loading';
+import {useAppSelector} from '../../hooks';
+import {isCheckedAuth} from '../../movie-theater';
+import Comments from '../../types/comments';
 
-function App({films, comments}: FilmsCommentsProps): JSX.Element {
+type AppProps = {
+  comments: Comments
+}
+
+function App({comments}: AppProps): JSX.Element {
+  const {authorizationStatus, isDataLoaded, movies} = useAppSelector((state) => state);
+
+  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -19,7 +34,7 @@ function App({films, comments}: FilmsCommentsProps): JSX.Element {
         <Route
           path={AppRoute.Main}
           element={
-            <MainPage films={films} />
+            <MainPage films={movies} />
           }
         />
         <Route
@@ -29,8 +44,8 @@ function App({films, comments}: FilmsCommentsProps): JSX.Element {
         <Route
           path={AppRoute.MyList}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <MyList films={films} />
+            <PrivateRoute authorizationStatus={authorizationStatus}>
+              <MyList films={movies} />
             </PrivateRoute>
           }
         />
@@ -38,21 +53,21 @@ function App({films, comments}: FilmsCommentsProps): JSX.Element {
           <Route
             path=':id'
             element={
-              <Film films={films} comments={comments} />
+              <Film films={movies} comments={comments} />
             }
           />
         </Route>
         <Route
           path={AppRoute.AddReview}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <AddReview films={films} />
+            <PrivateRoute authorizationStatus={authorizationStatus}>
+              <AddReview films={movies} />
             </PrivateRoute>
           }
         />
         <Route
           path={AppRoute.Player}
-          element={<Player films={films} />}
+          element={<Player films={movies} />}
         />
         <Route
           path="*"
