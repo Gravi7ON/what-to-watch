@@ -1,12 +1,11 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
 import {getToken} from './token';
-import {StatusCodes} from 'http-status-codes';
 import {processErrorHandle} from './process-error-handle';
 
 const StatusCodeMapping: Record<number, boolean> = {
-  [StatusCodes.BAD_REQUEST]: true,
-  [StatusCodes.UNAUTHORIZED]: true,
-  [StatusCodes.NOT_FOUND]: true
+  400: true,
+  401: true,
+  404: true
 };
 
 const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];

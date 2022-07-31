@@ -29,6 +29,9 @@ function MainPage({films}: ScreenProps): JSX.Element {
     backgroundImage
   } = films[0];
 
+  const isLessThanStep = () => movies.length <= filmsPerStep || (genreTab !== ALL_GENRES && moviesByGenre.length <= filmsPerStep);
+  const getFilmsByTab = () => genreTab === ALL_GENRES ? movies : moviesByGenre;
+
   return (
     <>
       <section className="film-card">
@@ -100,13 +103,13 @@ function MainPage({films}: ScreenProps): JSX.Element {
 
           <GenresList films={movies} />
 
-          <FilmsList films={genreTab === ALL_GENRES ? movies : moviesByGenre} amountFilms={filmsPerStep} />
+          <FilmsList films={getFilmsByTab()} amountFilms={filmsPerStep} />
 
           {
-            movies.length <= filmsPerStep || (genreTab !== ALL_GENRES && moviesByGenre.length <= filmsPerStep) ?
+            isLessThanStep() ?
               null :
               <ShowMoreButton
-                films={genreTab === ALL_GENRES ? movies : moviesByGenre}
+                films={getFilmsByTab()}
                 onShowMoreButtonClick={handleShowMoreButtonClick}
               />
           }

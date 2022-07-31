@@ -82,7 +82,7 @@ function Film({films, comments}: FilmsCommentsProps): JSX.Element {
 
       <div className="page-content">
         <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
+          <h2 className="catalog__title">{films.length === 0 ? null : 'More like this'}</h2>
 
           <FilmsList moreLikeThis currentFilmId={id} films={films} />
         </section>

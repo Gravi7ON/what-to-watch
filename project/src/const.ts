@@ -43,7 +43,7 @@ const ALL_GENRES = 'All genres';
 
 const OVERVIEW_TAB = 'Overview';
 
-const TIMEOUT_SHOW_ERROR = 2000;
+const TIMEOUT_SHOW_ERROR = 5000;
 
 export {
   AppRoute,
