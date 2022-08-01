@@ -1,4 +1,4 @@
-import {AppRoute, LOGO_CLASS_NAME, AMOUNT_FILMS_PER_STEP} from '../../const';
+import {AppRoute, LOGO_CLASS_NAME, AMOUNT_FILMS_PER_STEP, ALL_GENRES} from '../../const';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
 import {ScreenProps} from '../../types/films';
@@ -6,13 +6,13 @@ import {useNavigate} from 'react-router-dom';
 import GenresList from '../../components/genres-list/genres-list';
 import FilmsList from '../../components/films-list/films-list';
 import {useAppSelector, useAppDispatch} from '../../hooks/index';
-import {showMoreFilms} from '../../store/action';
+import {showMoreFilms, receiveFilmsByGenre, changeGenre} from '../../store/action';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
 
 function MainPage({films}: ScreenProps): JSX.Element {
   const navigate = useNavigate();
 
-  const {movies, filmsPerStep} = useAppSelector((state) => state);
+  const {movies, filmsPerStep, moviesByGenre, genreTab} = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
   const handleShowMoreButtonClick = () => {
@@ -29,6 +29,9 @@ function MainPage({films}: ScreenProps): JSX.Element {
     backgroundImage
   } = films[0];
 
+  const isLessThanStep = () => movies.length <= filmsPerStep || (genreTab !== ALL_GENRES && moviesByGenre.length <= filmsPerStep);
+  const getFilmsByTab = () => genreTab === ALL_GENRES ? movies : moviesByGenre;
+
   return (
     <>
       <section className="film-card">
@@ -39,7 +42,7 @@ function MainPage({films}: ScreenProps): JSX.Element {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header film-card__head">
-          <Logo path={AppRoute.Main} />
+          <Logo />
 
           <ul className="user-block">
             <UserLogo path={AppRoute.Main} />
@@ -63,6 +66,8 @@ function MainPage({films}: ScreenProps): JSX.Element {
                 <button className="btn btn--play film-card__button" type="button" onClick={
                   () => {
                     dispatch(showMoreFilms(AMOUNT_FILMS_PER_STEP));
+                    dispatch(changeGenre('All genres'));
+                    dispatch(receiveFilmsByGenre());
                   }
                 }
                 >
@@ -75,6 +80,8 @@ function MainPage({films}: ScreenProps): JSX.Element {
                   () => {
                     navigate(AppRoute.MyList);
                     dispatch(showMoreFilms(AMOUNT_FILMS_PER_STEP));
+                    dispatch(changeGenre('All genres'));
+                    dispatch(receiveFilmsByGenre());
                   }
                 }
                 >
@@ -94,11 +101,18 @@ function MainPage({films}: ScreenProps): JSX.Element {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenresList films={films} />
+          <GenresList films={movies} />
 
-          <FilmsList films={movies} amountFilms={filmsPerStep} />
+          <FilmsList films={getFilmsByTab()} amountFilms={filmsPerStep} />
 
-          {movies.length <= filmsPerStep ? null : <ShowMoreButton films={movies} onShowMoreButtonClick={handleShowMoreButtonClick} />}
+          {
+            isLessThanStep() ?
+              null :
+              <ShowMoreButton
+                films={getFilmsByTab()}
+                onShowMoreButtonClick={handleShowMoreButtonClick}
+              />
+          }
         </section>
 
         <footer className="page-footer">

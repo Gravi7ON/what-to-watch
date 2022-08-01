@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 
 type RouteLogoProps = {
-  path: string;
+  path?: string;
   classTitle?: string;
 }
 
@@ -10,7 +10,7 @@ function Logo({path, classTitle}: RouteLogoProps): JSX.Element {
     return (
       <>
         <div className="logo">
-          <Link to={path} className={`logo__link ${classTitle}`}>
+          <Link to={path || '#'} className={`logo__link ${classTitle}`}>
             <span className="logo__letter logo__letter--1">W</span>
             <span className="logo__letter logo__letter--2">T</span>
             <span className="logo__letter logo__letter--3">W</span>
@@ -25,7 +25,7 @@ function Logo({path, classTitle}: RouteLogoProps): JSX.Element {
 
   return (
     <div className="logo">
-      <Link to={path} className="logo__link">
+      <Link to={path || '#'} className="logo__link">
         <span className="logo__letter logo__letter--1">W</span>
         <span className="logo__letter logo__letter--2">T</span>
         <span className="logo__letter logo__letter--3">W</span>

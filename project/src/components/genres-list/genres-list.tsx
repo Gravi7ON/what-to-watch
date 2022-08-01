@@ -7,7 +7,7 @@ import {ALL_GENRES} from '../../const';
 type EventGenreClick = {preventDefault: () => void; target: {textContent: string}} & React.MouseEvent<HTMLAnchorElement, MouseEvent>
 
 function GenresList({films}: ScreenProps) {
-  const {genre} = useAppSelector((state) => state);
+  const {genreTab: genre} = useAppSelector((state) => state);
 
   const dispatch = useAppDispatch();
 
@@ -19,6 +19,7 @@ function GenresList({films}: ScreenProps) {
     if (genre === evt.target.textContent) {
       return;
     }
+
     dispatch(changeGenre(evt.target.textContent));
     dispatch(receiveFilmsByGenre());
   };

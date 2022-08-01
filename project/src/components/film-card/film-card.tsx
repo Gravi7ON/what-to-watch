@@ -1,9 +1,9 @@
 import {Link, useNavigate} from 'react-router-dom';
 import {useState} from 'react';
-import {AppRoute, AMOUNT_FILMS_PER_STEP} from '../../const';
+import {AppRoute, AMOUNT_FILMS_PER_STEP, ALL_GENRES, OVERVIEW_TAB} from '../../const';
 import VideoPlayer from '../video-player/video-player';
 import {useAppDispatch} from '../../hooks/index';
-import {showMoreFilms} from '../../store/action';
+import {showMoreFilms, setActiveFilmTab, changeGenre} from '../../store/action';
 
 type FilmCardProps = {
   id: number;
@@ -31,6 +31,8 @@ function FilmCard({name, previewImage, id, previewVideoLink}: FilmCardProps): JS
         () => {
           navigate(`${AppRoute.Film}/${id}`);
           dispatch(showMoreFilms(AMOUNT_FILMS_PER_STEP));
+          dispatch(setActiveFilmTab(OVERVIEW_TAB));
+          dispatch(changeGenre(ALL_GENRES));
         }
       }
       >
@@ -42,7 +44,11 @@ function FilmCard({name, previewImage, id, previewVideoLink}: FilmCardProps): JS
       <h3 className="small-film-card__title">
         <Link
           className="small-film-card__link" to={`${AppRoute.Film}/${id}`}
-          onClick={() => dispatch(showMoreFilms(AMOUNT_FILMS_PER_STEP))}
+          onClick={() => {
+            dispatch(showMoreFilms(AMOUNT_FILMS_PER_STEP));
+            dispatch(setActiveFilmTab(OVERVIEW_TAB));
+            dispatch(changeGenre(ALL_GENRES));
+          }}
         >
           {name}
         </Link>

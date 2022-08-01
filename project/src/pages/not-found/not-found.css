@@ -20,7 +20,7 @@
 }
 #rocket_not-found {
   transform: translateY(750px);
-  animation: launch 2s ease-out forwards;
+  animation: launch 1s ease-out forwards;
 }
 @keyframes launch {
   from {
@@ -32,7 +32,7 @@
   }
 }
 #stars_not-found {
-  animation: twinkling 2s linear ;
+  animation: twinkling 1.1s linear ;
 }
 @keyframes twinkling {
   from {
@@ -47,7 +47,7 @@
   line-height: 1.5rem;
   opacity: 0;
   animation:appear 1s ease-in forwards;
-  animation-delay: 1.8s;
+  animation-delay: 0.8s;
 }
 @keyframes appear {
   from {

@@ -21,6 +21,12 @@ enum TextFormRating {
   Awesome = 'Awesome'
 }
 
+enum APIRoute {
+  Films = '/films',
+  SignIn = '/login',
+  Logout = '/logout',
+}
+
 const MAX_SHOW_SIMILAR_FILMS = 4;
 
 const LOGO_CLASS_NAME = 'logo__link--light';
@@ -35,6 +41,10 @@ const TIME_UNTIL_ACTIVATION_PREVIEW = 1000;
 
 const ALL_GENRES = 'All genres';
 
+const OVERVIEW_TAB = 'Overview';
+
+const TIMEOUT_SHOW_ERROR = 5000;
+
 export {
   AppRoute,
   LOGO_CLASS_NAME,
@@ -45,5 +55,8 @@ export {
   AMOUNT_FILMS_PER_STEP,
   HOUR_IN_MINUTES,
   TIME_UNTIL_ACTIVATION_PREVIEW,
-  ALL_GENRES
+  ALL_GENRES,
+  APIRoute,
+  TIMEOUT_SHOW_ERROR,
+  OVERVIEW_TAB
 };
