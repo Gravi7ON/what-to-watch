@@ -5,10 +5,10 @@ import comments from './mock/comments';
 import ErrorMessage from './components/error-message/error-message';
 import {store} from './store/store';
 import {Provider} from 'react-redux';
-import {fetchFilmsAction} from './store/api-actions';
+import {fetchFilmsAction, checkAuthAction} from './store/api-actions';
 
 store.dispatch(fetchFilmsAction());
-// store.dispatch(checkAuthAction());
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

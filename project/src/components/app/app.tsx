@@ -6,12 +6,11 @@ import MainPage from '../../pages/main/main';
 import MyList from '../../pages/my-list/my-list';
 import NotFound from '../../pages/not-found/not-found';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
-import {AppRoute} from '../../const';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../../pages/loading/loading';
 import {useAppSelector} from '../../hooks';
-import {isCheckedAuth} from '../../movie-theater';
 import Comments from '../../types/comments';
 
 type AppProps = {
@@ -21,7 +20,7 @@ type AppProps = {
 function App({comments}: AppProps): JSX.Element {
   const {authorizationStatus, isDataLoaded, movies} = useAppSelector((state) => state);
 
-  if (isCheckedAuth(authorizationStatus) || isDataLoaded) {
+  if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoaded) {
     return (
       <LoadingScreen />
     );

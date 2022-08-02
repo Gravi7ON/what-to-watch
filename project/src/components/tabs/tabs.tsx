@@ -22,7 +22,7 @@ function Tabs({comments, currentFilm}: TabsProps): JSX.Element {
     ['Reviews', <Reviews key={2} comments={comments} />]
   ]);
 
-  const handleTabClick = (evt: TabEvent) => {
+  const onTabClick = (evt: TabEvent) => {
     evt.preventDefault();
     dispatch(setActiveFilmTab(evt.target.textContent));
   };
@@ -30,7 +30,7 @@ function Tabs({comments, currentFilm}: TabsProps): JSX.Element {
   return (
     <>
       <nav className="film-nav film-card__nav">
-        <TabBar activeTab={activeFilmTab} onTabClick={handleTabClick} titleTabs={Array.from(tabs.keys())} />
+        <TabBar activeTab={activeFilmTab} onTabClick={onTabClick} titleTabs={Array.from(tabs.keys())} />
       </nav>
       {tabs.get(activeFilmTab)}
     </>

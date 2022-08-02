@@ -35,7 +35,7 @@ function AddReview({films}: ScreenProps): JSX.Element {
           </nav>
 
           <ul className="user-block">
-            <UserLogo path={AppRoute.Main} />
+            <UserLogo />
           </ul>
         </header>
 

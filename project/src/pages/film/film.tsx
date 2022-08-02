@@ -1,17 +1,21 @@
 import {Link, useParams} from 'react-router-dom';
-import {AppRoute, LOGO_CLASS_NAME} from '../../const';
+import {AppRoute, AuthorizationStatus, LOGO_CLASS_NAME} from '../../const';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
 import {FilmsCommentsProps, FilmId} from '../../types/films';
 import FilmsList from '../../components/films-list/films-list';
-import {useNavigate} from 'react-router-dom';
 import Tabs from '../../components/tabs/tabs';
+import {isAuthorization} from '../../utils';
+import {useAppSelector} from '../../hooks';
 
 function Film({films, comments}: FilmsCommentsProps): JSX.Element {
-  const navigate = useNavigate();
-
   const {id} = useParams<FilmId>() ;
   const filmIndexInList = Number(id) - 1;
+
+  const {authorizationStatus} = useAppSelector((state) => state);
+
+  const isAuthorizationAndFilmsInList = () => films.find((film) => film.id === filmIndexInList) &&
+    authorizationStatus === AuthorizationStatus.Auth;
 
   const {
     name,
@@ -35,7 +39,11 @@ function Film({films, comments}: FilmsCommentsProps): JSX.Element {
             <Logo path={AppRoute.Main} />
 
             <ul className="user-block">
-              <UserLogo path={AppRoute.Main} />
+              {
+                isAuthorization() ?
+                  <UserLogo /> :
+                  <Link to={AppRoute.SignIn} className="user-block__link">Sign in</Link>
+              }
             </ul>
           </header>
 
@@ -54,12 +62,12 @@ function Film({films, comments}: FilmsCommentsProps): JSX.Element {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list film-card__button" type="button" onClick={() => navigate(AppRoute.MyList)}>
+                <button className="btn btn--list film-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
+                    <use xlinkHref={isAuthorizationAndFilmsInList() ? '#in-list' : '#add'}></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">{films.length}</span>
+                  <span className="film-card__count">{isAuthorization() ? films.length : '0'}</span>
                 </button>
                 <Link to={`${AppRoute.Film}/${id}/review`} className="btn film-card__button">Add review</Link>
               </div>

@@ -10,7 +10,7 @@ enum AppRoute {
 enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
+  Unknown = 'UNKNOWN'
 }
 
 enum TextFormRating {
@@ -24,7 +24,12 @@ enum TextFormRating {
 enum APIRoute {
   Films = '/films',
   SignIn = '/login',
-  Logout = '/logout',
+  Logout = '/logout'
+}
+
+enum HTTPStatusCode {
+  BAD_REQUEST = 400,
+  NOT_FOUND = 404
 }
 
 const MAX_SHOW_SIMILAR_FILMS = 4;
@@ -58,5 +63,6 @@ export {
   ALL_GENRES,
   APIRoute,
   TIMEOUT_SHOW_ERROR,
-  OVERVIEW_TAB
+  OVERVIEW_TAB,
+  HTTPStatusCode
 };
