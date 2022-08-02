@@ -8,7 +8,7 @@ import FilmsList from '../../components/films-list/films-list';
 import {useAppSelector, useAppDispatch} from '../../hooks/index';
 import {showMoreFilms, receiveFilmsByGenre, changeGenre} from '../../store/action';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
-import {isAuthorization} from '../../utils';
+import {isAuthorized} from '../../utils';
 
 function MainPage({films}: ScreenProps): JSX.Element {
   const navigate = useNavigate();
@@ -47,7 +47,7 @@ function MainPage({films}: ScreenProps): JSX.Element {
 
           <ul className="user-block">
             {
-              isAuthorization() ?
+              isAuthorized() ?
                 <UserLogo /> :
                 <Link to={AppRoute.SignIn} className="user-block__link">Sign in</Link>
             }
@@ -94,7 +94,7 @@ function MainPage({films}: ScreenProps): JSX.Element {
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">{isAuthorization() ? films.length : '0'}</span>
+                  <span className="film-card__count">{isAuthorized() ? films.length : '0'}</span>
                 </button>
               </div>
             </div>

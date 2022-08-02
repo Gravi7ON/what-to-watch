@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
-import {AppRoute, LOGO_CLASS_NAME} from '../../const';
+import {AppRoute, LOGO_CLASS_NAME, CHECK_PASSWORD_VALIDITY} from '../../const';
 import {useAppDispatch} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 
@@ -29,41 +29,45 @@ function SignIn(): JSX.Element {
   const handleSignInClick = async (evt: {preventDefault: () => void}) => {
     evt.preventDefault();
 
-    try {
-      if (!(userForm.formData.email && /@/.test(userForm.formData.email))) {
-        setFormData((prev) => ({...prev, emailError: true}));
-        throw new Error();
-      }
+    setFormData((prev) => ({...prev, error: true}));
 
-      if (!(userForm.formData.password && /(?=.*[0-9])(?=.*[A-Za-z])[0-9a-zA-Z]{2,}/.test(userForm.formData.password))) {
-        setFormData((prev) => ({...prev, emailError: false}));
-        setFormData((prev) => ({...prev, passwordError: true}));
-        throw new Error();
-      }
-
-      await dispatch(loginAction(userForm.formData));
-      navigate(AppRoute.Main);
-    } catch {
-      setFormData((prev) => ({...prev, error: true}));
+    if (!(userForm.formData.email && /@/.test(userForm.formData.email))) {
+      setFormData((prev) => ({...prev, emailError: true, error: true}));
+      return;
     }
+
+    if (!(userForm.formData.password && CHECK_PASSWORD_VALIDITY.test(userForm.formData.password))) {
+      setFormData((prev) => ({...prev, emailError: false, error: true, passwordError: true}));
+      return;
+    }
+
+    await dispatch(loginAction(userForm.formData));
+    navigate(AppRoute.Main);
   };
 
+
   const checkFormValidity = () => {
-    if (userForm.error && userForm.emailError) {
-      return (
-        <div className="sign-in__message">
-          <p>Please enter a valid email address</p>
-        </div>
-      );
+    const errorConfig = [
+      {
+        rule: userForm.error && userForm.emailError,
+        text: 'Please enter a valid email address',
+      },
+      {
+        rule:userForm.error && !userForm.emailError,
+        text: <>We can’t recognize this email <br /> and password combination. Please try again.</>
+      }
+    ];
+    const activeError = errorConfig.find((formError) => formError.rule);
+
+    if (!activeError) {
+      return null;
     }
 
-    if (userForm.error && !userForm.emailError) {
-      return (
-        <div className="sign-in__message">
-          <p>We can’t recognize this email <br /> and password combination. Please try again.</p>
-        </div>
-      );
-    }
+    return (
+      <div className="sign-in__message">
+        <p>{activeError.text}</p>
+      </div>
+    );
   };
 
   return (

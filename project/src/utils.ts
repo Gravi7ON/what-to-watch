@@ -12,6 +12,6 @@ const getFilteredFilmsByGenre = (genre: string, movies: Films): Films => {
   return filteredFilms;
 };
 
-const isAuthorization = () => store.getState().authorizationStatus === AuthorizationStatus.Auth;
+const isAuthorized = () => store.getState().authorizationStatus === AuthorizationStatus.Auth;
 
-export {getFilteredFilmsByGenre, isAuthorization};
+export {getFilteredFilmsByGenre, isAuthorized};

@@ -5,7 +5,7 @@ import UserLogo from '../../components/user-logo/user-logo';
 import {FilmsCommentsProps, FilmId} from '../../types/films';
 import FilmsList from '../../components/films-list/films-list';
 import Tabs from '../../components/tabs/tabs';
-import {isAuthorization} from '../../utils';
+import {isAuthorized} from '../../utils';
 import {useAppSelector} from '../../hooks';
 
 function Film({films, comments}: FilmsCommentsProps): JSX.Element {
@@ -40,7 +40,7 @@ function Film({films, comments}: FilmsCommentsProps): JSX.Element {
 
             <ul className="user-block">
               {
-                isAuthorization() ?
+                isAuthorized() ?
                   <UserLogo /> :
                   <Link to={AppRoute.SignIn} className="user-block__link">Sign in</Link>
               }
@@ -67,7 +67,7 @@ function Film({films, comments}: FilmsCommentsProps): JSX.Element {
                     <use xlinkHref={isAuthorizationAndFilmsInList() ? '#in-list' : '#add'}></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">{isAuthorization() ? films.length : '0'}</span>
+                  <span className="film-card__count">{isAuthorized() ? films.length : '0'}</span>
                 </button>
                 <Link to={`${AppRoute.Film}/${id}/review`} className="btn film-card__button">Add review</Link>
               </div>

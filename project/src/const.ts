@@ -50,6 +50,8 @@ const OVERVIEW_TAB = 'Overview';
 
 const TIMEOUT_SHOW_ERROR = 5000;
 
+const CHECK_PASSWORD_VALIDITY = /(?=.*[0-9])(?=.*[A-Za-z])[0-9a-zA-Z]{2,}/;
+
 export {
   AppRoute,
   LOGO_CLASS_NAME,
@@ -64,5 +66,6 @@ export {
   APIRoute,
   TIMEOUT_SHOW_ERROR,
   OVERVIEW_TAB,
-  HTTPStatusCode
+  HTTPStatusCode,
+  CHECK_PASSWORD_VALIDITY
 };
