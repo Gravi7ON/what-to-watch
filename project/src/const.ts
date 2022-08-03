@@ -49,6 +49,10 @@ const ALL_GENRES = 'All genres';
 
 const OVERVIEW_TAB = 'Overview';
 
+const MIN_COMMENT_LENGTH = 50;
+
+const MAX_COMMENT_LENGTH = 400;
+
 const TIMEOUT_SHOW_ERROR = 5000;
 
 const CHECK_PASSWORD_VALIDITY = /(?=.*[0-9])(?=.*[A-Za-z])[0-9a-zA-Z]{2,}/;
@@ -68,5 +72,7 @@ export {
   TIMEOUT_SHOW_ERROR,
   OVERVIEW_TAB,
   HTTPStatusCode,
-  CHECK_PASSWORD_VALIDITY
+  CHECK_PASSWORD_VALIDITY,
+  MIN_COMMENT_LENGTH,
+  MAX_COMMENT_LENGTH
 };

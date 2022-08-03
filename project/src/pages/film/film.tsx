@@ -10,7 +10,7 @@ import {useAppSelector} from '../../hooks';
 import LoadingScreen from '../loading/loading';
 
 function Film(): JSX.Element {
-  const {id} = useParams<FilmId>() ;
+  const {id} = useParams<FilmId>();
   const filmIndexInList = Number(id) - 1;
 
   const {
@@ -19,8 +19,7 @@ function Film(): JSX.Element {
     currentMovie,
     similarMovies,
     movieComments,
-    movies
-  } = useAppSelector((state) => state);
+    movies} = useAppSelector((state) => state);
 
   const isAuthorizedAndFilmsInList = () => movies.find((film) => film.id === filmIndexInList) &&
     authorizationStatus === AuthorizationStatus.Auth;
@@ -110,7 +109,7 @@ function Film(): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">{similarMovies.length === 0 ? null : 'More like this'}</h2>
 
-          <FilmsList moreLikeThis films={similarMovies} />
+          <FilmsList moreLikeThis films={similarMovies} currentFilmId={id} />
         </section>
 
         <footer className="page-footer">

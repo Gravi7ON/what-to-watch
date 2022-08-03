@@ -6,14 +6,16 @@ type FilmListProps = {
   films: Films;
   amountFilms?: number;
   moreLikeThis?: boolean;
+  currentFilmId?: string;
 }
 
-function FilmsList({films, amountFilms = AMOUNT_FILMS_PER_STEP, moreLikeThis}: FilmListProps): JSX.Element {
+function FilmsList({films, amountFilms = AMOUNT_FILMS_PER_STEP, moreLikeThis, currentFilmId}: FilmListProps): JSX.Element {
   const getFilmsCards = (): JSX.Element[] => {
     const filmsCards: JSX.Element[] = [];
 
     if (moreLikeThis) {
-      const similarFilms = [...films].slice(0, MAX_SHOW_SIMILAR_FILMS);
+      const similarFilms = [...films].filter((film) => film.id !== Number(currentFilmId))
+        .slice(0, MAX_SHOW_SIMILAR_FILMS);
 
       return similarFilms.map((film) => (
         <FilmCard

@@ -1,5 +1,5 @@
 import FilmComment from './film-comment';
-import Comments from '../../types/comments';
+import {Comments} from '../../types/comments';
 
 type CommentsProps = {
   comments: Comments

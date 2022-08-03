@@ -1,21 +1,15 @@
 import {createAction} from '@reduxjs/toolkit';
 import {Film, Films} from '../types/films';
 import {AuthorizationStatus} from '../const';
-import Comments from '../types/comments';
+import {Comments} from '../types/comments';
 
-const changeGenre = createAction('main/changeGenre', (value: string) => ({
-  payload: value
-}));
+const changeGenre = createAction<string>('main/changeGenre');
 
 const receiveFilmsByGenre = createAction('main/receiveFilmsByGenre');
 
-const showMoreFilms = createAction('main/showMoreFilms', (value: number) => ({
-  payload: value
-}));
+const showMoreFilms = createAction<number>('main/showMoreFilms');
 
-const setActiveFilmTab = createAction('film/activeFilmTab', (value: string) => ({
-  payload: value
-}));
+const setActiveFilmTab = createAction<string>('film/activeFilmTab');
 
 const loadFilms = createAction<Films>('data/loadFilms');
 
@@ -29,7 +23,11 @@ const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuth
 
 const setError = createAction<string | null>('main/setError');
 
+const redirectToRoute = createAction<string>('app/redirectToRoute');
+
 const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');
+
+const postComment = createAction<Comments>('data/postComment');
 
 export {
   changeGenre,
@@ -42,6 +40,8 @@ export {
   setError,
   loadCurrentFilm,
   loadSimilarFilms,
-  loadComments
+  loadComments,
+  redirectToRoute,
+  postComment
 };
 

@@ -7,10 +7,12 @@ import MyList from '../../pages/my-list/my-list';
 import NotFound from '../../pages/not-found/not-found';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../../pages/loading/loading';
 import {useAppSelector} from '../../hooks';
+import HistoryRouter from '../history-route/history-rout';
+import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
   const {authorizationStatus, isDataLoaded, movies} = useAppSelector((state) => state);
@@ -22,7 +24,7 @@ function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <ScrollToTop />
       <Routes>
         <Route
@@ -68,7 +70,7 @@ function App(): JSX.Element {
           element={<NotFound />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 
