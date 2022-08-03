@@ -2,19 +2,27 @@ import {Link, useParams} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus, LOGO_CLASS_NAME} from '../../const';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
-import {FilmsCommentsProps, FilmId} from '../../types/films';
+import {FilmId} from '../../types/films';
 import FilmsList from '../../components/films-list/films-list';
 import Tabs from '../../components/tabs/tabs';
 import {isAuthorized} from '../../utils';
 import {useAppSelector} from '../../hooks';
+import LoadingScreen from '../loading/loading';
 
-function Film({films, comments}: FilmsCommentsProps): JSX.Element {
+function Film(): JSX.Element {
   const {id} = useParams<FilmId>() ;
   const filmIndexInList = Number(id) - 1;
 
-  const {authorizationStatus} = useAppSelector((state) => state);
+  const {
+    authorizationStatus,
+    isDataLoaded,
+    currentMovie,
+    similarMovies,
+    movieComments,
+    movies
+  } = useAppSelector((state) => state);
 
-  const isAuthorizationAndFilmsInList = () => films.find((film) => film.id === filmIndexInList) &&
+  const isAuthorizedAndFilmsInList = () => movies.find((film) => film.id === filmIndexInList) &&
     authorizationStatus === AuthorizationStatus.Auth;
 
   const {
@@ -23,7 +31,13 @@ function Film({films, comments}: FilmsCommentsProps): JSX.Element {
     released,
     posterImage,
     backgroundImage,
-  } = films[filmIndexInList];
+  } = currentMovie;
+
+  if (isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <>
@@ -64,12 +78,16 @@ function Film({films, comments}: FilmsCommentsProps): JSX.Element {
                 </button>
                 <button className="btn btn--list film-card__button" type="button">
                   <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref={isAuthorizationAndFilmsInList() ? '#in-list' : '#add'}></use>
+                    <use xlinkHref={isAuthorizedAndFilmsInList() ? '#in-list' : '#add'}></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">{isAuthorized() ? films.length : '0'}</span>
+                  <span className="film-card__count">{isAuthorized() ? movies.length : '0'}</span>
                 </button>
-                <Link to={`${AppRoute.Film}/${id}/review`} className="btn film-card__button">Add review</Link>
+                {
+                  isAuthorized() ?
+                    <Link to={`${AppRoute.Film}/${id}/review`} className="btn film-card__button">Add review</Link> :
+                    null
+                }
               </div>
             </div>
           </div>
@@ -82,7 +100,7 @@ function Film({films, comments}: FilmsCommentsProps): JSX.Element {
             </div>
 
             <div className="film-card__desc">
-              <Tabs comments={comments} currentFilm={films[filmIndexInList]} />
+              <Tabs comments={movieComments} currentFilm={currentMovie} />
             </div>
           </div>
         </div>
@@ -90,9 +108,9 @@ function Film({films, comments}: FilmsCommentsProps): JSX.Element {
 
       <div className="page-content">
         <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">{films.length === 0 ? null : 'More like this'}</h2>
+          <h2 className="catalog__title">{similarMovies.length === 0 ? null : 'More like this'}</h2>
 
-          <FilmsList moreLikeThis currentFilmId={id} films={films} />
+          <FilmsList moreLikeThis films={similarMovies} />
         </section>
 
         <footer className="page-footer">

@@ -11,13 +11,8 @@ import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../../pages/loading/loading';
 import {useAppSelector} from '../../hooks';
-import Comments from '../../types/comments';
 
-type AppProps = {
-  comments: Comments
-}
-
-function App({comments}: AppProps): JSX.Element {
+function App(): JSX.Element {
   const {authorizationStatus, isDataLoaded, movies} = useAppSelector((state) => state);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoaded) {
@@ -52,7 +47,7 @@ function App({comments}: AppProps): JSX.Element {
           <Route
             path=':id'
             element={
-              <Film films={movies} comments={comments} />
+              <Film />
             }
           />
         </Route>

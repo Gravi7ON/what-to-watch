@@ -24,7 +24,8 @@ enum TextFormRating {
 enum APIRoute {
   Films = '/films',
   SignIn = '/login',
-  Logout = '/logout'
+  Logout = '/logout',
+  Comments = '/comments'
 }
 
 enum HTTPStatusCode {

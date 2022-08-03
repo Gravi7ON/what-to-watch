@@ -29,8 +29,6 @@ function SignIn(): JSX.Element {
   const handleSignInClick = async (evt: {preventDefault: () => void}) => {
     evt.preventDefault();
 
-    setFormData((prev) => ({...prev, error: true}));
-
     if (!(userForm.formData.email && /@/.test(userForm.formData.email))) {
       setFormData((prev) => ({...prev, emailError: true, error: true}));
       return;
@@ -53,7 +51,7 @@ function SignIn(): JSX.Element {
         text: 'Please enter a valid email address',
       },
       {
-        rule:userForm.error && !userForm.emailError,
+        rule: userForm.error && !userForm.emailError,
         text: <>We can’t recognize this email <br /> and password combination. Please try again.</>
       }
     ];

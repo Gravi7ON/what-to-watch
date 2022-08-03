@@ -1,4 +1,4 @@
-const AUTH_TOKEN_KEY_NAME = 'T2xpdmVyLmNvbm5lckBnbWFpbC5jb20=';
+const AUTH_TOKEN_KEY_NAME = 'wtw-token';
 
 type Token = string;
 

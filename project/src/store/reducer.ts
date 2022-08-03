@@ -7,16 +7,23 @@ import {
   loadFilms,
   requireAuthorization,
   setError,
-  setDataLoadedStatus
+  setDataLoadedStatus,
+  loadCurrentFilm,
+  loadSimilarFilms,
+  loadComments
 } from './action';
-import {Films} from '../types/films';
+import {Films, Film} from '../types/films';
 import {ALL_GENRES, AMOUNT_FILMS_PER_STEP, AuthorizationStatus, OVERVIEW_TAB} from '../const';
 import {getFilteredFilmsByGenre} from '../utils';
+import Comments from '../types/comments';
 
 type InitalState = {
   genreTab: string;
   movies: Films;
   moviesByGenre: Films;
+  currentMovie: Film;
+  movieComments: Comments;
+  similarMovies: Films
   filmsPerStep: number;
   activeFilmTab: string;
   isDataLoaded: boolean,
@@ -28,6 +35,9 @@ const initialState: InitalState = {
   genreTab: ALL_GENRES,
   movies: [],
   moviesByGenre: [],
+  currentMovie: {} as Film,
+  movieComments: [],
+  similarMovies: [],
   filmsPerStep: AMOUNT_FILMS_PER_STEP,
   activeFilmTab: OVERVIEW_TAB,
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -61,6 +71,15 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
+    })
+    .addCase(loadCurrentFilm, (state, action) => {
+      state.currentMovie = action.payload;
+    })
+    .addCase(loadSimilarFilms, (state, action) => {
+      state.similarMovies = action.payload;
+    })
+    .addCase(loadComments, (state, action) => {
+      state.movieComments = action.payload;
     });
 });
 
