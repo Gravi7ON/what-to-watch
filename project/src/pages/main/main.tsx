@@ -2,12 +2,13 @@ import {AppRoute, LOGO_CLASS_NAME, AMOUNT_FILMS_PER_STEP, ALL_GENRES} from '../.
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
 import {ScreenProps} from '../../types/films';
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import GenresList from '../../components/genres-list/genres-list';
 import FilmsList from '../../components/films-list/films-list';
 import {useAppSelector, useAppDispatch} from '../../hooks/index';
 import {showMoreFilms, receiveFilmsByGenre, changeGenre} from '../../store/action';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
+import {isAuthorized} from '../../utils';
 
 function MainPage({films}: ScreenProps): JSX.Element {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function MainPage({films}: ScreenProps): JSX.Element {
   const {movies, filmsPerStep, moviesByGenre, genreTab} = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
-  const handleShowMoreButtonClick = () => {
+  const onShowMoreButtonClick = () => {
     const totalFilmsCount = movies.length;
     const newCountFilmsPerStep = Math.min(totalFilmsCount, filmsPerStep + AMOUNT_FILMS_PER_STEP);
     dispatch(showMoreFilms(newCountFilmsPerStep));
@@ -45,7 +46,11 @@ function MainPage({films}: ScreenProps): JSX.Element {
           <Logo />
 
           <ul className="user-block">
-            <UserLogo path={AppRoute.Main} />
+            {
+              isAuthorized() ?
+                <UserLogo /> :
+                <Link to={AppRoute.SignIn} className="user-block__link">Sign in</Link>
+            }
           </ul>
         </header>
 
@@ -89,7 +94,7 @@ function MainPage({films}: ScreenProps): JSX.Element {
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">{films.length}</span>
+                  <span className="film-card__count">{isAuthorized() ? films.length : '0'}</span>
                 </button>
               </div>
             </div>
@@ -109,8 +114,7 @@ function MainPage({films}: ScreenProps): JSX.Element {
             isLessThanStep() ?
               null :
               <ShowMoreButton
-                films={getFilmsByTab()}
-                onShowMoreButtonClick={handleShowMoreButtonClick}
+                onShowMoreButtonClick={onShowMoreButtonClick}
               />
           }
         </section>

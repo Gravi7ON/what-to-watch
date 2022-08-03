@@ -12,7 +12,7 @@ function MyList({films}: ScreenProps): JSX.Element {
 
         <h1 className="page-title user-page__title">My list <span className="user-page__film-count">{films.length}</span></h1>
         <ul className="user-block">
-          <UserLogo path={AppRoute.Main} />
+          <UserLogo />
         </ul>
       </header>
 

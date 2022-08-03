@@ -1,17 +1,17 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeGenre, receiveFilmsByGenre, showMoreFilms, setActiveFilmTab, loadFilms, requireAuthorization, setError, setDataLoadedStatus} from './action';
+import {
+  changeGenre,
+  receiveFilmsByGenre,
+  showMoreFilms,
+  setActiveFilmTab,
+  loadFilms,
+  requireAuthorization,
+  setError,
+  setDataLoadedStatus
+} from './action';
 import {Films} from '../types/films';
 import {ALL_GENRES, AMOUNT_FILMS_PER_STEP, AuthorizationStatus, OVERVIEW_TAB} from '../const';
-
-const filterFilmsByGenre = (genre: string, movies: Films): Films => {
-  if (genre === ALL_GENRES) {
-    return movies;
-  }
-
-  const filteredFilms = movies.filter((movie: {genre: string}) => movie.genre === genre);
-
-  return filteredFilms;
-};
+import {getFilteredFilmsByGenre} from '../utils';
 
 type InitalState = {
   genreTab: string;
@@ -42,7 +42,7 @@ const reducer = createReducer(initialState, (builder) => {
       state.filmsPerStep = AMOUNT_FILMS_PER_STEP;
     })
     .addCase(receiveFilmsByGenre, (state) => {
-      state.moviesByGenre = filterFilmsByGenre(state.genreTab, state.movies);
+      state.moviesByGenre = getFilteredFilmsByGenre(state.genreTab, state.movies);
     })
     .addCase(showMoreFilms, (state, action) => {
       state.filmsPerStep = action.payload;
