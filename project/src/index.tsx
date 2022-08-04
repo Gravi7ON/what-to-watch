@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import comments from './mock/comments';
 import ErrorMessage from './components/error-message/error-message';
 import {store} from './store/store';
 import {Provider} from 'react-redux';
@@ -18,9 +17,7 @@ root.render(
   <React.StrictMode>
     <Provider store = {store}>
       <ErrorMessage />
-      <App
-        comments={comments}
-      />
+      <App />
     </Provider>
   </React.StrictMode>,
 );

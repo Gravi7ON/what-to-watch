@@ -1,5 +1,3 @@
-import Comments from '../types/comments';
-
 type Film = {
   name: string;
   posterImage: string;
@@ -30,15 +28,10 @@ type ScreenProps = {
   films: Films;
 }
 
-type FilmsCommentsProps = {
-  films: Films
-  comments: Comments;
-}
-
 type FilmTabProps = {
   film: Film;
 }
 
 type TabEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {target: {tagName: string; textContent: string}}
 
-export type {ScreenProps, Film, Films, FilmId, FilmTabProps, FilmsCommentsProps, TabEvent};
+export type {ScreenProps, Film, Films, FilmId, FilmTabProps, TabEvent};

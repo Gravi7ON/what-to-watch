@@ -4,7 +4,7 @@ import {Film, TabEvent} from '../../types/films';
 import Details from '../film-info/film-detais';
 import FilmInfo from '../film-info/film-info';
 import Reviews from '../film-info/film-reviews';
-import Comments from '../../types/comments';
+import {Comments} from '../../types/comments';
 import TabBar from './tab-bar';
 
 type TabsProps = {

@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import {useNavigate} from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import {AppRoute, LOGO_CLASS_NAME, CHECK_PASSWORD_VALIDITY} from '../../const';
 import {useAppDispatch} from '../../hooks';
@@ -7,8 +6,6 @@ import {loginAction} from '../../store/api-actions';
 
 function SignIn(): JSX.Element {
   const dispatch = useAppDispatch();
-
-  const navigate = useNavigate();
 
   const [userForm, setFormData] = useState({
     error: false,
@@ -26,10 +23,8 @@ function SignIn(): JSX.Element {
     setFormData({...userForm, formData: {...userForm.formData, [name]: value}});
   };
 
-  const handleSignInClick = async (evt: {preventDefault: () => void}) => {
+  const handleSignInClick = (evt: {preventDefault: () => void}) => {
     evt.preventDefault();
-
-    setFormData((prev) => ({...prev, error: true}));
 
     if (!(userForm.formData.email && /@/.test(userForm.formData.email))) {
       setFormData((prev) => ({...prev, emailError: true, error: true}));
@@ -41,8 +36,7 @@ function SignIn(): JSX.Element {
       return;
     }
 
-    await dispatch(loginAction(userForm.formData));
-    navigate(AppRoute.Main);
+    dispatch(loginAction(userForm.formData));
   };
 
 
@@ -53,7 +47,7 @@ function SignIn(): JSX.Element {
         text: 'Please enter a valid email address',
       },
       {
-        rule:userForm.error && !userForm.emailError,
+        rule: userForm.error && !userForm.emailError,
         text: <>We can’t recognize this email <br /> and password combination. Please try again.</>
       }
     ];

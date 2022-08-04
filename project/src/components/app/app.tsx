@@ -7,17 +7,14 @@ import MyList from '../../pages/my-list/my-list';
 import NotFound from '../../pages/not-found/not-found';
 import ScrollToTop from '../scroll-to-top/scroll-to-top';
 import {AppRoute, AuthorizationStatus} from '../../const';
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../../pages/loading/loading';
 import {useAppSelector} from '../../hooks';
-import Comments from '../../types/comments';
+import HistoryRouter from '../history-route/history-rout';
+import browserHistory from '../../browser-history';
 
-type AppProps = {
-  comments: Comments
-}
-
-function App({comments}: AppProps): JSX.Element {
+function App(): JSX.Element {
   const {authorizationStatus, isDataLoaded, movies} = useAppSelector((state) => state);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoaded) {
@@ -27,7 +24,7 @@ function App({comments}: AppProps): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <ScrollToTop />
       <Routes>
         <Route
@@ -52,7 +49,7 @@ function App({comments}: AppProps): JSX.Element {
           <Route
             path=':id'
             element={
-              <Film films={movies} comments={comments} />
+              <Film />
             }
           />
         </Route>
@@ -73,7 +70,7 @@ function App({comments}: AppProps): JSX.Element {
           element={<NotFound />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

@@ -14,12 +14,7 @@ function FilmsList({films, amountFilms = AMOUNT_FILMS_PER_STEP, moreLikeThis, cu
     const filmsCards: JSX.Element[] = [];
 
     if (moreLikeThis) {
-      const indexComparedFilm = Number(currentFilmId) - 1;
-      const similarFilms = [
-        ...films.slice(0, indexComparedFilm),
-        ...films.slice(indexComparedFilm + 1)
-      ]
-        .filter((film) => film.genre === films[indexComparedFilm].genre)
+      const similarFilms = [...films].filter((film) => film.id !== Number(currentFilmId))
         .slice(0, MAX_SHOW_SIMILAR_FILMS);
 
       return similarFilms.map((film) => (
