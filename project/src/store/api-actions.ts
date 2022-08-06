@@ -64,9 +64,14 @@ const postCommentAction = createAsyncThunk<void, UserComment, {
 }>(
   'user/login',
   async ({comment, rating, filmId}, {dispatch, extra: api}) => {
-    const {data} = await api.post<Comments>(`${APIRoute.Comments}/${filmId}`, {comment, rating});
-    dispatch(postComment(data));
-
+    try {
+      dispatch(setDataLoadedStatus(true));
+      const {data} = await api.post<Comments>(`${APIRoute.Comments}/${filmId}`, {comment, rating});
+      dispatch(postComment(data));
+      dispatch(setDataLoadedStatus(false));
+    } catch {
+      dispatch(setDataLoadedStatus(false));
+    }
   }
 );
 

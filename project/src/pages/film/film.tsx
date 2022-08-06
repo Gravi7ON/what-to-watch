@@ -4,7 +4,7 @@ import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
 import {FilmId} from '../../types/films';
 import FilmsList from '../../components/films-list/films-list';
-import Tabs from '../../components/tabs/tabs';
+import FilmTabs from '../../components/film-tabs/film-tabs';
 import {isAuthorized} from '../../utils';
 import {useAppSelector, useAppDispatch} from '../../hooks';
 import {fetchCurentFilmAction} from '../../store/api-actions';
@@ -105,7 +105,7 @@ function Film(): JSX.Element | null {
             </div>
 
             <div className="film-card__desc">
-              <Tabs comments={movieComments} currentFilm={currentMovie} />
+              <FilmTabs comments={movieComments} currentFilm={currentMovie} />
             </div>
           </div>
         </div>

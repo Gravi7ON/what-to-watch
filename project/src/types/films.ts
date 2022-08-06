@@ -34,4 +34,6 @@ type FilmTabProps = {
 
 type TabEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {target: {tagName: string; textContent: string}}
 
-export type {ScreenProps, Film, Films, FilmId, FilmTabProps, TabEvent};
+type EventGenreClick = {preventDefault: () => void; target: {textContent: string}} & React.MouseEvent<HTMLAnchorElement, MouseEvent>
+
+export type {ScreenProps, Film, Films, FilmId, FilmTabProps, TabEvent, EventGenreClick};

@@ -7,7 +7,7 @@ type TabBarProps = {
   titleTabs: string[];
 }
 
-function TabBar({activeTab, onTabClick, titleTabs}: TabBarProps) {
+function FilmTabBar({activeTab, onTabClick, titleTabs}: TabBarProps) {
   return (
     <ul className="film-nav__list">
       {
@@ -21,4 +21,4 @@ function TabBar({activeTab, onTabClick, titleTabs}: TabBarProps) {
   );
 }
 
-export default TabBar;
+export default FilmTabBar;

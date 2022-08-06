@@ -1,48 +1,61 @@
-import {Link} from 'react-router-dom';
-import {ScreenProps} from '../../types/films';
-import {useAppDispatch, useAppSelector} from '../../hooks/index';
-import {changeGenre, receiveFilmsByGenre} from '../../store/action';
-import {ALL_GENRES} from '../../const';
+import {Films, ScreenProps, EventGenreClick} from '../../types/films';
+import {ALL_GENRES, AMOUNT_FILMS_PER_STEP} from '../../const';
+import FilmsList from '../films-list/films-list';
+import ShowMoreButton from '../show-more-button/show-more-button';
+import {useState} from 'react';
+import {getFilteredFilmsByGenre} from '../../utils';
+import GenresTabs from '../genres-tabs/genres-tabs';
 
-type EventGenreClick = {preventDefault: () => void; target: {textContent: string}} & React.MouseEvent<HTMLAnchorElement, MouseEvent>
+type GenreState = {
+  filmsPerStep: number;
+  activeTab: string;
+  filmsByGenre: Films;
+}
 
 function GenresList({films}: ScreenProps) {
-  const {genreTab: genre} = useAppSelector((state) => state);
-
-  const dispatch = useAppDispatch();
+  const [{filmsPerStep, activeTab, filmsByGenre}, setFilmGenre] = useState<GenreState>({
+    filmsPerStep: AMOUNT_FILMS_PER_STEP,
+    activeTab: ALL_GENRES,
+    filmsByGenre: []
+  });
 
   const uniqueGenres = Array.from(new Set(films.map((film) => film.genre)));
 
-  const handleGenreClick = (evt: EventGenreClick) => {
+  const isLessThanStep = () => films.length <= filmsPerStep || (activeTab !== ALL_GENRES && filmsByGenre.length <= filmsPerStep);
+  const getFilmsByTab = () => activeTab === ALL_GENRES ? films : filmsByGenre;
+
+
+  const onGenreClick = (evt: EventGenreClick) => {
     evt.preventDefault();
 
-    if (genre === evt.target.textContent) {
+    if (activeTab === evt.target.textContent) {
       return;
     }
 
-    dispatch(changeGenre(evt.target.textContent));
-    dispatch(receiveFilmsByGenre());
+    setFilmGenre((prev) => ({...prev, activeTab: evt.target.textContent}));
+    setFilmGenre((prev) => ({...prev, filmsByGenre: getFilteredFilmsByGenre(prev.activeTab, films), filmsPerStep: AMOUNT_FILMS_PER_STEP}));
+  };
+
+  const onShowMoreButtonClick = () => {
+    const totalFilmsCount = films.length;
+    const newCountFilmsPerStep = Math.min(totalFilmsCount, filmsPerStep + AMOUNT_FILMS_PER_STEP);
+    setFilmGenre((prev) => ({...prev, filmsPerStep: newCountFilmsPerStep}));
   };
 
   return (
-    <ul className="catalog__genres-list">
-      {uniqueGenres.map((filmGenre, index) => (
-        <li
-          key={index++}
-          className={(genre === ALL_GENRES && index === 0) || genre === filmGenre ?
-            'catalog__genres-item catalog__genres-item--active' :
-            'catalog__genres-item'}
-        >
-          <Link
-            to="#"
-            className="catalog__genres-link"
-            onClick={handleGenreClick}
-          >
-            {index === 0 ? ALL_GENRES : filmGenre}
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <>
+      <GenresTabs activeTab={activeTab} onGenreClick={onGenreClick} uniqueGenres={uniqueGenres} />
+
+      <FilmsList films={getFilmsByTab()} amountFilms={filmsPerStep} />
+
+      {
+        isLessThanStep() ?
+          null :
+          <ShowMoreButton
+            onShowMoreButtonClick={onShowMoreButtonClick}
+          />
+      }
+    </>
   );
 }
 

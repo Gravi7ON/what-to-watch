@@ -4,7 +4,7 @@ import {useAppDispatch} from '../../hooks/index';
 import {postCommentAction} from '../../store/api-actions';
 import {useParams} from 'react-router-dom';
 import {FilmId} from '../../types/films';
-import {redirectToRoute, setActiveFilmTab} from '../../store/action';
+import {redirectToRoute} from '../../store/action';
 
 function UserCommentForm(): JSX.Element {
   const {id} = useParams<FilmId>();
@@ -41,7 +41,6 @@ function UserCommentForm(): JSX.Element {
       return;
     }
 
-    dispatch(setActiveFilmTab('Reviews'));
     dispatch(redirectToRoute(`${AppRoute.Film}/${userComment.filmId}`));
   };
 

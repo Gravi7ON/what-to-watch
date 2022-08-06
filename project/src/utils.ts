@@ -7,7 +7,7 @@ const getFilteredFilmsByGenre = (genre: string, movies: Films): Films => {
     return movies;
   }
 
-  const filteredFilms = movies.filter((movie: {genre: string}) => movie.genre === genre);
+  const filteredFilms = [...movies].filter((movie: {genre: string}) => movie.genre === genre);
 
   return filteredFilms;
 };

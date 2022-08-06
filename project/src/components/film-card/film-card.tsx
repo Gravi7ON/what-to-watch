@@ -1,9 +1,8 @@
 import {Link, useNavigate} from 'react-router-dom';
-import {useState} from 'react';
-import {AppRoute, AMOUNT_FILMS_PER_STEP, ALL_GENRES, OVERVIEW_TAB} from '../../const';
+import {memo, useState} from 'react';
+import {AppRoute} from '../../const';
 import VideoPlayer from '../video-player/video-player';
 import {useAppDispatch} from '../../hooks/index';
-import {showMoreFilms, setActiveFilmTab, changeGenre} from '../../store/action';
 import {fetchCurentFilmAction} from '../../store/api-actions';
 
 type FilmCardProps = {
@@ -26,9 +25,6 @@ function FilmCard({name, previewImage, id, previewVideoLink}: FilmCardProps): JS
     }
 
     await dispatch(fetchCurentFilmAction(id.toString()));
-    dispatch(showMoreFilms(AMOUNT_FILMS_PER_STEP));
-    dispatch(setActiveFilmTab(OVERVIEW_TAB));
-    dispatch(changeGenre(ALL_GENRES));
   };
 
   return (
@@ -59,4 +55,4 @@ function FilmCard({name, previewImage, id, previewVideoLink}: FilmCardProps): JS
   );
 }
 
-export default FilmCard;
+export default memo(FilmCard);
