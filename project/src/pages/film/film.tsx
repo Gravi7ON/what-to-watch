@@ -6,23 +6,34 @@ import {FilmId} from '../../types/films';
 import FilmsList from '../../components/films-list/films-list';
 import Tabs from '../../components/tabs/tabs';
 import {isAuthorized} from '../../utils';
-import {useAppSelector} from '../../hooks';
-import LoadingScreen from '../loading/loading';
+import {useAppSelector, useAppDispatch} from '../../hooks';
+import {fetchCurentFilmAction} from '../../store/api-actions';
 
-function Film(): JSX.Element {
-  const {id} = useParams<FilmId>();
+function Film(): JSX.Element | null {
+  const {id = '1'} = useParams<FilmId>();
   const filmIndexInList = Number(id) - 1;
+
+  const dispatch = useAppDispatch();
 
   const {
     authorizationStatus,
-    isDataLoaded,
     currentMovie,
     similarMovies,
     movieComments,
-    movies} = useAppSelector((state) => state);
+    movies,
+    isDataLoaded
+  } = useAppSelector((state) => state);
 
   const isAuthorizedAndFilmsInList = () => movies.find((film) => film.id === filmIndexInList) &&
     authorizationStatus === AuthorizationStatus.Auth;
+
+  if (!Object.keys(currentMovie).length && !isDataLoaded) {
+    dispatch(fetchCurentFilmAction(id));
+  }
+
+  if (isDataLoaded) {
+    return null;
+  }
 
   const {
     name,
@@ -30,19 +41,14 @@ function Film(): JSX.Element {
     released,
     posterImage,
     backgroundImage,
+    backgroundColor
   } = currentMovie;
-
-  if (isDataLoaded) {
-    return (
-      <LoadingScreen />
-    );
-  }
 
   return (
     <>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
-          <div className="film-card__bg">
+          <div className="film-card__bg" style={{backgroundColor: backgroundColor}}>
             <img src={backgroundImage} alt={name} />
           </div>
 

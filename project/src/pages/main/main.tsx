@@ -6,9 +6,10 @@ import {Link, useNavigate} from 'react-router-dom';
 import GenresList from '../../components/genres-list/genres-list';
 import FilmsList from '../../components/films-list/films-list';
 import {useAppSelector, useAppDispatch} from '../../hooks/index';
-import {showMoreFilms, receiveFilmsByGenre, changeGenre} from '../../store/action';
+import {showMoreFilms, changeGenre} from '../../store/action';
 import ShowMoreButton from '../../components/show-more-button/show-more-button';
 import {isAuthorized} from '../../utils';
+import {memo} from 'react';
 
 function MainPage({films}: ScreenProps): JSX.Element {
   const navigate = useNavigate();
@@ -71,8 +72,7 @@ function MainPage({films}: ScreenProps): JSX.Element {
                 <button className="btn btn--play film-card__button" type="button" onClick={
                   () => {
                     dispatch(showMoreFilms(AMOUNT_FILMS_PER_STEP));
-                    dispatch(changeGenre('All genres'));
-                    dispatch(receiveFilmsByGenre());
+                    dispatch(changeGenre(ALL_GENRES));
                   }
                 }
                 >
@@ -85,8 +85,7 @@ function MainPage({films}: ScreenProps): JSX.Element {
                   () => {
                     navigate(AppRoute.MyList);
                     dispatch(showMoreFilms(AMOUNT_FILMS_PER_STEP));
-                    dispatch(changeGenre('All genres'));
-                    dispatch(receiveFilmsByGenre());
+                    dispatch(changeGenre(ALL_GENRES));
                   }
                 }
                 >
@@ -127,4 +126,4 @@ function MainPage({films}: ScreenProps): JSX.Element {
   );
 }
 
-export default MainPage;
+export default memo(MainPage);

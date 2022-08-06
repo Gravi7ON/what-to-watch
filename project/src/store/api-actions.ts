@@ -50,8 +50,9 @@ const fetchCurentFilmAction = createAsyncThunk<void, string, {
       dispatch(loadComments(filmComments));
       dispatch(setDataLoadedStatus(false));
     } catch {
+      dispatch(setError(null));
       dispatch(setDataLoadedStatus(false));
-      dispatch(redirectToRoute(AppRoute.Main));
+      dispatch(redirectToRoute(AppRoute.NotFound));
     }
   }
 );

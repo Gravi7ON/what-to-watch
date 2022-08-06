@@ -21,15 +21,10 @@ function FilmCard({name, previewImage, id, previewVideoLink}: FilmCardProps): JS
   const dispatch = useAppDispatch();
 
   const handleFilmCardClick = (isLink: boolean | null) => async () => {
-    if (isLink) {
-      await dispatch(fetchCurentFilmAction(id.toString()));
-      dispatch(showMoreFilms(AMOUNT_FILMS_PER_STEP));
-      dispatch(setActiveFilmTab(OVERVIEW_TAB));
-      dispatch(changeGenre(ALL_GENRES));
-      return;
+    if (!isLink) {
+      navigate(`${AppRoute.Film}/${id}`);
     }
 
-    navigate(`${AppRoute.Film}/${id}`);
     await dispatch(fetchCurentFilmAction(id.toString()));
     dispatch(showMoreFilms(AMOUNT_FILMS_PER_STEP));
     dispatch(setActiveFilmTab(OVERVIEW_TAB));

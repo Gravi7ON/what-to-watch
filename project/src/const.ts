@@ -4,7 +4,8 @@ enum AppRoute {
   MyList = '/mylist',
   Film = '/films',
   AddReview = '/films/:id/review',
-  Player = '/player/:id'
+  Player = '/player/:id',
+  NotFound = '/notfound'
 }
 
 enum AuthorizationStatus {

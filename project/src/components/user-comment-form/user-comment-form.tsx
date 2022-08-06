@@ -37,6 +37,7 @@ function UserCommentForm(): JSX.Element {
 
     const requestStatus = await dispatch(postCommentAction(userComment));
     if (requestStatus.meta.requestStatus === 'rejected') {
+      setUploadingComment(false);
       return;
     }
 
@@ -53,7 +54,7 @@ function UserCommentForm(): JSX.Element {
       </Fragment>
     ));
 
-  const isValidity = () => !(
+  const isValid = () => !(
     (userComment.comment.length >= MIN_COMMENT_LENGTH
     && userComment.comment.length <= MAX_COMMENT_LENGTH)
     && userComment.rating !== 0
@@ -74,7 +75,7 @@ function UserCommentForm(): JSX.Element {
           >
           </textarea>
           <div className="add-review__submit">
-            <button className="add-review__btn" disabled={isValidity()} type="submit"
+            <button className="add-review__btn" disabled={isValid()} type="submit"
               onClick={handleButtonSubmit}
             >
           Post
