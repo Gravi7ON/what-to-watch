@@ -2,6 +2,7 @@ import {useAppDispatch} from '../../hooks';
 import {loginAction} from '../../store/api-actions';
 import {useState} from 'react';
 import {CHECK_PASSWORD_VALIDITY} from '../../const';
+import {toast} from 'react-toastify';
 
 function FormSignIn() {
   const dispatch = useAppDispatch();
@@ -35,7 +36,11 @@ function FormSignIn() {
       return;
     }
 
-    dispatch(loginAction(userForm.formData));
+    dispatch(loginAction(userForm.formData)).catch(
+      (error) => {
+        toast.warn(error);
+      }
+    );
   };
 
 

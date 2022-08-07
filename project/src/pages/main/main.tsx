@@ -6,11 +6,14 @@ import {Link, useNavigate} from 'react-router-dom';
 import GenresList from '../../components/genres-list/genres-list';
 import {useAppSelector} from '../../hooks/index';
 import {isAuthorized} from '../../utils';
+import {getFilms} from '../../store/films-data/selectors';
+import {getAuthorizationStatus} from '../../store/user-process/selector';
 
 function MainPage({films}: ScreenProps): JSX.Element {
   const navigate = useNavigate();
 
-  const {movies} = useAppSelector((state) => state);
+  const movies = useAppSelector(getFilms);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const {
     name,
@@ -34,7 +37,7 @@ function MainPage({films}: ScreenProps): JSX.Element {
 
           <ul className="user-block">
             {
-              isAuthorized() ?
+              isAuthorized(authorizationStatus) ?
                 <UserLogo /> :
                 <Link to={AppRoute.SignIn} className="user-block__link">Sign in</Link>
             }
@@ -71,7 +74,7 @@ function MainPage({films}: ScreenProps): JSX.Element {
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">{isAuthorized() ? films.length : '0'}</span>
+                  <span className="film-card__count">{isAuthorized(authorizationStatus) ? films.length : '0'}</span>
                 </button>
               </div>
             </div>

@@ -1,6 +1,5 @@
 import {Films} from './types/films';
 import {ALL_GENRES, AuthorizationStatus} from './const';
-import {store} from './store/store';
 
 const getFilteredFilmsByGenre = (genre: string, movies: Films): Films => {
   if (genre === ALL_GENRES) {
@@ -12,6 +11,6 @@ const getFilteredFilmsByGenre = (genre: string, movies: Films): Films => {
   return filteredFilms;
 };
 
-const isAuthorized = () => store.getState().authorizationStatus === AuthorizationStatus.Auth;
+const isAuthorized = (authorizationStatus: AuthorizationStatus) => authorizationStatus === AuthorizationStatus.Auth;
 
 export {getFilteredFilmsByGenre, isAuthorized};

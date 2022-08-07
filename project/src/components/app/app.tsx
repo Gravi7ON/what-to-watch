@@ -13,9 +13,13 @@ import LoadingScreen from '../../pages/loading/loading';
 import {useAppSelector} from '../../hooks';
 import HistoryRouter from '../history-route/history-rout';
 import browserHistory from '../../browser-history';
+import {getAuthorizationStatus} from '../../store/user-process/selector';
+import {getLoadedDataStatus, getFilms} from '../../store/films-data/selectors';
 
 function App(): JSX.Element {
-  const {authorizationStatus, isDataLoaded, movies} = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isDataLoaded = useAppSelector(getLoadedDataStatus);
+  const movies = useAppSelector(getFilms);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoaded) {
     return (

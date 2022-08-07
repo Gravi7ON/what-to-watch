@@ -2,12 +2,15 @@ import {Link, useParams} from 'react-router-dom';
 import {AppRoute, AuthorizationStatus, LOGO_CLASS_NAME} from '../../const';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
-import {FilmId} from '../../types/films';
+import {Film as Movie, FilmId, Films} from '../../types/films';
 import FilmsList from '../../components/films-list/films-list';
 import FilmTabs from '../../components/film-tabs/film-tabs';
 import {isAuthorized} from '../../utils';
 import {useAppSelector, useAppDispatch} from '../../hooks';
 import {fetchCurentFilmAction} from '../../store/api-actions';
+import {getAuthorizationStatus} from '../../store/user-process/selector';
+import {getCurrentFilm, getCurrentFilmComments, getFilms, getLoadedDataStatus, getSimilarFilms} from '../../store/films-data/selectors';
+import { Comments } from '../../types/comments';
 
 function Film(): JSX.Element | null {
   const {id = '1'} = useParams<FilmId>();
@@ -15,15 +18,12 @@ function Film(): JSX.Element | null {
 
   const dispatch = useAppDispatch();
 
-  const {
-    authorizationStatus,
-    currentMovie,
-    similarMovies,
-    movieComments,
-    movies,
-    isDataLoaded
-  } = useAppSelector((state) => state);
-
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const movies = useAppSelector(getFilms);
+  const isDataLoaded = useAppSelector(getLoadedDataStatus);
+  const currentMovie = useAppSelector(getCurrentFilm) as Movie;
+  const similarMovies = useAppSelector(getSimilarFilms) as Films;
+  const movieComments = useAppSelector(getCurrentFilmComments) as Comments;
   const isAuthorizedAndFilmsInList = () => movies.find((film) => film.id === filmIndexInList) &&
     authorizationStatus === AuthorizationStatus.Auth;
 
@@ -59,7 +59,7 @@ function Film(): JSX.Element | null {
 
             <ul className="user-block">
               {
-                isAuthorized() ?
+                isAuthorized(authorizationStatus) ?
                   <UserLogo /> :
                   <Link to={AppRoute.SignIn} className="user-block__link">Sign in</Link>
               }
@@ -86,10 +86,10 @@ function Film(): JSX.Element | null {
                     <use xlinkHref={isAuthorizedAndFilmsInList() ? '#in-list' : '#add'}></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">{isAuthorized() ? movies.length : '0'}</span>
+                  <span className="film-card__count">{isAuthorized(authorizationStatus) ? movies.length : '0'}</span>
                 </button>
                 {
-                  isAuthorized() ?
+                  isAuthorized(authorizationStatus) ?
                     <Link to={`${AppRoute.Film}/${id}/review`} className="btn film-card__button">Add review</Link> :
                     null
                 }
