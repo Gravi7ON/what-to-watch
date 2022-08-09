@@ -5,9 +5,10 @@ import {State} from '../../types/state';
 
 const getFilms = (state: State): Films => state[NameSpace.Films].movies;
 const getLoadedDataStatus = (state: State): boolean => state[NameSpace.Films].isDataLoaded;
-const getCurrentFilm = (state: State): Film | undefined => state[NameSpace.Films]?.currentMovie;
-const getSimilarFilms = (state: State): Films | undefined => state[NameSpace.Films]?.similarMovies;
-const getCurrentFilmComments = (state: State): Comments | undefined => state[NameSpace.Films]?.movieComments;
+const getLoadedFilmStatus = (state: State): boolean => state[NameSpace.Films].isFilmLoaded;
+const getCurrentFilm = (state: State): Film | undefined => state[NameSpace.Films].currentMovie;
+const getSimilarFilms = (state: State): Films | undefined => state[NameSpace.Films].similarMovies;
+const getCurrentFilmComments = (state: State): Comments | undefined => state[NameSpace.Films].movieComments;
 
-export {getFilms, getLoadedDataStatus, getCurrentFilm, getSimilarFilms, getCurrentFilmComments};
+export {getFilms, getLoadedDataStatus, getCurrentFilm, getSimilarFilms, getLoadedFilmStatus, getCurrentFilmComments};
 

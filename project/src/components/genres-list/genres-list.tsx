@@ -32,8 +32,12 @@ function GenresList({films}: ScreenProps) {
       return;
     }
 
-    setFilmGenre((prev) => ({...prev, activeTab: evt.target.textContent}));
-    setFilmGenre((prev) => ({...prev, filmsByGenre: getFilteredFilmsByGenre(prev.activeTab, films), filmsPerStep: AMOUNT_FILMS_PER_STEP}));
+    setFilmGenre((prev) => ({
+      ...prev,
+      activeTab: evt.target.textContent,
+      filmsByGenre: getFilteredFilmsByGenre(prev.activeTab, films),
+      filmsPerStep: AMOUNT_FILMS_PER_STEP,
+    }));
   };
 
   const onShowMoreButtonClick = () => {

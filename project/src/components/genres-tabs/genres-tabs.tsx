@@ -10,12 +10,15 @@ type GenresTabsProps = {
 }
 
 function GenresTabs({uniqueGenres, activeTab, onGenreClick}: GenresTabsProps) {
+  const isActiveGenreTab = (index: number, filmGenre: string) =>
+    (activeTab === ALL_GENRES && index === 0) || activeTab === filmGenre;
+
   return (
     <ul className="catalog__genres-list">
       {uniqueGenres.map((filmGenre, index) => (
         <li
           key={`${index++} - ${filmGenre}`}
-          className={(activeTab === ALL_GENRES && index === 0) || activeTab === filmGenre ?
+          className={isActiveGenreTab(index, filmGenre) ?
             'catalog__genres-item catalog__genres-item--active' :
             'catalog__genres-item'}
         >

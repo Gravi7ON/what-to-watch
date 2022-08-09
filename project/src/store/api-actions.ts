@@ -6,7 +6,7 @@ import {
 } from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AppRoute} from '../const';
-import {Films, Film, CurrentFilmData} from '../types/films.js';
+import {Films, CurrentFilmData, Film} from '../types/films.js';
 import {AuthData} from '../types/auth-data.js';
 import {UserData} from '../types/user-data.js';
 import {Comments, UserComment} from '../types/comments.js';

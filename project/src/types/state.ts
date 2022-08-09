@@ -13,6 +13,7 @@ type FilmsData = {
   movieComments: Comments | undefined;
   similarMovies: Films | undefined;
   isDataLoaded: boolean;
+  isFilmLoaded: boolean;
 }
 
 type State = ReturnType<typeof store.getState>;
