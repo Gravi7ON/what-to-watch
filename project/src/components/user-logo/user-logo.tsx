@@ -2,6 +2,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {useAppDispatch} from '../../hooks';
 import {logoutAction} from '../../store/api-actions';
+import './user-logo.css';
 
 function UserLogo(): JSX.Element {
   const dispatch = useAppDispatch();

@@ -40,7 +40,7 @@ const createAPI = (): AxiosInstance => {
           toast.warn(error.response.data.error.slice(0, 18));
           throw error;
         }
-        toast.warn(error.response.data.error);
+        toast.dark(error.response.data.error);
       }
 
       throw error;

@@ -12,7 +12,7 @@ function FilmTabBar({activeTab, onTabClick, titleTabs}: TabBarProps) {
     <ul className="film-nav__list">
       {
         titleTabs.map((tab, index) => (
-          <li key={index++} className={activeTab === `${tab}` ? 'film-nav__item film-nav__item--active' : 'film-nav__item'}>
+          <li key={`${index++} - ${tab}`} className={activeTab === `${tab}` ? 'film-nav__item film-nav__item--active' : 'film-nav__item'}>
             <Link to={'#'} className="film-nav__link" onClick={onTabClick}>{tab}</Link>
           </li>
         ))

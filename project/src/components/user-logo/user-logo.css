@@ -1,0 +1,7 @@
+.user-block__avatar {
+  transition: transform 0.2s ease;
+}
+
+.user-block__avatar:hover {
+  transform: scale(1.1);
+}
