@@ -12,6 +12,10 @@
   background-color: #120102;
 }
 
+.spinner-text {
+  animation: wink 1.5s ease-in-out infinite;
+}
+
 .spinner::before {
   content: "";
   display: block;
@@ -31,6 +35,18 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes wink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 

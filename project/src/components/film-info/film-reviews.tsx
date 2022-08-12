@@ -19,7 +19,7 @@ function FilmReviews({comments}: CommentsProps): JSX.Element {
         {
           firsCommentsColumn.map((comment, index) => (
             <FilmComment
-              key={index++}
+              key={comment.id}
               {...comment}
             />
           ))
@@ -29,7 +29,7 @@ function FilmReviews({comments}: CommentsProps): JSX.Element {
         {
           secondCommentsColumn.map((comment, index) => (
             <FilmComment
-              key={index--}
+              key={comment.id}
               {...comment}
             />
           ))

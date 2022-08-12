@@ -2,12 +2,13 @@ import {AppRoute, RATING_STARS_COUNT, MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH} fr
 import {Fragment, useState} from 'react';
 import {useAppDispatch} from '../../hooks/index';
 import {postCommentAction} from '../../store/api-actions';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {FilmId} from '../../types/films';
-import {redirectToRoute, setActiveFilmTab} from '../../store/action';
 
 function UserCommentForm(): JSX.Element {
   const {id} = useParams<FilmId>();
+
+  const navigate = useNavigate();
 
   const [userComment, setComment] = useState({
     comment: '',
@@ -35,13 +36,19 @@ function UserCommentForm(): JSX.Element {
 
     setUploadingComment(true);
 
-    const requestStatus = await dispatch(postCommentAction(userComment));
-    if (requestStatus.meta.requestStatus === 'rejected') {
+    try {
+      await dispatch(postCommentAction(userComment))
+        .catch(
+          () => {
+            setUploadingComment(false);
+            throw new Error('need to cancel transition to film');
+          }
+        );
+    } catch {
       return;
     }
 
-    dispatch(setActiveFilmTab('Reviews'));
-    dispatch(redirectToRoute(`${AppRoute.Film}/${userComment.filmId}`));
+    navigate(`${AppRoute.Film}/${userComment.filmId}`);
   };
 
   const ratingStars: JSX.Element[] = Array.from({length: RATING_STARS_COUNT}, (element, index) => index + 1)
@@ -53,7 +60,7 @@ function UserCommentForm(): JSX.Element {
       </Fragment>
     ));
 
-  const isValidity = () => !(
+  const isValid = () => !(
     (userComment.comment.length >= MIN_COMMENT_LENGTH
     && userComment.comment.length <= MAX_COMMENT_LENGTH)
     && userComment.rating !== 0
@@ -74,7 +81,7 @@ function UserCommentForm(): JSX.Element {
           >
           </textarea>
           <div className="add-review__submit">
-            <button className="add-review__btn" disabled={isValidity()} type="submit"
+            <button className="add-review__btn" disabled={isValid()} type="submit"
               onClick={handleButtonSubmit}
             >
           Post

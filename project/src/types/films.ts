@@ -1,3 +1,5 @@
+import {Comments} from './comments';
+
 type Film = {
   name: string;
   posterImage: string;
@@ -32,6 +34,14 @@ type FilmTabProps = {
   film: Film;
 }
 
+type CurrentFilmData = {
+  currentFilm: Film;
+  similarFilms: Films;
+  filmComments: Comments;
+}
+
 type TabEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {target: {tagName: string; textContent: string}}
 
-export type {ScreenProps, Film, Films, FilmId, FilmTabProps, TabEvent};
+type EventGenreClick = {preventDefault: () => void; target: {textContent: string}} & React.MouseEvent<HTMLAnchorElement, MouseEvent>
+
+export type {ScreenProps, Film, Films, FilmId, FilmTabProps, TabEvent, EventGenreClick, CurrentFilmData};

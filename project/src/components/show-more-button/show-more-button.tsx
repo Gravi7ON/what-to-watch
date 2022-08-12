@@ -11,4 +11,3 @@ function ShowMoreButton({onShowMoreButtonClick}: ShowMoreButtonProps): JSX.Eleme
 }
 
 export default ShowMoreButton;
-

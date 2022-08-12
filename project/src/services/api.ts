@@ -1,11 +1,12 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
 import {getToken} from './token';
-import {processErrorHandle} from './process-error-handle';
 import {HTTPStatusCode} from '../const';
+import {toast} from 'react-toastify';
 
 const StatusCodeMapping: Record<number, boolean> = {
   [HTTPStatusCode.BAD_REQUEST]: true,
-  [HTTPStatusCode.NOT_FOUND]: true
+  [HTTPStatusCode.NOT_FOUND]: true,
+  [HTTPStatusCode.UNAUTHORIZED]: true
 };
 
 const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
@@ -35,7 +36,11 @@ const createAPI = (): AxiosInstance => {
     (response) => response,
     (error: AxiosError) => {
       if (error.response && shouldDisplayError(error.response)) {
-        processErrorHandle(error.response.data.error);
+        if (error.response.status === HTTPStatusCode.UNAUTHORIZED) {
+          toast.warn(error.response.data.error.slice(0, 18));
+          throw error;
+        }
+        toast.dark(error.response.data.error);
       }
 
       throw error;

@@ -4,7 +4,8 @@ enum AppRoute {
   MyList = '/mylist',
   Film = '/films',
   AddReview = '/films/:id/review',
-  Player = '/player/:id'
+  Player = '/player/:id',
+  NotFound = '/notfound'
 }
 
 enum AuthorizationStatus {
@@ -30,7 +31,13 @@ enum APIRoute {
 
 enum HTTPStatusCode {
   BAD_REQUEST = 400,
-  NOT_FOUND = 404
+  NOT_FOUND = 404,
+  UNAUTHORIZED = 401
+}
+
+enum NameSpace {
+  Films = 'FILMS',
+  User = 'USER',
 }
 
 const MAX_SHOW_SIMILAR_FILMS = 4;
@@ -53,8 +60,6 @@ const MIN_COMMENT_LENGTH = 50;
 
 const MAX_COMMENT_LENGTH = 400;
 
-const TIMEOUT_SHOW_ERROR = 5000;
-
 const CHECK_PASSWORD_VALIDITY = /(?=.*[0-9])(?=.*[A-Za-z])[0-9a-zA-Z]{2,}/;
 
 export {
@@ -69,10 +74,10 @@ export {
   TIME_UNTIL_ACTIVATION_PREVIEW,
   ALL_GENRES,
   APIRoute,
-  TIMEOUT_SHOW_ERROR,
   OVERVIEW_TAB,
   HTTPStatusCode,
   CHECK_PASSWORD_VALIDITY,
   MIN_COMMENT_LENGTH,
-  MAX_COMMENT_LENGTH
+  MAX_COMMENT_LENGTH,
+  NameSpace
 };

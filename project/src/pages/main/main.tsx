@@ -1,26 +1,19 @@
-import {AppRoute, LOGO_CLASS_NAME, AMOUNT_FILMS_PER_STEP, ALL_GENRES} from '../../const';
+import {AppRoute, LOGO_CLASS_NAME} from '../../const';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
 import {ScreenProps} from '../../types/films';
 import {Link, useNavigate} from 'react-router-dom';
 import GenresList from '../../components/genres-list/genres-list';
-import FilmsList from '../../components/films-list/films-list';
-import {useAppSelector, useAppDispatch} from '../../hooks/index';
-import {showMoreFilms, receiveFilmsByGenre, changeGenre} from '../../store/action';
-import ShowMoreButton from '../../components/show-more-button/show-more-button';
+import {useAppSelector} from '../../hooks/index';
 import {isAuthorized} from '../../utils';
+import {getFilms} from '../../store/films-data/selectors';
+import {getAuthorizationStatus} from '../../store/user-process/selector';
 
 function MainPage({films}: ScreenProps): JSX.Element {
   const navigate = useNavigate();
 
-  const {movies, filmsPerStep, moviesByGenre, genreTab} = useAppSelector((state) => state);
-  const dispatch = useAppDispatch();
-
-  const onShowMoreButtonClick = () => {
-    const totalFilmsCount = movies.length;
-    const newCountFilmsPerStep = Math.min(totalFilmsCount, filmsPerStep + AMOUNT_FILMS_PER_STEP);
-    dispatch(showMoreFilms(newCountFilmsPerStep));
-  };
+  const movies = useAppSelector(getFilms);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const {
     name,
@@ -29,9 +22,6 @@ function MainPage({films}: ScreenProps): JSX.Element {
     posterImage,
     backgroundImage
   } = films[0];
-
-  const isLessThanStep = () => movies.length <= filmsPerStep || (genreTab !== ALL_GENRES && moviesByGenre.length <= filmsPerStep);
-  const getFilmsByTab = () => genreTab === ALL_GENRES ? movies : moviesByGenre;
 
   return (
     <>
@@ -47,7 +37,7 @@ function MainPage({films}: ScreenProps): JSX.Element {
 
           <ul className="user-block">
             {
-              isAuthorized() ?
+              isAuthorized(authorizationStatus) ?
                 <UserLogo /> :
                 <Link to={AppRoute.SignIn} className="user-block__link">Sign in</Link>
             }
@@ -68,14 +58,7 @@ function MainPage({films}: ScreenProps): JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button" onClick={
-                  () => {
-                    dispatch(showMoreFilms(AMOUNT_FILMS_PER_STEP));
-                    dispatch(changeGenre('All genres'));
-                    dispatch(receiveFilmsByGenre());
-                  }
-                }
-                >
+                <button className="btn btn--play film-card__button" type="button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
@@ -84,9 +67,6 @@ function MainPage({films}: ScreenProps): JSX.Element {
                 <button className="btn btn--list film-card__button" type="button" onClick={
                   () => {
                     navigate(AppRoute.MyList);
-                    dispatch(showMoreFilms(AMOUNT_FILMS_PER_STEP));
-                    dispatch(changeGenre('All genres'));
-                    dispatch(receiveFilmsByGenre());
                   }
                 }
                 >
@@ -94,7 +74,7 @@ function MainPage({films}: ScreenProps): JSX.Element {
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">{isAuthorized() ? films.length : '0'}</span>
+                  <span className="film-card__count">{isAuthorized(authorizationStatus) ? films.length : '0'}</span>
                 </button>
               </div>
             </div>
@@ -107,16 +87,6 @@ function MainPage({films}: ScreenProps): JSX.Element {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <GenresList films={movies} />
-
-          <FilmsList films={getFilmsByTab()} amountFilms={filmsPerStep} />
-
-          {
-            isLessThanStep() ?
-              null :
-              <ShowMoreButton
-                onShowMoreButtonClick={onShowMoreButtonClick}
-              />
-          }
         </section>
 
         <footer className="page-footer">
