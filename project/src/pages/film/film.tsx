@@ -7,7 +7,7 @@ import FilmsList from '../../components/films-list/films-list';
 import FilmTabs from '../../components/film-tabs/film-tabs';
 import {isAuthorized} from '../../utils';
 import {useAppSelector, useAppDispatch} from '../../hooks';
-import {fetchCurentFilmAction} from '../../store/api-actions';
+import {fetchCurrentFilmAction} from '../../store/api-actions';
 import {getAuthorizationStatus} from '../../store/user-process/selector';
 import {getCurrentFilm, getCurrentFilmComments, getFilms, getLoadedFilmStatus, getSimilarFilms} from '../../store/films-data/selectors';
 import LoadingScreen from '../loading/loading';
@@ -21,9 +21,12 @@ function Film(): JSX.Element | null {
 
   useEffect(
     () => {
-      dispatch(fetchCurentFilmAction(id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id]
+      const timerId = requestAnimationFrame(() => {
+        dispatch(fetchCurrentFilmAction(id));
+      });
+
+      return () => cancelAnimationFrame(timerId);
+    }, [id, dispatch]
   );
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);

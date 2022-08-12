@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../const';
 import {FilmsData} from '../../types/state';
-import {fetchCurentFilmAction, fetchFilmsAction, postCommentAction} from '../api-actions';
+import {fetchCurrentFilmAction, fetchFilmsAction, postCommentAction} from '../api-actions';
 
 const initialState: FilmsData = {
   movies: [],
@@ -22,16 +22,16 @@ export const filmsData = createSlice({
         state.movies = action.payload;
         state.isDataLoaded = false;
       })
-      .addCase(fetchCurentFilmAction.pending, (state) => {
+      .addCase(fetchCurrentFilmAction.pending, (state) => {
         state.isFilmLoaded = true;
       })
-      .addCase(fetchCurentFilmAction.fulfilled, (state, action) => {
+      .addCase(fetchCurrentFilmAction.fulfilled, (state, action) => {
         state.currentMovie = action.payload?.currentFilm;
         state.similarMovies = action.payload?.similarFilms;
         state.movieComments = action.payload?.filmComments;
         state.isFilmLoaded = false;
       })
-      .addCase(fetchCurentFilmAction.rejected, (state) => {
+      .addCase(fetchCurrentFilmAction.rejected, (state) => {
         state.isFilmLoaded = false;
       })
       .addCase(postCommentAction.fulfilled, (state, action) => {

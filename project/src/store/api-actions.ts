@@ -24,7 +24,7 @@ const fetchFilmsAction = createAsyncThunk<Films, undefined, {
   }
 );
 
-const fetchCurentFilmAction = createAsyncThunk<CurrentFilmData | undefined, string, {
+const fetchCurrentFilmAction = createAsyncThunk<CurrentFilmData | undefined, string, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -94,7 +94,7 @@ const logoutAction = createAsyncThunk<void, undefined, {
 
 export {
   fetchFilmsAction,
-  fetchCurentFilmAction,
+  fetchCurrentFilmAction,
   checkAuthAction,
   loginAction,
   logoutAction,
