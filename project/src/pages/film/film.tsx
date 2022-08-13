@@ -5,9 +5,9 @@ import UserLogo from '../../components/user-logo/user-logo';
 import {FilmId} from '../../types/films';
 import FilmsList from '../../components/films-list/films-list';
 import FilmTabs from '../../components/film-tabs/film-tabs';
-import {isAuthorized, isAuthorizedAndFilmsInList} from '../../utils';
+import {isAuthorized, isAuthorizedAndFilmsInList, isFilmFavorite} from '../../utils';
 import {useAppSelector, useAppDispatch} from '../../hooks';
-import {fetchCurrentFilmAction} from '../../store/api-actions';
+import {addFilmToFavoritesAction, fetchCurrentFilmAction} from '../../store/api-actions';
 import {getAuthorizationStatus} from '../../store/user-process/selector';
 import {
   getCurrentFilm,
@@ -101,7 +101,10 @@ function Film(): JSX.Element | null {
                     </svg>
                     <span>Play</span>
                   </button>
-                  <button className="btn btn--list film-card__button" type="button">
+                  <button className="btn btn--list film-card__button" type="button" onClick={() => {
+                    dispatch(addFilmToFavoritesAction({filmId: Number(id), status: isFilmFavorite(favoritesFilms, id) ? 0 : 1}));
+                  }}
+                  >
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref={isAuthorizedAndFilmsInList(authorizationStatus, favoritesFilms, id) ? '#in-list' : '#add'}></use>
                     </svg>

@@ -6,7 +6,7 @@ import {
 } from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AppRoute} from '../const';
-import {Films, CurrentFilmData, FetchFilms, Film} from '../types/films.js';
+import {Films, CurrentFilmData, FetchFilms, Film, UpdateFilm} from '../types/films.js';
 import {AuthData} from '../types/auth-data.js';
 import {UserData} from '../types/user-data.js';
 import {Comments, UserComment} from '../types/comments.js';
@@ -75,6 +75,19 @@ const postCommentAction = createAsyncThunk<Comments, UserComment, {
   }
 );
 
+const addFilmToFavoritesAction = createAsyncThunk<Film, UpdateFilm, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/addFilmToFavorite',
+  async ({status, filmId}, {dispatch, extra: api}) => {
+    const {data: updateFilm} = await api.post<Film>(`${APIRoute.Favorite}/${filmId}/${status}`);
+
+    return updateFilm;
+  }
+);
+
 const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,
   state: State,
@@ -118,5 +131,6 @@ export {
   loginAction,
   logoutAction,
   postCommentAction,
-  fetchMyListAction
+  fetchMyListAction,
+  addFilmToFavoritesAction
 };

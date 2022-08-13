@@ -1,7 +1,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../const';
 import {FilmsData} from '../../types/state';
-import {fetchCurrentFilmAction, fetchFilmsAction, fetchMyListAction, postCommentAction} from '../api-actions';
+import {addFilmToFavoritesAction, fetchCurrentFilmAction, fetchFilmsAction, fetchMyListAction, postCommentAction} from '../api-actions';
 
 const initialState: FilmsData = {
   movies: [],
@@ -54,6 +54,19 @@ export const filmsData = createSlice({
       })
       .addCase(fetchMyListAction.rejected, (state) => {
         state.isFavoritesLoaded = false;
+      })
+      .addCase(addFilmToFavoritesAction.fulfilled, (state, action) => {
+        const updatedFilmlIndex = state.favorites?.findIndex((updatedFilm) => updatedFilm.id === action.payload.id);
+
+        if (!action.payload.isFavorite && state.favorites && updatedFilmlIndex) {
+          state.favorites = [
+            ...state.favorites.slice(0, updatedFilmlIndex),
+            ...state.favorites.slice(updatedFilmlIndex + 1)
+          ];
+          return;
+        }
+
+        state.favorites?.push(action.payload);
       });
   }
 });
