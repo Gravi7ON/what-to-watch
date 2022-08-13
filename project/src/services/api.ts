@@ -37,7 +37,7 @@ const createAPI = (): AxiosInstance => {
     (error: AxiosError) => {
       if (error.response && shouldDisplayError(error.response)) {
         if (error.response.status === HTTPStatusCode.UNAUTHORIZED) {
-          toast.warn(error.response.data.error.slice(0, 18));
+          toast.dark(error.response.data.error.slice(0, 18));
           throw error;
         }
         toast.dark(error.response.data.error);

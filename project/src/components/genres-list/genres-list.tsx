@@ -1,5 +1,5 @@
 import {Films, ScreenProps, EventGenreClick} from '../../types/films';
-import {ALL_GENRES, AMOUNT_FILMS_PER_STEP} from '../../const';
+import {ALL_GENRES, AMOUNT_FILMS_PER_STEP, MAX_AMOUNT_GENRES} from '../../const';
 import FilmsList from '../films-list/films-list';
 import ShowMoreButton from '../show-more-button/show-more-button';
 import {useState} from 'react';
@@ -19,7 +19,8 @@ function GenresList({films}: ScreenProps) {
     filmsByGenre: []
   });
 
-  const uniqueGenres = Array.from(new Set(films.map((film) => film.genre)));
+  const uniqueGenres = Array.from(new Set(films.map((film) => film.genre))).slice(0, MAX_AMOUNT_GENRES);
+  uniqueGenres.unshift(ALL_GENRES);
 
   const isLessThanStep = () => films.length <= filmsPerStep || (activeTab !== ALL_GENRES && filmsByGenre.length <= filmsPerStep);
   const getFilmsByTab = () => activeTab === ALL_GENRES ? films : filmsByGenre;
@@ -35,8 +36,8 @@ function GenresList({films}: ScreenProps) {
     setFilmGenre((prev) => ({
       ...prev,
       activeTab: evt.target.textContent,
-      filmsByGenre: getFilteredFilmsByGenre(prev.activeTab, films),
-      filmsPerStep: AMOUNT_FILMS_PER_STEP,
+      filmsByGenre: getFilteredFilmsByGenre(evt.target.textContent, films),
+      filmsPerStep: AMOUNT_FILMS_PER_STEP
     }));
   };
 

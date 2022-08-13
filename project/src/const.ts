@@ -52,6 +52,8 @@ const HOUR_IN_MINUTES = 60;
 
 const TIME_UNTIL_ACTIVATION_PREVIEW = 1000;
 
+const MAX_AMOUNT_GENRES = 9;
+
 const ALL_GENRES = 'All genres';
 
 const OVERVIEW_TAB = 'Overview';
@@ -79,5 +81,6 @@ export {
   CHECK_PASSWORD_VALIDITY,
   MIN_COMMENT_LENGTH,
   MAX_COMMENT_LENGTH,
-  NameSpace
+  NameSpace,
+  MAX_AMOUNT_GENRES
 };

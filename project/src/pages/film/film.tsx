@@ -21,11 +21,11 @@ function Film(): JSX.Element | null {
 
   useEffect(
     () => {
-      const timerId = requestAnimationFrame(() => {
+      const requestId = requestAnimationFrame(() => {
         dispatch(fetchCurrentFilmAction(id));
       });
 
-      return () => cancelAnimationFrame(timerId);
+      return () => cancelAnimationFrame(requestId);
     }, [id, dispatch]
   );
 
