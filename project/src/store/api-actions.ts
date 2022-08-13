@@ -6,12 +6,12 @@ import {
 } from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AppRoute} from '../const';
-import {Films, CurrentFilmData, Film} from '../types/films.js';
+import {Films, CurrentFilmData, FetchFilms, Film} from '../types/films.js';
 import {AuthData} from '../types/auth-data.js';
 import {UserData} from '../types/user-data.js';
 import {Comments, UserComment} from '../types/comments.js';
 
-const fetchFilmsAction = createAsyncThunk<Films, undefined, {
+const fetchFilmsAction = createAsyncThunk<FetchFilms, undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
@@ -19,8 +19,10 @@ const fetchFilmsAction = createAsyncThunk<Films, undefined, {
   'data/fetchFilms',
   async (_arg, {dispatch, extra: api}) => {
     const {data: films} = await api.get<Films>(APIRoute.Films);
+    const {data: promoFilm} = await api.get<Film>(APIRoute.PromoFilm);
+    const {data: myFilms} = await api.get<Films>(APIRoute.Favorite);
 
-    return films;
+    return {films, promoFilm, myFilms};
   }
 );
 
@@ -39,6 +41,23 @@ const fetchCurrentFilmAction = createAsyncThunk<CurrentFilmData | undefined, str
       return {currentFilm, similarFilms, filmComments};
     } catch {
       dispatch(redirectToRoute(AppRoute.NotFound));
+    }
+  }
+);
+
+const fetchMyListAction = createAsyncThunk<Films | undefined, undefined, {
+  dispatch: AppDispatch,
+  state: State,
+  extra: AxiosInstance
+}>(
+  'data/fetchFavoritesFilms',
+  async (_arg, {dispatch, extra: api}) => {
+    try {
+      const {data: myFilms} = await api.get<Films>(APIRoute.Favorite);
+
+      return myFilms;
+    } catch {
+      dispatch(redirectToRoute(AppRoute.Main));
     }
   }
 );
@@ -98,5 +117,6 @@ export {
   checkAuthAction,
   loginAction,
   logoutAction,
-  postCommentAction
+  postCommentAction,
+  fetchMyListAction
 };

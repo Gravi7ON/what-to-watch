@@ -4,7 +4,7 @@ enum AppRoute {
   MyList = '/mylist',
   Film = '/films',
   AddReview = '/films/:id/review',
-  Player = '/player/:id',
+  Player = '/player',
   NotFound = '/notfound'
 }
 
@@ -23,6 +23,8 @@ enum TextFormRating {
 }
 
 enum APIRoute {
+  Favorite = '/favorite',
+  PromoFilm = '/promo',
   Films = '/films',
   SignIn = '/login',
   Logout = '/logout',

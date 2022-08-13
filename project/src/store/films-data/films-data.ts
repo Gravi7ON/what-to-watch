@@ -1,15 +1,18 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {NameSpace} from '../../const';
 import {FilmsData} from '../../types/state';
-import {fetchCurrentFilmAction, fetchFilmsAction, postCommentAction} from '../api-actions';
+import {fetchCurrentFilmAction, fetchFilmsAction, fetchMyListAction, postCommentAction} from '../api-actions';
 
 const initialState: FilmsData = {
   movies: [],
+  favorites: [],
+  promoFilm: undefined,
   currentMovie: undefined,
   movieComments: [],
   similarMovies: [],
   isDataLoaded: true,
-  isFilmLoaded: true
+  isFilmLoaded: true,
+  isFavoritesLoaded: false,
 };
 
 export const filmsData = createSlice({
@@ -19,7 +22,9 @@ export const filmsData = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchFilmsAction.fulfilled, (state, action) => {
-        state.movies = action.payload;
+        state.movies = action.payload.films;
+        state.promoFilm = action.payload?.promoFilm;
+        state.favorites = action.payload.myFilms;
         state.isDataLoaded = false;
       })
       .addCase(fetchCurrentFilmAction.pending, (state) => {
@@ -39,6 +44,16 @@ export const filmsData = createSlice({
       })
       .addCase(postCommentAction.rejected, () => {
         throw new Error('need to cancel transition to sign in');
+      })
+      .addCase(fetchMyListAction.pending, (state) => {
+        state.isFavoritesLoaded = true;
+      })
+      .addCase(fetchMyListAction.fulfilled, (state, action) => {
+        state.favorites = action.payload;
+        state.isFavoritesLoaded = false;
+      })
+      .addCase(fetchMyListAction.rejected, (state) => {
+        state.isFavoritesLoaded = false;
       });
   }
 });

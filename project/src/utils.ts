@@ -13,4 +13,8 @@ const getFilteredFilmsByGenre = (genre: string, movies: Films): Films => {
 
 const isAuthorized = (authorizationStatus: AuthorizationStatus) => authorizationStatus === AuthorizationStatus.Auth;
 
-export {getFilteredFilmsByGenre, isAuthorized};
+const isAuthorizedAndFilmsInList = (authorizationStatus: AuthorizationStatus, favoritesFilms: Films, id: string) =>
+  favoritesFilms?.find((film) => film.id === Number(id)) &&
+  authorizationStatus === AuthorizationStatus.Auth;
+
+export {getFilteredFilmsByGenre, isAuthorized, isAuthorizedAndFilmsInList};
