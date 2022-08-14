@@ -34,7 +34,7 @@ function App(): JSX.Element {
         <Route
           path={AppRoute.Main}
           element={
-            <MainPage films={movies} />
+            <MainPage />
           }
         />
         <Route
@@ -45,7 +45,7 @@ function App(): JSX.Element {
           path={AppRoute.MyList}
           element={
             <PrivateRoute authorizationStatus={authorizationStatus}>
-              <MyList films={movies} />
+              <MyList />
             </PrivateRoute>
           }
         />
@@ -65,10 +65,14 @@ function App(): JSX.Element {
             </PrivateRoute>
           }
         />
-        <Route
-          path={AppRoute.Player}
-          element={<Player films={movies} />}
-        />
+        <Route path={AppRoute.Player}>
+          <Route
+            path=':id'
+            element={
+              <Player films={movies} />
+            }
+          />
+        </Route>
         <Route
           path="*"
           element={<NotFound />}

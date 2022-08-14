@@ -9,11 +9,14 @@ type UserProcess = {
 
 type FilmsData = {
   movies: Films;
+  favorites: Films | undefined;
   currentMovie: Film | undefined;
+  promoFilm: Film | undefined;
   movieComments: Comments | undefined;
   similarMovies: Films | undefined;
   isDataLoaded: boolean;
   isFilmLoaded: boolean;
+  isFavoritesLoaded: boolean;
 }
 
 type State = ReturnType<typeof store.getState>;

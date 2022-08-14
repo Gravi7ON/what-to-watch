@@ -1,42 +1,47 @@
-import {Link, useParams} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus, LOGO_CLASS_NAME} from '../../const';
+import {Link, useNavigate, useParams} from 'react-router-dom';
+import {AppRoute, LOGO_CLASS_NAME} from '../../const';
 import Logo from '../../components/logo/logo';
 import UserLogo from '../../components/user-logo/user-logo';
 import {FilmId} from '../../types/films';
 import FilmsList from '../../components/films-list/films-list';
 import FilmTabs from '../../components/film-tabs/film-tabs';
-import {isAuthorized} from '../../utils';
+import {isAuthorized, isAuthorizedAndFilmsInList, isFilmFavorite} from '../../utils';
 import {useAppSelector, useAppDispatch} from '../../hooks';
-import {fetchCurrentFilmAction} from '../../store/api-actions';
+import {addFilmToFavoritesAction, fetchCurrentFilmAction} from '../../store/api-actions';
 import {getAuthorizationStatus} from '../../store/user-process/selector';
-import {getCurrentFilm, getCurrentFilmComments, getFilms, getLoadedFilmStatus, getSimilarFilms} from '../../store/films-data/selectors';
+import {
+  getCurrentFilm,
+  getCurrentFilmComments,
+  getFavoritesFilms,
+  getLoadedFilmStatus,
+  getSimilarFilms
+} from '../../store/films-data/selectors';
 import LoadingScreen from '../loading/loading';
 import {useEffect} from 'react';
 
 function Film(): JSX.Element | null {
   const {id = '1'} = useParams<FilmId>();
-  const filmIndexInList = Number(id) - 1;
+
+  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
   useEffect(
     () => {
-      const timerId = requestAnimationFrame(() => {
+      const requestId = requestAnimationFrame(() => {
         dispatch(fetchCurrentFilmAction(id));
       });
 
-      return () => cancelAnimationFrame(timerId);
+      return () => cancelAnimationFrame(requestId);
     }, [id, dispatch]
   );
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const movies = useAppSelector(getFilms);
   const isFilmLoaded = useAppSelector(getLoadedFilmStatus);
   const currentMovie = useAppSelector(getCurrentFilm);
   const similarMovies = useAppSelector(getSimilarFilms);
   const movieComments = useAppSelector(getCurrentFilmComments);
-  const isAuthorizedAndFilmsInList = () => movies.find((film) => film.id === filmIndexInList) &&
-    authorizationStatus === AuthorizationStatus.Auth;
+  const favoritesFilms = useAppSelector(getFavoritesFilms);
 
   if (isFilmLoaded) {
     return (
@@ -44,7 +49,7 @@ function Film(): JSX.Element | null {
     );
   }
 
-  if (currentMovie && similarMovies && movieComments) {
+  if (currentMovie && similarMovies && movieComments && favoritesFilms) {
     const {
       name,
       genre,
@@ -56,9 +61,9 @@ function Film(): JSX.Element | null {
 
     return (
       <>
-        <section className="film-card film-card--full">
+        <section className="film-card film-card--full" style={{backgroundColor: backgroundColor}}>
           <div className="film-card__hero">
-            <div className="film-card__bg" style={{backgroundColor: backgroundColor}}>
+            <div className="film-card__bg">
               <img src={backgroundImage} alt={name} />
             </div>
 
@@ -85,18 +90,26 @@ function Film(): JSX.Element | null {
                 </p>
 
                 <div className="film-card__buttons">
-                  <button className="btn btn--play film-card__button" type="button">
+                  <button className="btn btn--play film-card__button" type="button" onClick={
+                    () => {
+                      navigate(`${AppRoute.Player}/${id}`);
+                    }
+                  }
+                  >
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
                     <span>Play</span>
                   </button>
-                  <button className="btn btn--list film-card__button" type="button">
+                  <button className="btn btn--list film-card__button" type="button" onClick={() => {
+                    dispatch(addFilmToFavoritesAction({filmId: Number(id), status: isFilmFavorite(favoritesFilms, id) ? 0 : 1}));
+                  }}
+                  >
                     <svg viewBox="0 0 19 20" width="19" height="20">
-                      <use xlinkHref={isAuthorizedAndFilmsInList() ? '#in-list' : '#add'}></use>
+                      <use xlinkHref={isAuthorizedAndFilmsInList(authorizationStatus, favoritesFilms, id) ? '#in-list' : '#add'}></use>
                     </svg>
                     <span>My list</span>
-                    <span className="film-card__count">{isAuthorized(authorizationStatus) ? movies.length : '0'}</span>
+                    <span className="film-card__count">{isAuthorized(authorizationStatus) ? favoritesFilms.length : '0'}</span>
                   </button>
                   {
                     isAuthorized(authorizationStatus) ?
