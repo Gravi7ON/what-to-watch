@@ -17,10 +17,12 @@ import {
   getSimilarFilms
 } from '../../store/films-data/selectors';
 import LoadingScreen from '../loading/loading';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 
 function Film(): JSX.Element | null {
   const {id = '1'} = useParams<FilmId>();
+
+  const [isAddingFilm , setIsAddingFilm] = useState(false);
 
   const navigate = useNavigate();
 
@@ -101,9 +103,13 @@ function Film(): JSX.Element | null {
                     </svg>
                     <span>Play</span>
                   </button>
-                  <button className="btn btn--list film-card__button" type="button" onClick={() => {
-                    dispatch(addFilmToFavoritesAction({filmId: Number(id), status: isFilmFavorite(favoritesFilms, id) ? 0 : 1}));
-                  }}
+                  <button className="btn btn--list film-card__button" disabled={isAddingFilm} type="button" onClick={
+                    async () => {
+                      setIsAddingFilm(true);
+                      await dispatch(addFilmToFavoritesAction({filmId: Number(id), status: isFilmFavorite(favoritesFilms, id) ? 0 : 1}));
+                      setIsAddingFilm(false);
+                    }
+                  }
                   >
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref={isAuthorizedAndFilmsInList(authorizationStatus, favoritesFilms, id) ? '#in-list' : '#add'}></use>
