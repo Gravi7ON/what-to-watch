@@ -20,9 +20,8 @@ const fetchFilmsAction = createAsyncThunk<FetchFilms, undefined, {
   async (_arg, {dispatch, extra: api}) => {
     const {data: films} = await api.get<Films>(APIRoute.Films);
     const {data: promoFilm} = await api.get<Film>(APIRoute.PromoFilm);
-    const {data: myFilms} = await api.get<Films>(APIRoute.Favorite);
 
-    return {films, promoFilm, myFilms};
+    return {films, promoFilm};
   }
 );
 

@@ -46,9 +46,8 @@ type CurrentFilmData = {
 }
 
 type FetchFilms = {
-  films: Films,
-  promoFilm: Film,
-  myFilms: Films
+  films: Films;
+  promoFilm: Film;
 }
 
 type TabEvent = React.MouseEvent<HTMLAnchorElement, MouseEvent> & {target: {tagName: string; textContent: string}}

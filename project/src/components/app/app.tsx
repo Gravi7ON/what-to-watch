@@ -10,16 +10,33 @@ import {AppRoute, AuthorizationStatus} from '../../const';
 import {Route, Routes} from 'react-router-dom';
 import PrivateRoute from '../private-route/private-route';
 import LoadingScreen from '../../pages/loading/loading';
-import {useAppSelector} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import HistoryRouter from '../history-route/history-rout';
 import browserHistory from '../../browser-history';
 import {getAuthorizationStatus} from '../../store/user-process/selector';
 import {getLoadedDataStatus, getFilms} from '../../store/films-data/selectors';
+import {fetchMyListAction} from '../../store/api-actions';
+import {isAuthorized} from '../../utils';
+import {useEffect} from 'react';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const isDataLoaded = useAppSelector(getLoadedDataStatus);
   const movies = useAppSelector(getFilms);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(
+    () => {
+      const requestId = requestAnimationFrame(() => {
+        if (isAuthorized(authorizationStatus)) {
+          dispatch(fetchMyListAction());
+        }
+      });
+
+      return () => cancelAnimationFrame(requestId);
+    }, [authorizationStatus, dispatch]
+  );
 
   if (authorizationStatus === AuthorizationStatus.Unknown || isDataLoaded) {
     return (
