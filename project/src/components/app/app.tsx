@@ -16,7 +16,7 @@ import browserHistory from '../../browser-history';
 import {getAuthorizationStatus} from '../../store/user-process/selector';
 import {getLoadedDataStatus, getFilms} from '../../store/films-data/selectors';
 import {fetchMyListAction} from '../../store/api-actions';
-import {isAuthorized} from '../../utils';
+import {isAuthorized} from '../../utils/utils';
 import {useEffect} from 'react';
 
 function App(): JSX.Element {

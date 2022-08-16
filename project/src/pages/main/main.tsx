@@ -4,7 +4,7 @@ import UserLogo from '../../components/user-logo/user-logo';
 import {Link, useNavigate} from 'react-router-dom';
 import GenresList from '../../components/genres-list/genres-list';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
-import {isAuthorized, isAuthorizedAndFilmsInList, isFilmFavorite} from '../../utils';
+import {isAuthorized, isAuthorizedAndFilmsInList, isFilmFavorite} from '../../utils/utils';
 import {getFavoritesFilms, getFilms, getPromoFilm} from '../../store/films-data/selectors';
 import {getAuthorizationStatus} from '../../store/user-process/selector';
 import {addFilmToFavoritesAction} from '../../store/api-actions';

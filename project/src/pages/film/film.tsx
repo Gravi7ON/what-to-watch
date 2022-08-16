@@ -5,7 +5,7 @@ import UserLogo from '../../components/user-logo/user-logo';
 import {FilmId} from '../../types/films';
 import FilmsList from '../../components/films-list/films-list';
 import FilmTabs from '../../components/film-tabs/film-tabs';
-import {isAuthorized, isAuthorizedAndFilmsInList, isFilmFavorite} from '../../utils';
+import {isAuthorized, isAuthorizedAndFilmsInList, isFilmFavorite} from '../../utils/utils';
 import {useAppSelector, useAppDispatch} from '../../hooks';
 import {addFilmToFavoritesAction, fetchCurrentFilmAction} from '../../store/api-actions';
 import {getAuthorizationStatus} from '../../store/user-process/selector';
