@@ -6,13 +6,15 @@ import {createAPI} from '../services/api';
 import {addFilmToFavoritesAction, checkAuthAction, fetchCurrentFilmAction, fetchFilmsAction, fetchMyListAction, postCommentAction} from './api-actions';
 import {APIRoute, AppRoute} from '../const';
 import {State} from '../types/state';
-import {createFakeComments, createFakeFilm, createFakeFilms, createFakeUpdatedFilm, createFakeUserComment} from '../utils/mocs';
+import {createFakeComments, createFakeFilm, createFakeFilms, createFakeUpdatedFilm, createFakeUserComment} from '../utils/mocks';
 import { redirectToRoute } from './action';
 
 describe('Async actions', () => {
   const api = createAPI();
   const mockAPI = new MockAdapter(api);
   const middlewares = [thunk.withExtraArgument(api)];
+  const mockFilms = createFakeFilms(8);
+  const mockFilm = createFakeFilm();
 
   const mockStore = configureMockStore<
       State,
@@ -40,9 +42,6 @@ describe('Async actions', () => {
     });
 
     it('should dispatch load Films when GET /films', async () => {
-      const mockFilms = createFakeFilms();
-      const mockFilm = createFakeFilm();
-
       const store = mockStore();
       mockAPI
         .onGet(AppRoute.Film)
@@ -62,8 +61,6 @@ describe('Async actions', () => {
     });
 
     it('should dispatch load current film when GET /films/:id', async () => {
-      const mockFilms = createFakeFilms();
-      const mockFilm = createFakeFilm();
       const mockComments = createFakeComments(3);
       const mockId = '3';
 
@@ -89,8 +86,6 @@ describe('Async actions', () => {
     });
 
     it('should dispatch load favorites films when GET /favorite', async () => {
-      const mockFilms = createFakeFilms();
-
       const store = mockStore();
       mockAPI
         .onGet(APIRoute.Favorite)
@@ -127,9 +122,6 @@ describe('Async actions', () => {
     });
 
     it('should show loading screen when server return 4xx, required films', async () => {
-      const mockFilms = createFakeFilms();
-      const mockFilm = createFakeFilm();
-
       const store = mockStore();
       mockAPI
         .onGet(AppRoute.Film)
@@ -149,8 +141,6 @@ describe('Async actions', () => {
     });
 
     it('should redirect to not-found when server return 4xx, required current film', async () => {
-      const mockFilms = createFakeFilms();
-      const mockFilm = createFakeFilm();
       const mockComments = createFakeComments(3);
       const mockId = '3';
 
@@ -178,8 +168,6 @@ describe('Async actions', () => {
     });
 
     it('should redirect to main page when server return 4xx, required favorite films', async () => {
-      const mockFilms = createFakeFilms();
-
       const store = mockStore();
       mockAPI
         .onGet(APIRoute.Favorite)
@@ -220,7 +208,6 @@ describe('Async actions', () => {
 
     it('should dispatch post favorite film when POST /favorite/:filmId/{status}', async () => {
       const {status, filmId} = createFakeUpdatedFilm();
-      const mockFilm = createFakeFilm();
 
       const store = mockStore();
       mockAPI
@@ -260,7 +247,6 @@ describe('Async actions', () => {
 
     it('should show notify when server return 4xx, required update favorites', async () => {
       const {status, filmId} = createFakeUpdatedFilm();
-      const mockFilm = createFakeFilm();
 
       const store = mockStore();
       mockAPI

@@ -7,7 +7,7 @@ type CommentsProps = {
 
 function FilmReviews({comments}: CommentsProps): JSX.Element {
   if (comments.length === 0) {
-    return <> </>;
+    return <p style={{fontWeight: 'bold'}}>Nothing comments yet</p>;
   }
 
   const firsCommentsColumn = comments.slice(0, Math.ceil(comments.length / 2));
@@ -17,7 +17,7 @@ function FilmReviews({comments}: CommentsProps): JSX.Element {
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
         {
-          firsCommentsColumn.map((comment, index) => (
+          firsCommentsColumn.map((comment) => (
             <FilmComment
               key={comment.id}
               {...comment}
@@ -27,7 +27,7 @@ function FilmReviews({comments}: CommentsProps): JSX.Element {
       </div>
       <div className="film-card__reviews-col">
         {
-          secondCommentsColumn.map((comment, index) => (
+          secondCommentsColumn.map((comment) => (
             <FilmComment
               key={comment.id}
               {...comment}

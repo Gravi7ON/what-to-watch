@@ -16,18 +16,18 @@ const createFakeFilm = (): Film => ({
   runTime: +faker.random.numeric(2),
   genre: faker.word.noun(),
   released: +faker.finance.amount(1995, 2015, 0),
-  id: +faker.random.numeric(),
+  id: +faker.unique(faker.random.numeric, [2]),
   isFavorite: faker.datatype.boolean(),
   videoLink: faker.internet.url(),
   previewVideoLink: faker.internet.url()
 });
 
-const createFakeFilms = (): Films => new Array(8).fill(null).map(() => createFakeFilm());
+const createFakeFilms = (amount: number): Films => Array.from({length: amount}, () => createFakeFilm());
 
 const createFakeComments = (amount: number): Comments => new Array(amount).fill(null).map(() => ({
   comment: faker.lorem.sentence(5),
   date: new Date().toString(),
-  id: +faker.unique(faker.random.numeric),
+  id: +faker.unique(faker.random.numeric, [2]),
   rating: +faker.finance.amount(0, 10, 1),
   user: {
     id: +faker.random.numeric(),
@@ -38,7 +38,7 @@ const createFakeComments = (amount: number): Comments => new Array(amount).fill(
 const createFakeUserComment = (): UserComment => ({
   comment: faker.lorem.sentence(5),
   rating: +faker.finance.amount(0, 10, 1),
-  filmId: +faker.random.numeric(2),
+  filmId: +faker.random.numeric(),
 });
 
 const createFakeUpdatedFilm = (): UpdateFilm => ({
