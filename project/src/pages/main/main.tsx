@@ -4,12 +4,15 @@ import UserLogo from '../../components/user-logo/user-logo';
 import {Link, useNavigate} from 'react-router-dom';
 import GenresList from '../../components/genres-list/genres-list';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
-import {isAuthorized, isAuthorizedAndFilmsInList, isFilmFavorite} from '../../utils';
+import {isAuthorized, isAuthorizedAndFilmsInList, isFilmFavorite} from '../../utils/utils';
 import {getFavoritesFilms, getFilms, getPromoFilm} from '../../store/films-data/selectors';
 import {getAuthorizationStatus} from '../../store/user-process/selector';
 import {addFilmToFavoritesAction} from '../../store/api-actions';
+import {useState} from 'react';
 
 function MainPage(): JSX.Element | null {
+  const [isAddingFilm , setIsAddingFilm] = useState(false);
+
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
@@ -75,9 +78,13 @@ function MainPage(): JSX.Element | null {
                     </svg>
                     <span>Play</span>
                   </button>
-                  <button className="btn btn--list film-card__button" type="button" onClick={() => {
-                    dispatch(addFilmToFavoritesAction({filmId: id, status: isFilmFavorite(favoritesFilms, id.toString()) ? 0 : 1}));
-                  }}
+                  <button className="btn btn--list film-card__button" disabled={isAddingFilm} type="button" onClick={
+                    async () => {
+                      setIsAddingFilm(true);
+                      await dispatch(addFilmToFavoritesAction({filmId: id, status: isFilmFavorite(favoritesFilms, id.toString()) ? 0 : 1}));
+                      setIsAddingFilm(false);
+                    }
+                  }
                   >
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref={isAuthorizedAndFilmsInList(authorizationStatus, favoritesFilms, id.toString()) ? '#in-list' : '#add'}></use>

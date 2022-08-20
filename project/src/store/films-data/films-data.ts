@@ -24,7 +24,6 @@ export const filmsData = createSlice({
       .addCase(fetchFilmsAction.fulfilled, (state, action) => {
         state.movies = action.payload.films;
         state.promoFilm = action.payload?.promoFilm;
-        state.favorites = action.payload.myFilms;
         state.isDataLoaded = false;
       })
       .addCase(fetchCurrentFilmAction.pending, (state) => {
@@ -56,9 +55,10 @@ export const filmsData = createSlice({
         state.isFavoritesLoaded = false;
       })
       .addCase(addFilmToFavoritesAction.fulfilled, (state, action) => {
-        const updatedFilmlIndex = state.favorites?.findIndex((updatedFilm) => updatedFilm.id === action.payload.id);
+        if (!action.payload.isFavorite && state.favorites) {
+          const updatedFilmlIndex = state.favorites?.findIndex((updatedFilm) =>
+            updatedFilm.id === action.payload.id);
 
-        if (!action.payload.isFavorite && state.favorites && updatedFilmlIndex) {
           state.favorites = [
             ...state.favorites.slice(0, updatedFilmlIndex),
             ...state.favorites.slice(updatedFilmlIndex + 1)

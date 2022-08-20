@@ -3,7 +3,7 @@ import {ALL_GENRES, AMOUNT_FILMS_PER_STEP, MAX_AMOUNT_GENRES} from '../../const'
 import FilmsList from '../films-list/films-list';
 import ShowMoreButton from '../show-more-button/show-more-button';
 import {useState} from 'react';
-import {getFilteredFilmsByGenre} from '../../utils';
+import {getFilteredFilmsByGenre} from '../../utils/utils';
 import GenresTabs from '../genres-tabs/genres-tabs';
 
 type GenreState = {
