@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import {ToastContainer} from 'react-toastify';
 import {fetchFilmsAction, checkAuthAction} from './store/api-actions';
 import 'react-toastify/dist/ReactToastify.css';
-import HistoryRouter from './components/history-route/history-rout';
+import HistoryRouter from './components/history-route/history-route';
 import browserHistory from './browser-history';
 import ScrollToTop from './components/scroll-to-top/scroll-to-top';
 

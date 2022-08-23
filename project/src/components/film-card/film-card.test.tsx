@@ -1,13 +1,13 @@
 import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 import {createFakeFilm} from '../../utils/mocks';
-import HistoryRouter from '../history-route/history-rout';
+import HistoryRouter from '../history-route/history-route';
 import FilmCard from './film-card';
 
 const history = createMemoryHistory();
 const mockFilm = createFakeFilm();
 
-describe('Component: Film Card', () => {
+describe('Component: FilmCard', () => {
   it('should render correctly', () => {
     render(
       <HistoryRouter history={history}>

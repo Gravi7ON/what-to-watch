@@ -3,7 +3,7 @@ import {createMemoryHistory} from 'history';
 import {render, screen} from '@testing-library/react';
 import {Provider} from 'react-redux';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-import HistoryRouter from '../../components/history-route/history-rout';
+import HistoryRouter from '../history-route/history-route';
 import {AppRoute, AuthorizationStatus} from '../../const';
 import PrivateRoute from './private-route';
 
