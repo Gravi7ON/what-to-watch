@@ -2,18 +2,20 @@ import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 import {createFakeFilms} from '../../utils/mocks';
 import HistoryRouter from '../history-route/history-route';
-import FilmsList from './films-list';
+import GenresList from './genres-list';
 
-const history = createMemoryHistory();
-const mockFilms = createFakeFilms(5);
+describe('Component: GenresList', () => {
+  const mockFilms = createFakeFilms(8);
+  const history = createMemoryHistory();
 
-describe('Component: FilmsList', () => {
   it('should render correctly', () => {
     render(
       <HistoryRouter history={history}>
-        <FilmsList films={mockFilms} />
+        <GenresList films={mockFilms} />
       </HistoryRouter>
     );
+
+    expect(screen.getByText(/All genres/i)).toBeInTheDocument();
 
     for (const film of mockFilms) {
       expect(screen.getByText(`${film.name}`)).toBeInTheDocument();

@@ -3,13 +3,13 @@ import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import {AuthorizationStatus} from '../../const';
-import HistoryRouter from '../history-route/history-rout';
+import HistoryRouter from '../history-route/history-route';
 import UserLogo from './user-logo';
 
 const history = createMemoryHistory();
 const mockStore = configureMockStore();
 
-describe('Component: User logo', () => {
+describe('Component: UserLogo', () => {
   it('should render correctly with "Sign out"', () => {
     const store = mockStore({
       USER: {authorizationStatus: AuthorizationStatus.Auth},

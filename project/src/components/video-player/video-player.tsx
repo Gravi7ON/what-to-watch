@@ -19,7 +19,7 @@ function VideoPlayer({previewImage, previewVideoLink}: VideoPlayerProps): JSX.El
   });
 
   return (
-    <video style={{width: '100%', height: '100%', objectFit: 'cover'}}
+    <video data-testid="testid" style={{width: '100%', height: '100%', objectFit: 'cover'}}
       ref={videoRef} src={previewVideoLink} muted loop poster={previewImage}
     />
   );
