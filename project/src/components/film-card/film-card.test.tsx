@@ -1,7 +1,7 @@
 import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 import {createFakeFilm} from '../../utils/mocks';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import FilmCard from './film-card';
 
 const history = createMemoryHistory();

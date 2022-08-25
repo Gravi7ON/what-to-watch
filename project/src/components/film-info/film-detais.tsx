@@ -12,10 +12,10 @@ function FilmDetails({film}: FilmTabProps): JSX.Element {
   } = film;
 
   const durationHours: number = Math.floor(runTime / HOUR_IN_MINUTES);
-  const durationMunutes: number = runTime - HOUR_IN_MINUTES * durationHours;
+  const durationMinutes: number = runTime - HOUR_IN_MINUTES * durationHours;
 
   const getActors = (): JSX.Element[] => starring.map((actor, index) => (
-    <Fragment key={`${index++} - ${actor}`}>{`${actor}${index === starring.length - 1 ? '' : ','}`}<br /></Fragment>
+    <Fragment key={Math.random()}>{`${actor}${index === starring.length - 1 ? '' : ','}`}<br /></Fragment>
   ));
 
   return (
@@ -36,7 +36,7 @@ function FilmDetails({film}: FilmTabProps): JSX.Element {
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{`${durationHours}h ${durationMunutes}m`}</span>
+          <span className="film-card__details-value">{`${durationHours}h ${durationMinutes}m`}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>

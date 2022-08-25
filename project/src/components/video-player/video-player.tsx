@@ -1,3 +1,4 @@
+import './video-player.css';
 import {useRef, useEffect} from 'react';
 import {TIME_UNTIL_ACTIVATION_PREVIEW} from '../../const';
 
@@ -19,8 +20,14 @@ function VideoPlayer({previewImage, previewVideoLink}: VideoPlayerProps): JSX.El
   });
 
   return (
-    <video data-testid="testid" style={{width: '100%', height: '100%', objectFit: 'cover'}}
-      ref={videoRef} src={previewVideoLink} muted loop poster={previewImage}
+    <video
+      className="preview-player"
+      data-testid="testid"
+      ref={videoRef}
+      src={previewVideoLink}
+      muted
+      loop
+      poster={previewImage}
     />
   );
 }
