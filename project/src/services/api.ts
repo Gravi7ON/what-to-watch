@@ -2,8 +2,6 @@ import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} fro
 import {getToken} from './token';
 import {HTTPStatusCode} from '../const';
 import {toast} from 'react-toastify';
-import {store} from '../store/store';
-import browserHistory from '../browser-history';
 
 const StatusCodeMapping: Record<number, boolean> = {
   [HTTPStatusCode.BAD_REQUEST]: true,
@@ -39,10 +37,6 @@ const createAPI = (): AxiosInstance => {
     (error: AxiosError) => {
       if (error.response && shouldDisplayError(error.response)) {
         if (error.response.status === HTTPStatusCode.UNAUTHORIZED) {
-          if (store.getState().FILMS.isDataLoaded || browserHistory.location.pathname === '/') {
-            throw error;
-          }
-          toast.dark(error.response.data.error.slice(0, 18));
           throw error;
         }
         toast.dark(error.response.data.error);

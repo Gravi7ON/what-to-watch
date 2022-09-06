@@ -9,6 +9,7 @@ import {getFavoritesFilms, getFilms, getPromoFilm} from '../../store/films-data/
 import {getAuthorizationStatus} from '../../store/user-process/selector';
 import {addFilmToFavoritesAction} from '../../store/api-actions';
 import {useState} from 'react';
+import {toast} from 'react-toastify';
 
 function MainPage(): JSX.Element | null {
   const [isAddingFilm , setIsAddingFilm] = useState(false);
@@ -81,7 +82,10 @@ function MainPage(): JSX.Element | null {
                   <button className="btn btn--list film-card__button" disabled={isAddingFilm} type="button" onClick={
                     async () => {
                       setIsAddingFilm(true);
-                      await dispatch(addFilmToFavoritesAction({filmId: id, status: isFilmFavorite(favoritesFilms, id.toString()) ? 0 : 1}));
+                      const {meta} = await dispatch(addFilmToFavoritesAction({filmId: id, status: isFilmFavorite(favoritesFilms, id.toString()) ? 0 : 1}));
+                      if (meta.requestStatus === 'rejected') {
+                        toast.dark('You are not logged');
+                      }
                       setIsAddingFilm(false);
                     }
                   }

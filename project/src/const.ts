@@ -66,6 +66,8 @@ const MAX_COMMENT_LENGTH = 400;
 
 const CHECK_PASSWORD_VALIDITY = /(?=.*[0-9])(?=.*[A-Za-z])[0-9a-zA-Z]{2,}/;
 
+const LIGHTEN_PERCENT = 0.07;
+
 export {
   AppRoute,
   LOGO_CLASS_NAME,
@@ -84,5 +86,6 @@ export {
   MIN_COMMENT_LENGTH,
   MAX_COMMENT_LENGTH,
   NameSpace,
-  MAX_AMOUNT_GENRES
+  MAX_AMOUNT_GENRES,
+  LIGHTEN_PERCENT
 };

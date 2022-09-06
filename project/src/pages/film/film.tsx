@@ -18,6 +18,7 @@ import {
 } from '../../store/films-data/selectors';
 import LoadingScreen from '../loading/loading';
 import {useEffect, useState} from 'react';
+import {toast} from 'react-toastify';
 
 function Film(): JSX.Element | null {
   const {id = '1'} = useParams<FilmId>();
@@ -106,7 +107,10 @@ function Film(): JSX.Element | null {
                   <button className="btn btn--list film-card__button" disabled={isAddingFilm} type="button" onClick={
                     async () => {
                       setIsAddingFilm(true);
-                      await dispatch(addFilmToFavoritesAction({filmId: Number(id), status: isFilmFavorite(favoritesFilms, id) ? 0 : 1}));
+                      const {meta} = await dispatch(addFilmToFavoritesAction({filmId: Number(id), status: isFilmFavorite(favoritesFilms, id) ? 0 : 1}));
+                      if (meta.requestStatus === 'rejected') {
+                        toast.dark('You are not logged');
+                      }
                       setIsAddingFilm(false);
                     }
                   }

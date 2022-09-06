@@ -9,10 +9,10 @@ function AddReview({films}: ScreenProps): JSX.Element {
   const {id} = useParams<FilmId>();
   const filmIndexInList = Number(id) - 1;
 
-  const {name, backgroundImage, posterImage} = films[filmIndexInList];
+  const {name, backgroundImage, posterImage, backgroundColor} = films[filmIndexInList];
 
   return (
-    <section className="film-card film-card--full">
+    <section className="film-card film-card--full" style={{backgroundColor: backgroundColor}}>
       <div className="film-card__header">
         <div className="film-card__bg">
           <img src={backgroundImage} alt={name} />
@@ -45,7 +45,7 @@ function AddReview({films}: ScreenProps): JSX.Element {
       </div>
 
       <div className="add-review">
-        <UserCommentForm />
+        <UserCommentForm backgroundColor={backgroundColor} />
       </div>
 
     </section>

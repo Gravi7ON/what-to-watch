@@ -7,7 +7,7 @@ import {addFilmToFavoritesAction, checkAuthAction, fetchCurrentFilmAction, fetch
 import {APIRoute, AppRoute} from '../const';
 import {State} from '../types/state';
 import {createFakeComments, createFakeFilm, createFakeFilms, createFakeUpdatedFilm, createFakeUserComment} from '../utils/mocks';
-import { redirectToRoute } from './action';
+import {redirectToRoute} from './action';
 
 describe('Async actions', () => {
   const api = createAPI();

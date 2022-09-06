@@ -3,11 +3,13 @@ import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
 import {Provider} from 'react-redux';
 import {AuthorizationStatus} from '../../const';
+import { createFakeFilm } from '../../utils/mocks';
 import HistoryRouter from '../history-router/history-router';
 import UserCommentForm from './user-comment-form';
 
 const history = createMemoryHistory();
 const mockStore = configureMockStore();
+const {backgroundColor} = createFakeFilm();
 const store = mockStore({
   USER: {authorizationStatus: AuthorizationStatus.Auth},
 });
@@ -17,7 +19,7 @@ describe('Component: UserCommentForm', () => {
     render(
       <Provider store={store}>
         <HistoryRouter history={history}>
-          <UserCommentForm />
+          <UserCommentForm backgroundColor={backgroundColor} />
         </HistoryRouter>
       </Provider>
     );

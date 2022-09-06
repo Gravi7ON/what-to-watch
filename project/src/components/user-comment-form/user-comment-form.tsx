@@ -1,11 +1,12 @@
-import {AppRoute, RATING_STARS_COUNT, MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH} from '../../const';
+import {AppRoute, RATING_STARS_COUNT, MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, LIGHTEN_PERCENT} from '../../const';
 import {Fragment, useState} from 'react';
 import {useAppDispatch} from '../../hooks/index';
 import {postCommentAction} from '../../store/api-actions';
 import {useNavigate, useParams} from 'react-router-dom';
 import {FilmId} from '../../types/films';
+import {lighten} from 'polished';
 
-function UserCommentForm(): JSX.Element {
+function UserCommentForm({backgroundColor}: {backgroundColor: string}): JSX.Element {
   const {id} = useParams<FilmId>();
 
   const navigate = useNavigate();
@@ -51,7 +52,7 @@ function UserCommentForm(): JSX.Element {
     navigate(`${AppRoute.Film}/${userComment.filmId}`);
   };
 
-  const ratingStars: JSX.Element[] = Array.from({length: RATING_STARS_COUNT}, (element, index) => index + 1)
+  const ratingStars: JSX.Element[] = Array.from({length: RATING_STARS_COUNT}, (_arg, index) => index + 1)
     .reverse()
     .map((number) => (
       <Fragment key={number}>
@@ -66,6 +67,10 @@ function UserCommentForm(): JSX.Element {
     && userComment.rating !== 0
   );
 
+  const stylesTextFiel = {
+    backgroundColor: lighten(LIGHTEN_PERCENT, backgroundColor),
+  };
+
   return (
     <form action="#" className="add-review__form" onChange={handleFormChange}>
       <fieldset disabled={isUploadingComment} style={{margin: 0, border: 0, padding: 0}}>
@@ -75,7 +80,7 @@ function UserCommentForm(): JSX.Element {
           </div>
         </div>
 
-        <div className="add-review__text">
+        <div className="add-review__text" style={stylesTextFiel}>
           <textarea className="add-review__textarea"
             name="review-text" id="review-text" placeholder="Review text"
           >
@@ -95,4 +100,3 @@ function UserCommentForm(): JSX.Element {
 }
 
 export default UserCommentForm;
-
