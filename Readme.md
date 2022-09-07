@@ -23,6 +23,8 @@ ___
 * `Testing Library`
 
 ---
+Студент: [Дмитрий Радионов](https://up.htmlacademy.ru/nodejs-api/2/user/678357).</br>
+Наставник: [Глеб Клецков](https://up.htmlacademy.ru/react/10/user/1487865).
 
 <a href="https://htmlacademy.ru/intensive/react"><img align="left" width="50" height="50" title="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/react/logo-for-github.png"></a>
 
