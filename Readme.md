@@ -1,46 +1,26 @@
 # Личный проект «Что посмотреть»
 
-* Студент: [Дмитрий Радионов](https://up.htmlacademy.ru/react/10/user/678357).
-* Наставник: [Глеб Клецков](https://up.htmlacademy.ru/react/10/user/1487865).
+---
+
+### Проект доступен по [https://wtw-project.netlify.app](https://wtw-project.netlify.app)
 
 ---
 
-_Не удаляйте и не изменяйте папки и файлы:_
-_`.editorconfig`, `.gitattributes`, `.gitignore`._
+### Скриншоты проекта
+<img width="320" alt="Главная страница" src="https://user-images.githubusercontent.com/89462502/188873640-980068bc-6654-4a8c-a05f-cbf49071d3ce.jpg"> <img width="320" alt="Страница с описанием фильма" src="https://user-images.githubusercontent.com/89462502/188873643-61aa7bbb-515b-45c8-8a8e-6d34506440fd.jpg"> <img width="320" alt="Список любимых фильмов" src="https://user-images.githubusercontent.com/89462502/188873651-821170e3-c957-4c0f-8ae9-85c64a9f3031.jpg"> <img width="320" alt="Страница с формой комментария" src="https://user-images.githubusercontent.com/89462502/188873652-8f3306cd-667d-4d87-bd3a-33858b737481.jpg"> <img width="320" alt="Страница с формой регистрации" src="https://user-images.githubusercontent.com/89462502/188873656-12c89d2b-cc48-49bf-ad97-19855da6ba6b.jpg"> <img width="320" alt="Видео плеер" src="https://user-images.githubusercontent.com/89462502/188873661-830aa6da-36dc-4acb-81c0-dd2680197537.jpg">
 
----
+___
 
-### Памятка
-
-#### 1. Зарегистрируйтесь на Гитхабе
-
-Если у вас ещё нет аккаунта на [github.com](https://github.com/join), скорее зарегистрируйтесь.
-
-#### 2. Создайте форк
-
-Откройте репозиторий и нажмите кнопку «Fork» в правом верхнем углу. Репозиторий из Академии будет скопирован в ваш аккаунт.
-
-<img width="769" alt="Press 'Fork'" src="https://cloud.githubusercontent.com/assets/259739/20264045/a1ddbf40-aa7a-11e6-9a1a-724a1c0123c8.png">
-
-Получится вот так:
-
-<img width="769" alt="Forked" src="https://cloud.githubusercontent.com/assets/259739/20264122/f63219a6-aa7a-11e6-945a-89818fc7c014.png">
-
-#### 3. Клонируйте репозиторий на свой компьютер
-
-Будьте внимательны: нужно клонировать свой репозиторий (форк), а не репозиторий Академии. Также обратите внимание, что клонировать репозиторий нужно через SSH, а не через HTTPS. Нажмите зелёную кнопку в правой части экрана, чтобы скопировать SSH-адрес вашего репозитория:
-
-<img width="769" alt="SSH" src="https://cloud.githubusercontent.com/assets/259739/20264180/42704126-aa7b-11e6-9ab4-73372b812a53.png">
-
-Клонировать репозиторий можно так:
-
-```
-git clone SSH-адрес_вашего_форка
-```
-
-Команда клонирует репозиторий на ваш компьютер и подготовит всё необходимое для старта работы.
-
-#### 4. Начинайте обучение!
+### Проект создан при помощи [Create React App](https://create-react-app.dev/).
+#### Технологии используемые для реализации функционала:
+* `React`
+* `Redux` `(RTK, Redux-Thunk)`
+* `React-Router`
+* `TypeScript`
+#### В качестве HTTP клиента используется библиотека `Axios`
+#### Тестирование осуществлено при помощи:
+* `Jest`
+* `Testing Library`
 
 ---
 
