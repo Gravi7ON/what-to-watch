@@ -1,8 +1,8 @@
-# Личный проект «Что посмотреть»
+# :clapper: Личный проект «Что посмотреть» 
 
 ---
 
-### Проект доступен по [https://wtw-project.netlify.app](https://wtw-project.netlify.app)
+### Проект доступен по :link: <https://wtw-project.netlify.app>
 
 ---
 
@@ -17,10 +17,11 @@ ___
 * `Redux` `(RTK, Redux-Thunk)`
 * `React-Router`
 * `TypeScript`
-#### В качестве HTTP клиента используется библиотека `Axios`
+#### В качестве HTTP клиента используется библиотека:
+* `Axios`
 #### Тестирование осуществлено при помощи:
 * `Jest`
-* `Testing Library`
+* `React Testing Library`
 
 ---
 Студент: [Дмитрий Радионов](https://up.htmlacademy.ru/nodejs-api/2/user/678357).</br>
