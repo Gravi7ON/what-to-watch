@@ -13,7 +13,7 @@ function GenresTabs({uniqueGenres, activeTab, onGenreClick}: GenresTabsProps) {
     <ul className="catalog__genres-list">
       {uniqueGenres.map((filmGenre, index) => (
         <li
-          key={Math.random()}
+          key={`${filmGenre}-${index++}`}
           className={activeTab === filmGenre ?
             'catalog__genres-item catalog__genres-item--active' :
             'catalog__genres-item'}

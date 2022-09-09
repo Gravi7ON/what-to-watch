@@ -15,7 +15,7 @@ function FilmDetails({film}: FilmTabProps): JSX.Element {
   const durationMinutes: number = runTime - HOUR_IN_MINUTES * durationHours;
 
   const getActors = (): JSX.Element[] => starring.map((actor, index) => (
-    <Fragment key={Math.random()}>{`${actor}${index === starring.length - 1 ? '' : ','}`}<br /></Fragment>
+    <Fragment key={`${actor}-${index++}`}>{`${actor}${index === starring.length - 1 ? '' : ','}`}<br /></Fragment>
   ));
 
   return (
