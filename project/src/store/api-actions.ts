@@ -31,26 +31,17 @@ const fetchCurrentFilmAction = createAsyncThunk<CurrentFilmData | undefined, str
   'data/fetchCurrentFilm',
   async (id, {dispatch, extra: api}) => {
     try {
-      let currentFilmData;
-
-      await Promise.all([
+      const currentFilmData = await Promise.all([
         api.get<Film>(`${APIRoute.Films}/${id}`),
         api.get<Films>(`${APIRoute.Films}/${id}/similar`),
         api.get<Comments>(`${APIRoute.Comments}/${id}`)
-      ])
-        .then((response) => {
-          const currentFilm: Film = response[0].data;
-          const similarFilms: Films = response[1].data;
-          const filmComments: Comments = response[2].data;
+      ]);
 
-          currentFilmData = {
-            currentFilm,
-            similarFilms,
-            filmComments
-          };
-        });
-
-      return currentFilmData;
+      return {
+        currentFilm: currentFilmData[0].data,
+        similarFilms: currentFilmData[1].data,
+        filmComments: currentFilmData[2].data
+      };
     } catch {
       dispatch(redirectToRoute(AppRoute.NotFound));
     }
