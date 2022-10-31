@@ -2,7 +2,8 @@
 
 ---
 
-### Проект доступен [WTH](https://wtw-project.netlify.app)
+#### Проект доступен [WTH](https://wtw-project.netlify.app)
+#### Руководство по сборке и работе находится в [Workflow.md](/project/Workflow.md) директории [project](/project/)
 
 ---
 
@@ -10,7 +11,6 @@
 
 ___
 
-### Проект создан при помощи [Create React App](https://create-react-app.dev/).
 #### Технологии используемые для реализации функционала:
 * `React`
 * `Redux` `(RTK, Redux-Thunk)`
